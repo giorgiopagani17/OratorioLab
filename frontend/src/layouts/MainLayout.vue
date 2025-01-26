@@ -11,8 +11,8 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
-          OratoriXD
+        <q-toolbar-title class="text-bold">
+          Oratorio<span class="text-secondary">360</span>
         </q-toolbar-title>
 
         <div class="flex items-center">
@@ -39,12 +39,11 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      bordered
+      elevated
+      class="custom-shadow"
     >
       <q-list>
-        <q-item-label
-          header
-        >
+        <q-item-label header>
           Essential Links
         </q-item-label>
 
@@ -129,3 +128,4 @@ function toggleSearch () {
   searchActive.value = !searchActive.value;
 }
 </script>
+
