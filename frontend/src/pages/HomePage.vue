@@ -96,7 +96,7 @@ const buttons: Button[] = [
     height: 125px;
     font-size: 22.5px;
     font-weight: bold;
-    color: $primary;
+    color: $secondary;
 
     &:hover {
       transform: scale(1.1) !important;
@@ -104,6 +104,6 @@ const buttons: Button[] = [
   }
 
   .button-container {
-    border-bottom: solid 2px $secondary;
+    border-bottom: solid 2.5px $primary;
   }
 </style>

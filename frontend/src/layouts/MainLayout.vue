@@ -1,40 +1,5 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title class="text-bold">
-          Oratorio<span class="text-secondary">360</span>
-        </q-toolbar-title>
-
-        <div class="flex items-center">
-          <q-input
-            v-model="searchQuery"
-            v-if="searchActive"
-            filled
-            color="white"
-            input-class="text-white"
-            class="q-mr-md"
-            dense
-            placeholder="Search..."
-            @blur="toggleSearch"
-          />
-          <q-icon
-            name="search"
-            size="sm"
-            @click="toggleSearch"
-          />
-        </div>
-      </q-toolbar>
-    </q-header>
 
     <q-drawer
       v-model="leftDrawerOpen"
@@ -43,8 +8,8 @@
       class="custom-shadow"
     >
       <q-list>
-        <q-item-label header>
-          Essential Links
+        <q-item-label header class="text-bold text-secondary" style="font-size: 1.7em">
+          Oratorio<span class="text-primary">360</span>
         </q-item-label>
 
         <EssentialLink
@@ -116,16 +81,5 @@ const linksList: EssentialLinkProps[] = [
 ];
 
 const leftDrawerOpen = ref(false);
-const searchActive = ref(false);
-const searchQuery = ref('');
-
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
-
-function toggleSearch () {
-  searchQuery.value = '';
-  searchActive.value = !searchActive.value;
-}
 </script>
 
