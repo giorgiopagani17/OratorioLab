@@ -30,16 +30,27 @@
       show-if-above
       elevated
       class="custom-shadow"
+      :width="250"
     >
-      <q-list class="q-mt-md">
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
+      <div class="drawer-container">
+        <q-list class="q-mt-md">
+          <EssentialLink
+            v-for="link in linksList"
+            :key="link.title"
+            v-bind="link"
+          />
+        </q-list>
 
+        <div class="q-mb-md q-mt-auto border-top-primary flex justify-center">
+          <q-btn
+            color="primary"
+            label="Logout"
+            class="q-mt-md"
+            style="width: 200px;"
+          />
+        </div>
+      </div>
+    </q-drawer>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -88,8 +99,15 @@ const leftDrawerOpen = ref(false);
 </script>
 
 
-<style>
-.custom-input .q-field__control:before {
-  border: none !important;
+<style lang="scss">
+.drawer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.border-top-primary {
+  border-top: 2px solid $primary;
 }
 </style>
