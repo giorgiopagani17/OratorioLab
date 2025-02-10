@@ -2,7 +2,7 @@
   <q-page class="row items-center justify-evenly q-pa-md page-background">
     <div>
       <div class="container flex justify-center q-mb-lg" style="padding: 12px">
-        <div class="flex items-center justify-center q-pr-sm" style="border-right: 2px solid #F1F1F1 ;">
+        <div class="flex items-center justify-center q-pr-sm border-right-grey-custom">
           <q-btn v-for="button in buttons" :key="button.title" color="primary" class="button" style="width: 160px;">
             {{ button.title }}
           </q-btn>
