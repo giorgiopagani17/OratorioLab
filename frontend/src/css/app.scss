@@ -2,7 +2,61 @@
 .page-background {
   background-color: #F1F1F1;
 }
+
 body {
   font-family: 'Futura', sans-serif;
+}
+
+.container{
+  background-color: white;
+  border-radius: 24px;
+  border: solid 1px #E0E0E0;
+}
+
+.card {
+  width: 300px;
+  height: 350px;
+  margin: 15px;
+}
+
+.button {
+  margin: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border-radius: 100px;
+
+  &:hover {
+    transform: scale(1.1) !important;
+  }
+}
+
+.blue-container {
+  margin: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border-radius: 100px;
+  background-color: #004AAD;
+  padding: 10px;
+}
+
+
+.blue-container-input {
+  margin: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border-radius: 100px;
+  background-color: #004AAD;
+  padding: 6px 12px;
+}
+
+.custom-input .q-field__control:before {
+  border: none !important;
+}
+
+.custom-input .q-field__control:focus::after {
+  border: none !important;
 }
 

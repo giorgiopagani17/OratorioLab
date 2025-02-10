@@ -94,39 +94,4 @@ const buttons: Button[] = [
     action: 'https://quasar.dev'
   }
 ];
-</script>004AAD
-
-<style lang="scss">
-  .container{
-    background-color: white;
-    border-radius: 24px;
-  }
-
-  .card {
-    width: 300px;
-    height: 350px;
-    margin: 15px;
-  }
-
-  .button {
-    margin: 10px;
-    font-size: 22.5px;
-    font-weight: bold;
-    color: white;
-    border-radius: 100px;
-
-    &:hover {
-      transform: scale(1.1) !important;
-    }
-  }
-
-  .blue-container {
-    margin: 10px;
-    font-size: 22.5px;
-    font-weight: bold;
-    color: white;
-    border-radius: 100px;
-    background-color: #004AAD;
-    padding: 12px;
-  }
-</style>
+</script>

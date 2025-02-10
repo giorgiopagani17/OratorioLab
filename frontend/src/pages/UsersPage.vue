@@ -9,7 +9,7 @@
             input-style="color: white;"
             placeholder="Search..."
             color="white"
-            class="custom-input fake-button"
+            class="custom-input blue-container-input"
           >
             <template v-slot:prepend>
               <q-icon name="search" color="white"/>
@@ -24,12 +24,14 @@
       </div>
 
       <q-table
-        style="border-radius: 24px"
-        class="q-mt-xl"
+        style="border-radius: 24px; min-height: 460px"
+        class="q-mt-lg"
         :rows="rows"
+        :columns="columns"
         row-key="name"
         flat
         bordered
+        virtual-scroll
       >
         <template v-slot:header-cell="props">
           <q-th
@@ -52,12 +54,20 @@
 </template>
 
 <script setup lang="ts">
-
 import {ref} from 'vue';
+import type { QTableColumn } from 'quasar';
 
 defineOptions({
   name: 'UserPage'
 });
+
+interface UserRow {
+  name: string;
+  age: number;
+  dateOfBirth: string;
+  gender: string;
+  email: string;
+}
 
 interface Button {
   title: string;
@@ -65,6 +75,15 @@ interface Button {
 }
 
 const search = ref<string>('');
+
+const columns = ref<QTableColumn<UserRow>[]>([
+  { name: 'name', label: 'Nome', align: 'left', field: 'name', sortable: false },
+  { name: 'age', label: 'Età', align: 'left', field: 'age', sortable: false },
+  { name: 'dateOfBirth', label: 'Birth', align: 'left', field: 'dateOfBirth', sortable: false },
+  { name: 'gender', label: 'Gender', align: 'left', field: 'gender', sortable: false },
+  { name: 'email', label: 'Email', align: 'left', field: 'email', sortable: false },
+]);
+
 
 const rows = ref([
   {
@@ -125,45 +144,8 @@ const buttons: Button[] = [
 </script>004AAD
 
 <style lang="scss">
-.container{
-  background-color: white;
-  border-radius: 24px;
-}
-
-.card {
-  width: 300px;
-  height: 350px;
-  margin: 15px;
-}
-
-.button {
-  margin: 10px;
-  font-size: 22.5px;
-  font-weight: bold;
-  color: white;
-  border-radius: 100px;
-
-  &:hover {
-    transform: scale(1.1) !important;
-  }
-}
-
-.fake-button {
-  margin: 10px;
-  font-size: 22.5px;
-  font-weight: bold;
-  color: white;
-  border-radius: 100px;
-  background-color: #004AAD;
-  padding: 10px;
-}
-
 .input-blue {
   border: none !important;
   border-radius: 100px;
-}
-
-.custom-input .q-field__control:before {
-  border: none !important;
 }
 </style>
