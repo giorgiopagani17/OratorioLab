@@ -1,17 +1,37 @@
 <template>
   <q-layout view="hHh lpR fFf">
 
+    <q-header elevated class="bg-secondary text-white">
+      <q-toolbar>
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+
+        <q-toolbar-title header class="text-bold text-white" style="font-size: 1.7em">
+          Oratori<span class="text-primary">360</span>
+        </q-toolbar-title>
+
+        <q-input
+          v-model="search"
+          dense
+          input-style="color: white;"
+          placeholder="Search..."
+          color="white"
+          class="custom-input"
+        >
+          <template v-slot:prepend>
+            <q-icon name="search" color="white"/>
+          </template>
+        </q-input>
+      </q-toolbar>
+    </q-header>
+
+
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       elevated
       class="custom-shadow"
     >
-      <q-list>
-        <q-item-label header class="text-bold text-secondary" style="font-size: 1.7em">
-          Oratorio<span class="text-primary">360</span>
-        </q-item-label>
-
+      <q-list class="q-mt-md">
         <EssentialLink
           v-for="link in linksList"
           :key="link.title"
@@ -35,51 +55,41 @@ defineOptions({
   name: 'MainLayout'
 });
 
+const search = ref<string>('');
+
 const linksList: EssentialLinkProps[] = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
+    title: 'Home',
     icon: 'school',
-    link: 'https://quasar.dev'
+    link: '/'
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
+    title: 'Anagrafiche',
     icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    link: '/users'
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
+    title: 'Eventi',
+    icon: 'code',
+    link: '/events'
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Attività',
+    icon: 'chat',
+    link: '/activities'
   }
 ];
+
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+};
 
 const leftDrawerOpen = ref(false);
 </script>
 
+
+<style>
+.custom-input .q-field__control:before {
+  border: none !important;
+}
+</style>

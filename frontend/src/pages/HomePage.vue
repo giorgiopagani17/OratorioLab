@@ -1,23 +1,36 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md page-background">
     <div>
-      <div class="flex items-center justify-center q-pb-lg button-container">
-        <q-btn v-for="button in buttons" :key="button.title" class="button bg-white">
-          {{ button.title }}
-        </q-btn>
+      <div class="container flex justify-center q-mb-lg" style="padding: 12px">
+        <div class="flex items-center justify-center q-pr-sm" style="border-right: 2px solid #F1F1F1 ;">
+          <q-btn v-for="button in buttons" :key="button.title" color="primary" class="button" style="width: 160px;">
+            {{ button.title }}
+          </q-btn>
+        </div>
+        <div class="flex items-center justify-center q-pl-sm">
+          <div class="blue-container">
+            ORATORIO S. MARIA
+          </div>
+        </div>
       </div>
-      <div class="flex items-center justify-center q-mt-lg">
-        <q-card v-for="card in cards" :key="card.title" class="card">
-          <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
-            <div class="absolute-bottom text-h6">
-              {{ card.title }}
-            </div>
-          </q-img>
 
-          <q-card-section>
-            {{ card.caption }}
-          </q-card-section>
-        </q-card>
+      <div class="q-mt-lg container">
+        <div class="bg-secondary text-bold text-white q-py-sm q-pl-md" style="font-size: 20px ;border-top-left-radius: 24px; border-top-right-radius: 24px;">
+          Eventi
+        </div>
+        <div class="flex items-center justify-center q-pa-md">
+          <q-card v-for="card in cards" :key="card.title" class="card">
+            <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <div class="absolute-bottom text-h6">
+                {{ card.title }}
+              </div>
+            </q-img>
+
+            <q-card-section>
+              {{ card.caption }}
+            </q-card-section>
+          </q-card>
+        </div>
       </div>
     </div>
   </q-page>
@@ -84,6 +97,11 @@ const buttons: Button[] = [
 </script>004AAD
 
 <style lang="scss">
+  .container{
+    background-color: white;
+    border-radius: 24px;
+  }
+
   .card {
     width: 300px;
     height: 350px;
@@ -91,19 +109,24 @@ const buttons: Button[] = [
   }
 
   .button {
-    margin: 15px;
-    width: 240px;
-    height: 125px;
+    margin: 10px;
     font-size: 22.5px;
     font-weight: bold;
-    color: $secondary;
+    color: white;
+    border-radius: 100px;
 
     &:hover {
       transform: scale(1.1) !important;
     }
   }
 
-  .button-container {
-    border-bottom: solid 2.5px $primary;
+  .blue-container {
+    margin: 10px;
+    font-size: 22.5px;
+    font-weight: bold;
+    color: white;
+    border-radius: 100px;
+    background-color: #004AAD;
+    padding: 12px;
   }
 </style>
