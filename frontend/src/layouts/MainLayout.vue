@@ -63,6 +63,7 @@ import { ref } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
 import {EssentialLinkProps} from '@/components/EssentialLink.vue';
 import { useRouter } from 'vue-router';
+
 defineOptions({
   name: 'MainLayout'
 });
