@@ -13,6 +13,26 @@ body {
   border: solid 1px $border-color;
 }
 
+.container-header {
+  background-color: $secondary;
+  font-weight: bold;
+  color: white;
+  font-size: 20px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+}
+
+.container-body {
+  background-color: white;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+.container-border {
+  border-radius: 25px;
+  border: solid 1px $border-color;
+}
+
 .card {
   width: 300px;
   height: 350px;
@@ -62,4 +82,16 @@ body {
 
 .border-right-grey-custom {
   border-right: 2px solid $border-color;
+}
+
+.wallpaper{
+  background-image: url('../assets/wallpaper.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+}
+
+.text-25 {
+  font-size: 25px;
 }

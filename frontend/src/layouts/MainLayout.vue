@@ -47,6 +47,7 @@
             label="Logout"
             class="q-mt-md"
             style="width: 200px;"
+            @click="logout"
           />
         </div>
       </div>
@@ -61,18 +62,23 @@
 import { ref } from 'vue';
 import EssentialLink from 'components/EssentialLink.vue';
 import {EssentialLinkProps} from '@/components/EssentialLink.vue';
-
+import { useRouter } from 'vue-router';
 defineOptions({
   name: 'MainLayout'
 });
 
 const search = ref<string>('');
+const router = useRouter();
+
+const logout = () => {
+  router.push('/');
+};
 
 const linksList: EssentialLinkProps[] = [
   {
     title: 'Home',
     icon: 'school',
-    link: '/'
+    link: '/home'
   },
   {
     title: 'Anagrafiche',

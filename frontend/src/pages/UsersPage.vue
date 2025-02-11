@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md page-background">
-    <div>
+    <div style="width: 90%">
       <div class="container flex justify-center q-mb-lg" style="padding: 12px">
         <div class="flex items-center justify-center q-pr-sm border-right-grey-custom">
           <q-input

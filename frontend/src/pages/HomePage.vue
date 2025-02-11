@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md page-background">
-    <div>
+    <div style="width: 90%">
       <div class="container flex justify-center q-mb-lg" style="padding: 12px">
         <div class="flex items-center justify-center q-pr-sm border-right-grey-custom">
           <q-btn v-for="button in buttons" :key="button.title" color="primary" class="button" style="width: 160px;">
@@ -14,11 +14,11 @@
         </div>
       </div>
 
-      <div class="q-mt-lg container">
-        <div class="bg-secondary text-bold text-white q-py-sm q-pl-md" style="font-size: 20px ;border-top-left-radius: 24px; border-top-right-radius: 24px;">
-          Eventi
+      <div class="q-mt-lg container-border">
+        <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
+          Ultimi Eventi
         </div>
-        <div class="flex items-center justify-center q-pa-md">
+        <div class="flex items-center justify-center q-pa-md container-body">
           <q-card v-for="card in cards" :key="card.title" class="card">
             <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
               <div class="absolute-bottom text-h6">
