@@ -95,3 +95,7 @@ body {
 .text-25 {
   font-size: 25px;
 }
+
+.q-textarea .q-field__native {
+  resize: none !important;
+}

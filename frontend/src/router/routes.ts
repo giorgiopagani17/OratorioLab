@@ -18,7 +18,17 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/events',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/EventsPage.vue') }],
+    children: [{ path: '', component: () => import('pages/EventsActivitiesPage.vue'), props: { type: 'events' } }],
+  },
+  {
+    path: '/activities',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/EventsActivitiesPage.vue'), props: { type: 'activities' } }],
+  },
+  {
+    path: '/:section(activities|events)',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: 'create', component: () => import('../components/Create/CreateEventsActivities.vue'), props: (route) => ({ type: route.query.type, section: route.params.section }) }]
   },
   {
     path: '/:catchAll(.*)*',
