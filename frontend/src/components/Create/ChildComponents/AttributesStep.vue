@@ -2,34 +2,34 @@
   <div class="flex">
     <div class="small-containers">
       <div>
-        <span class="text-h6 q-ml-xs text-bold text-primary">Nome Evento</span>
+        <span class="text-h6 text-bold text-primary">Nome Evento</span>
         <q-input rounded outlined v-model="text" placeholder="Nome Evento"/>
       </div>
 
       <div>
-        <span class="text-h6 q-ml-xs text-bold text-primary">Descrizione</span>
+        <span class="text-h6 text-bold text-primary">Descrizione</span>
         <q-input type="textarea" rounded outlined v-model="text" placeholder="Text"/>
       </div>
 
       <div>
-        <span class="text-h6 q-ml-xs text-bold text-primary">Note</span>
+        <span class="text-h6 text-bold text-primary">Note</span>
         <q-input rounded outlined v-model="text" placeholder="Nome Evento"/>
       </div>
     </div>
 
     <div class="small-containers border-primary-left">
       <div>
-        <span class="text-h6 q-ml-xs text-bold text-primary">Max Partecipanti</span>
+        <span class="text-h6 text-bold text-primary">Max Partecipanti</span>
         <q-input type="number" class="q-mb-xs" rounded outlined v-model="number" placeholder="Nome Evento"/>
       </div>
 
       <div>
-        <span class="text-h6 q-ml-xs text-bold text-primary">Data Inizio</span>
+        <span class="text-h6 text-bold text-primary">Data Inizio</span>
         <q-input type="date" class="q-mb-xs" rounded outlined v-model="date"/>
       </div>
 
       <div>
-        <span class="text-h6 q-ml-xs text-bold text-primary">Data Fine</span>
+        <span class="text-h6 text-bold text-primary">Data Fine</span>
         <q-input type="date" class="q-mb-xs" rounded outlined v-model="date"/>
       </div>
     </div>
