@@ -1,6 +1,5 @@
 <template>
   <q-layout view="hHh lpR fFf">
-
     <q-header elevated class="bg-secondary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
@@ -13,7 +12,7 @@
           v-model="search"
           dense
           input-style="color: white;"
-          placeholder="Search..."
+          :placeholder="t('header.search')"
           color="white"
           class="custom-input"
         >
@@ -21,9 +20,10 @@
             <q-icon name="search" color="white"/>
           </template>
         </q-input>
+
+        <LanguageSwitcher />
       </q-toolbar>
     </q-header>
-
 
     <q-drawer
       v-model="leftDrawerOpen"
@@ -44,7 +44,7 @@
         <div class="q-mb-md q-mt-auto border-top-primary flex justify-center">
           <q-btn
             color="primary"
-            label="Logout"
+            :label="t('buttons.logout')"
             class="q-mt-md"
             style="width: 200px;"
             @click="logout"
@@ -52,6 +52,7 @@
         </div>
       </div>
     </q-drawer>
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -59,10 +60,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {computed, ref} from 'vue';
+import { useI18n } from 'vue-i18n';
 import EssentialLink from 'components/EssentialLink.vue';
-import {EssentialLinkProps} from '@/components/EssentialLink.vue';
+import LanguageSwitcher from 'components/LanguageSwitcher.vue';
+import { EssentialLinkProps } from '@/components/EssentialLink.vue';
 import { useRouter } from 'vue-router';
+
+const { t } = useI18n();
 
 defineOptions({
   name: 'MainLayout'
@@ -75,28 +80,28 @@ const logout = () => {
   router.push('/');
 };
 
-const linksList: EssentialLinkProps[] = [
+const linksList = computed((): EssentialLinkProps[] => [
   {
-    title: 'Home',
+    title: t('menu.home'),
     icon: 'school',
     link: '/home'
   },
   {
-    title: 'Anagrafiche',
+    title: t('menu.registry'),
     icon: 'record_voice_over',
     link: '/users'
   },
   {
-    title: 'Eventi',
+    title: t('menu.events'),
     icon: 'code',
     link: '/events'
   },
   {
-    title: 'Attività',
+    title: t('menu.activities'),
     icon: 'chat',
     link: '/activities'
   }
-];
+]);
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -104,7 +109,6 @@ const toggleLeftDrawer = () => {
 
 const leftDrawerOpen = ref(false);
 </script>
-
 
 <style lang="scss">
 .drawer-container {
@@ -118,3 +122,4 @@ const leftDrawerOpen = ref(false);
   border-top: 2px solid $primary;
 }
 </style>
+

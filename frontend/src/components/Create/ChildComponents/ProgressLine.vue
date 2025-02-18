@@ -45,7 +45,7 @@
             'completed': currentStep > index
           }"
         >
-          {{ step.title }}
+          {{ $t(`steps.${step.title}`) }}
         </div>
       </div>
     </div>
@@ -55,6 +55,7 @@
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'StepProgressBar',
@@ -63,19 +64,20 @@ export default defineComponent({
     const currentStep = ref(0)
     const route = useRoute();
     const steps = ref([]);
+    const { t } = useI18n();
 
     const activitySteps = [
-      { title: 'Attività', completed: false },
-      { title: 'Immagini', completed: false },
-      { title: 'Target e Prezzo', completed: false },
-      { title: 'Revisione', completed: false },
+      { title: 'activity', completed: false },
+      { title: 'image', completed: false },
+      { title: 'targetPrice', completed: false },
+      { title: 'review', completed: false },
     ]
 
     const eventSteps = [
-      { title: 'Posto', completed: false },
-      { title: 'Evento', completed: false },
-      { title: 'Immagini', completed: false },
-      { title: 'Revisione', completed: false },
+      { title: 'place', completed: false },
+      { title: 'event', completed: false },
+      { title: 'image', completed: false },
+      { title: 'review', completed: false },
     ]
 
     if (route.path.includes('activities')) {
@@ -123,7 +125,8 @@ export default defineComponent({
       steps,
       progressWidth,
       nextStep,
-      prevStep
+      prevStep,
+      t
     }
   }
 })

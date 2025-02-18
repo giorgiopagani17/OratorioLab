@@ -6,23 +6,34 @@
           <ProgressLine ref="progressLine"/>
         </div>
         <div class="q-pa-md container-body flex items-center justify-center">
-          <div v-if="currentStep === 0" style="width: 100%; min-height: 400px">
-            <AttributesStep />
+          <div v-if="$route.path.includes('events')" class="minimum-size-create-events">
+            <div v-if="currentStep === 1" class="minimum-size-create-events">
+              <AttributesStep />
+            </div>
+            <div v-if="currentStep === 2" class="minimum-size-create-events">
+              <ImagesStep />
+            </div>
           </div>
-          <div v-if="currentStep === 1" style="width: 100%; min-height: 400px">
-            <ImagesStep />
+
+          <div v-if="$route.path.includes('activities')" class="minimum-size-create-events">
+            <div v-if="currentStep === 0" class="minimum-size-create-events">
+              <AttributesStep />
+            </div>
+            <div v-if="currentStep === 1" class="minimum-size-create-events">
+              <ImagesStep />
+            </div>
           </div>
 
           <div class="q-mt-sm flex justify-between items-center button-container" style="width: 100%">
+            <q-btn color="primary" :disable="currentStep === 0" @click="emitPrevStep">
+              <q-icon name="arrow_back" style="margin-right: 0.75rem"/>
+              {{ $t('buttons.back') }}
+            </q-btn>
+
             <q-btn
               color="primary"
-              label="Indietro"
-              :disable="currentStep === 0"
-              @click="emitPrevStep"
-            />
-            <q-btn
-              color="primary"
-              label="Avanti"
+              :label="$t('buttons.next')"
+              icon-right="arrow_forward"
               @click="emitNextStep"
             />
           </div>
@@ -42,13 +53,12 @@ defineOptions({
   name: 'HomePage'
 });
 
-const currentStep = ref(0);
-
 interface ProgressLineInstance {
   nextStep: () => void;
   prevStep: () => void;
 }
 
+const currentStep = ref(0);
 const progressLine = ref<ProgressLineInstance | null>(null);
 
 const emitNextStep = () => {

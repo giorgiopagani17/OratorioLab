@@ -99,3 +99,8 @@ body {
 .q-textarea .q-field__native {
   resize: none !important;
 }
+
+.minimum-size-create-events {
+  width: 100%;
+  min-height: 400px;
+}

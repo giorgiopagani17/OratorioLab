@@ -3,20 +3,26 @@
     <div style="width: 90%">
       <div class="container flex justify-center q-mb-lg" style="padding: 12px">
         <div class="flex items-center justify-center q-pr-sm border-right-grey-custom">
-          <q-btn v-for="button in buttons" :key="button.title" color="primary" class="button" style="width: 160px;">
-            {{ button.title }}
+          <q-btn
+            v-for="button in buttons"
+            :key="button.title"
+            color="primary"
+            class="button"
+            style="width: 160px;"
+          >
+            {{ $t(`buttons.${button.action}`) }}
           </q-btn>
         </div>
         <div class="flex items-center justify-center q-pl-sm">
           <div class="blue-container">
-            ORATORIO S. MARIA
+            {{ oratorio }}
           </div>
         </div>
       </div>
 
       <div class="q-mt-lg container-border">
         <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
-          Ultimi Eventi
+          {{ $t('titles.latestEvents') }}
         </div>
         <div class="flex items-center justify-center q-pa-md container-body">
           <q-card v-for="card in cards" :key="card.title" class="card">
@@ -37,7 +43,6 @@
 </template>
 
 <script setup lang="ts">
-
 defineOptions({
   name: 'HomePage'
 });
@@ -53,6 +58,8 @@ interface Button {
   title: string;
   action: string;
 }
+
+const oratorio = 'ORATORIO S. MARIA';
 
 const cards: Card[] = [
   {
@@ -75,23 +82,22 @@ const cards: Card[] = [
   }
 ];
 
-
 const buttons: Button[] = [
   {
     title: 'Attività',
-    action: 'https://quasar.dev'
+    action: 'activities'
   },
   {
     title: 'Eventi',
-    action: 'https://quasar.dev'
+    action: 'events'
   },
   {
     title: 'Cassa',
-    action: 'https://quasar.dev'
+    action: 'cash'
   },
   {
     title: 'Persone',
-    action: 'https://quasar.dev'
+    action: 'people'
   }
 ];
 </script>

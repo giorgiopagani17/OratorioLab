@@ -16,7 +16,7 @@
           <template v-slot:header="scope">
             <div class="q-uploader__header">
               <div class="q-uploader__header-content flex flex-center no-wrap q-px-sm">
-                <div class="q-uploader__title">Trascina l'immagine qui o clicca per caricare file dal tuo dispositivo</div>
+                <div class="q-uploader__title">{{ $t('buttons.dragAndDrop') }}</div>
 
                 <q-btn v-if="scope.canAddFiles" type="a" icon="add_box" @click="scope.pickFiles" round dense flat>
                   <q-uploader-add-trigger />

@@ -50,7 +50,7 @@
               rounded
               @click="showAllEvents(day.events)"
             >
-              {{ day.events.length }} {{ text === 'activities' ? 'Attività' : 'Eventi' }}
+              {{ day.events.length }} {{ $t(`types.${text}`) }}
             </q-badge>
             <q-badge
               v-if="day.events.length === 1"
@@ -88,6 +88,7 @@
 <script>
 import { defineComponent, ref, computed } from 'vue'
 import { date } from 'quasar'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'EventCalendar',
@@ -102,7 +103,8 @@ export default defineComponent({
     const eventDialog = ref(false)
     const selectedEvent = ref(null)
 
-    // Eventi di esempio
+    const { locale, t } = useI18n();
+
     const events = ref([
       {
         id: 1,
@@ -134,12 +136,14 @@ export default defineComponent({
       }
     ])
 
-    const daysOfWeek = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']
+    const daysOfWeek = computed(() => {
+      return locale.value === 'it'
+        ? ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']
+        : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    });
 
-    const currentMonthYear = computed(() => {
-      const month = date.formatDate(currentDate.value, 'MMMM')
-      const year = date.formatDate(currentDate.value, 'YYYY')
-      const italianMonth = {
+    const monthNames = {
+      it: {
         'January': 'Gennaio',
         'February': 'Febbraio',
         'March': 'Marzo',
@@ -152,8 +156,27 @@ export default defineComponent({
         'October': 'Ottobre',
         'November': 'Novembre',
         'December': 'Dicembre'
-      }[month]
-      return `${italianMonth} ${year}`
+      },
+      en: {
+        'January': 'January',
+        'February': 'February',
+        'March': 'March',
+        'April': 'April',
+        'May': 'May',
+        'June': 'June',
+        'July': 'July',
+        'August': 'August',
+        'September': 'September',
+        'October': 'October',
+        'November': 'November',
+        'December': 'December'
+      }
+    }
+
+    const currentMonthYear = computed(() => {
+      const month = date.formatDate(currentDate.value, 'MMMM')
+      const year = date.formatDate(currentDate.value, 'YYYY')
+      return `${monthNames[locale.value][month]} ${year}`
     })
 
     const calendarDays = computed(() => {
@@ -255,7 +278,8 @@ export default defineComponent({
       showEventDetails,
       showAllEvents,
       formatEventDateTime,
-      text: props.type
+      text: props.type,
+      t
     }
   },
 })
