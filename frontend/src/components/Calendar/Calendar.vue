@@ -46,7 +46,7 @@
             <q-badge
               v-if="day.events.length > 1"
               color="grey-7"
-              class="more-badge q-mr-xs"
+              class="event-badge q-mr-xs"
               rounded
               @click="showAllEvents(day.events)"
             >
@@ -337,17 +337,6 @@ export default defineComponent({
 
 .event-badge:hover {
   opacity: 0.9;
-}
-
-.more-badge {
-  font-size: 0.7rem;
-  padding: 1px 4px;
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.more-badge:hover {
-  opacity: 1;
 }
 
 .row .col:first-child {
