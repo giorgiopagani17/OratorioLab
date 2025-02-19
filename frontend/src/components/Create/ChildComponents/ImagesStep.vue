@@ -106,11 +106,11 @@ const onChange = ({ canvas }: { canvas: HTMLCanvasElement }) => {
   cropperRef.value = canvas;
 };
 
-const cropImage = () => {
-  if (cropperRef.value) {
-    croppedImage.value = cropperRef.value.toDataURL();
-  }
-};
+//const cropImage = () => {
+  //if (cropperRef.value) {
+    //croppedImage.value = cropperRef.value.toDataURL();
+  //}
+//};
 
 const resetImage = () => {
   selectedImage.value = null;

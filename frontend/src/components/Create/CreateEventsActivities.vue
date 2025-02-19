@@ -22,6 +22,9 @@
             <div v-if="currentStep === 1" class="minimum-size-create-events">
               <ImagesStep />
             </div>
+            <div v-if="currentStep === 2" class="minimum-size-create-events">
+              <TargetPriceStep />
+            </div>
           </div>
 
           <div class="q-mt-sm flex justify-between items-center button-container" style="width: 100%">
@@ -48,6 +51,7 @@ import { ref } from 'vue';
 import ProgressLine from './ChildComponents/ProgressLine.vue';
 import ImagesStep from './ChildComponents/ImagesStep.vue';
 import AttributesStep from './ChildComponents/AttributesStep.vue';
+import TargetPriceStep from './ChildComponents/TargetPriceStep.vue';
 
 defineOptions({
   name: 'HomePage'
