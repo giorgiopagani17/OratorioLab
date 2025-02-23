@@ -12,10 +12,10 @@
             @click="!isTarget20 && addTarget()"
           >
             <q-tooltip v-if="isTarget20" class="bg-negative" anchor="top middle" self="bottom middle" :offset="[5, 5]">
-              Non puoi creare più di 20 target
+              {{ t('tooltips.maxTarget') }}
             </q-tooltip>
             <q-tooltip v-else anchor="top middle" self="bottom middle" :offset="[5, 5]">
-              Aggiungi Target
+              {{ t('tooltips.addTarget') }}
             </q-tooltip>
           </q-icon>
         </div>
@@ -23,14 +23,14 @@
 
       <div class="flex justify-center items-center text-center" style="width: 100%; height: 80px">
         <div style="width: 40%">
-          <q-checkbox v-model="isPriceForAll" label="I Prezzi sono uguali per tutti i target" color="secondary" class="q-mt-md"/>
+          <q-checkbox v-model="isPriceForAll" :label="t('texts.priceForAll')" color="secondary" class="q-mt-md"/>
         </div>
         <div style="width: 20%" v-if="isPriceForAll" >
           <q-input
             rounded outlined
             v-model="commonPrice"
             maxlength="7"
-            placeholder="Prezzo comune"
+            :placeholder="t('placeholders.commonPrice')"
             class="q-mt-md"
             @input="handleCommonPriceInput"
             @blur="handleCommonPriceBlur"
@@ -45,12 +45,12 @@
       <div v-if="targets.length === 0" class="q-my-auto">
         <div class="text-center">
           <q-icon name="arrow_upward" size="40px" class="text-grey-5"/>
-          <p class="text-h6 text-bold text-grey-5">Inserisci un numero di target da creare qui sopra</p>
+          <p class="text-h6 text-bold text-grey-5"> {{ t('texts.insertTarget') }}</p>
         </div>
       </div>
 
       <div v-else v-for="(target, index) in targets" :key="index">
-        <div class="q-mt-md text-center container-border q-px-md q-pt-sm">
+        <div class="q-mt-md text-center container-border q-px-md q-pt-sm q-pb-xs">
           <div class="flex justify-between items-center">
             <div style="width: 25px"></div>
             <span class="text-h5 text-bold text-secondary">Target {{ index + 1 }}</span>
@@ -64,30 +64,30 @@
               :disable="targetNumber === 1"
             >
               <q-tooltip v-if="targetNumber === 1" class="bg-negative" anchor="top middle" self="bottom middle" :offset="[5, 5]">
-                Deve esserci almeno 1 target
+                {{ t('tooltips.targetRequired') }}
               </q-tooltip>
               <q-tooltip v-else anchor="top middle" self="bottom middle" :offset="[5, 5]">
-                Elimina Target
+                {{ t('tooltips.deleteTarget') }}
               </q-tooltip>
             </q-btn>
           </div>
           <div class="flex justify-between items-center q-pt-sm">
             <div class="text-left" style="width: 45%">
               <div>
-                <span class="text-bold text-primary" style="font-size: 17px;">Nome</span>
-                <q-input rounded outlined v-model="target.name" placeholder="Nome Target"/>
+                <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.name') }}</span>
+                <q-input rounded outlined v-model="target.name" :placeholder="`${t('labels.name')} Target`"  @update:model-value="value => target.name = (value?.toString() || '').trim()"/>
               </div>
               <div class="q-mt-sm">
-                <span class="text-bold text-primary" style="font-size: 17px;">Prezzo</span>
+                <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.price') }}</span>
                 <q-input
                   rounded
                   maxlength="8"
                   outlined
                   :disable="isPriceForAll"
                   v-model="target.displayPrice"
-                  placeholder="Prezzo Target"
+                  :placeholder="`${t('labels.price')} Target`"
                   :error="!isPriceForAll && !target.displayPrice"
-                  :error-message="t('errors.price')"
+                  :error-message="t('errors.targetPrice')"
                   @input="handleInput($event, target)"
                   @blur="handleBlur($event, target)"
                 >
@@ -98,7 +98,7 @@
               </div>
             </div>
             <div class="text-left" style="width: 45%">
-              <span class="text-bold text-primary" style="font-size: 17px;">Fascia d'eta</span>
+              <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.ageRange') }}</span>
               <q-select
                 rounded
                 outlined
@@ -112,32 +112,32 @@
               />
               <div class="row q-col-gutter-sm q-mt-sm">
                 <div class="col-6 text-left">
-                  <span class="text-bold text-primary" style="font-size: 17px;">Anno di Inizio</span>
+                  <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.startingYear') }}</span>
                   <q-input
                     rounded
                     outlined
                     v-model.number="target.startYear"
                     type="number"
                     :rules="[
-                      val => (!target.endYear || val <= target.endYear) || 'Non può essere maggiore dell\'anno fine'
+                      val => (!target.endYear || val <= target.endYear) || t('errors.targetStartingYear'),
                     ]"
                     :max="target.endYear || new Date().getFullYear() + 10"
-                    placeholder="Anno Inizio"
+                    :placeholder="`${t('labels.startingYear')} Target`"
                     @update:model-value="validateStartYear"
                   />
                 </div>
                 <div class="col-6 text-left">
-                  <span class="text-bold text-primary" style="font-size: 17px;">Anno di Fine</span>
+                  <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.endingYear') }}</span>
                   <q-input
                     rounded
                     outlined
                     v-model.number="target.endYear"
                     type="number"
                     :rules="[
-                      val => val >= (target.startYear || new Date().getFullYear()) || 'Non può essere minore dell\'anno inizio',
+                      val => val >= (target.startYear || new Date().getFullYear()) || t('errors.targetEndingYear'),
                     ]"
                     :min="target.startYear || new Date().getFullYear()"
-                    placeholder="Anno Fine"
+                    :placeholder="`${t('labels.endingYear')} Target`"
                     @update:model-value="validateEndYear"
                   />
                 </div>
@@ -208,8 +208,8 @@ const cleanAndFormatInput = (input: string): string => {
   const newValue = parts[1] ? `${beforeDecimal}.${parts[1]}` : beforeDecimal;
   const numericValue = parseFloat(newValue);
 
-  return isNaN(numericValue)
-    ? ''
+  return isNaN(numericValue) || numericValue === 0
+    ? '0,00'
     : numericValue.toLocaleString('it-IT', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2

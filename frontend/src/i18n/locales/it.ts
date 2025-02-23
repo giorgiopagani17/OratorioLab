@@ -16,6 +16,10 @@ export default {
     financialBalance: 'Bilancio Contabile',
     dragAndDrop: 'Trascina l\'immagine qui o clicca per caricare file dal tuo dispositivo',
   },
+  texts: {
+    insertTarget: 'Inserisci un numero di target da creare qui sopra',
+    priceForAll: 'I Prezzi sono uguali per tutti i target',
+  },
   titles: {
     latestEvents: 'Ultimi Eventi',
   },
@@ -39,6 +43,27 @@ export default {
   },
   header: {
     search: 'Cerca...'
+  },
+  labels: {
+    startingYear: 'Anno di inizio',
+    endingYear: 'Anno di fine',
+    name: 'Nome',
+    price: 'Prezzo',
+    ageRange: 'Fascia d\'età',
+  },
+  placeholders: {
+    commonPrice: 'Prezzo comune',
+  },
+  tooltips: {
+    deleteTarget: 'Elimina Target',
+    targetRequired: '1 Target Obbligatorio',
+    addTarget: 'Aggiungi Target',
+    maxTarget: 'Numero massimo di target raggiunto',
+  },
+  errors: {
+    targetPrice: 'Il prezzo del target è obbligatorio',
+    targetStartingYear: 'Controlla l\'anno di fine',
+    targetEndingYear: 'Controllo l\'anno di inizio',
   },
   menu: {
     home: 'Home',
