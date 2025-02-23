@@ -1,29 +1,47 @@
 import { defineStore } from 'pinia';
 
-export const useDetailsStore = defineStore('eventsActivities', {
+interface Target {
+  name: string;
+  price: number;
+  startYear: number;
+  endYear: number;
+}
+
+interface EventActivity {
+  name: string;
+  description: string;
+  note: string;
+  maxParticipants: number;
+  startingDate: string;
+  endingDate: string;
+  image?: string;
+  targets?: Target[];
+}
+
+export const useEventsActivitiesStore = defineStore('eventsActivities', {
   state: () => ({
-    name: localStorage.getItem('name') || '',
-    email: localStorage.getItem('email') || '',
+    eventsActivities: [] as EventActivity[],
   }),
   actions: {
-    setDetails(name: string, email: string) {
-      this.name = name;
-      this.email = email;
-
-      localStorage.setItem('name', name);
-      localStorage.setItem('email', email);
+    addEventActivity(eventActivity: Omit<EventActivity, 'image' | 'targets'>) {
+      this.eventsActivities.push({ ...eventActivity, image: '', targets: [] });
+      localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
     },
-    clearDetails() {
-      this.name = '';
-      this.email = '';
-
-      localStorage.removeItem('name');
-      localStorage.removeItem('email');
+    addImage(index: number, image: string) {
+      if (this.eventsActivities[index]) {
+        this.eventsActivities[index].image = image;
+        localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
+      }
     },
-
-    setEmail(email: string) {
-      this.email = email;
-      localStorage.setItem('email', email);
+    addTargets(index: number, targets: Target[]) {
+      if (this.eventsActivities[index]) {
+        this.eventsActivities[index].targets = targets;
+        localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
+      }
+    },
+    clearEventActivities() {
+      this.eventsActivities = [];
+      localStorage.removeItem('eventsActivities');
     },
   },
 });

@@ -37,7 +37,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {onMounted, onUnmounted, ref} from 'vue';
+import { useEventsActivitiesStore } from '../../../stores/eventsActivities';
 
 const name = ref('');
 const description = ref('');
@@ -45,6 +46,26 @@ const note = ref('');
 const startingDate = ref('');
 const endingDate = ref('');
 const maxParticipants = ref(0);
+const store = useEventsActivitiesStore();
+
+const saveToLocalStorage = () => {
+  store.addEventActivity({
+    name: name.value,
+    description: description.value,
+    note: note.value,
+    maxParticipants: maxParticipants.value,
+    startingDate: startingDate.value,
+    endingDate: endingDate.value,
+  });
+};
+
+onMounted(() => {
+  window.addEventListener('saveAttributesStep', saveToLocalStorage);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('saveAttributesStep', saveToLocalStorage);
+});
 </script>
 
 <style lang="scss">

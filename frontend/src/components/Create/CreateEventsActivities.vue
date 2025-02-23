@@ -67,6 +67,7 @@ const progressLine = ref<ProgressLineInstance | null>(null);
 
 const emitNextStep = () => {
   if (progressLine.value) {
+    window.dispatchEvent(new Event('saveAttributesStep'));
     progressLine.value.nextStep();
     currentStep.value++;
   }
