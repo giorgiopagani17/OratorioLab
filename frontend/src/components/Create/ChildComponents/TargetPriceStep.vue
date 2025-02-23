@@ -75,7 +75,7 @@
             <div class="text-left" style="width: 45%">
               <div>
                 <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.name') }}</span>
-                <q-input rounded outlined v-model="target.name" :placeholder="`${t('labels.name')} Target`"  @update:model-value="value => target.name = (value?.toString() || '').trim()"/>
+                <q-input rounded outlined v-model="target.name" :placeholder="`${t('labels.name')} Target`" @update:model-value="value => target.name = (value?.toString() || '').trim()"/>
               </div>
               <div class="q-mt-sm">
                 <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.price') }}</span>

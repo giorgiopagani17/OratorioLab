@@ -3,34 +3,34 @@
     <div class="small-containers">
       <div>
         <span class="text-h6 text-bold text-primary">Nome Evento</span>
-        <q-input rounded outlined v-model="text" placeholder="Nome Evento"/>
+        <q-input rounded outlined v-model="name" placeholder="Nome Evento"  @update:model-value="value => name = (value?.toString() || '').trim()"/>
       </div>
 
       <div>
         <span class="text-h6 text-bold text-primary">Descrizione</span>
-        <q-input type="textarea" rounded outlined v-model="text" placeholder="Text"/>
+        <q-input type="textarea" rounded outlined v-model="description" placeholder="Text"  @update:model-value="value => description = (value?.toString() || '').trim()"/>
       </div>
 
       <div>
         <span class="text-h6 text-bold text-primary">Note</span>
-        <q-input rounded outlined v-model="text" placeholder="Nome Evento"/>
+        <q-input rounded outlined v-model="note" placeholder="Nome Evento"  @update:model-value="value => note = (value?.toString() || '').trim()"/>
       </div>
     </div>
 
     <div class="small-containers border-primary-left">
       <div>
         <span class="text-h6 text-bold text-primary">Max Partecipanti</span>
-        <q-input type="number" class="q-mb-xs" rounded outlined v-model="number" placeholder="Nome Evento"/>
+        <q-input type="number" class="q-mb-xs" rounded outlined v-model="maxParticipants" placeholder="Nome Evento"/>
       </div>
 
       <div>
         <span class="text-h6 text-bold text-primary">Data Inizio</span>
-        <q-input type="date" class="q-mb-xs" rounded outlined v-model="date"/>
+        <q-input type="datetime-local" class="q-mb-xs" rounded outlined v-model="startingDate"/>
       </div>
 
       <div>
         <span class="text-h6 text-bold text-primary">Data Fine</span>
-        <q-input type="date" class="q-mb-xs" rounded outlined v-model="date"/>
+        <q-input type="datetime-local" class="q-mb-xs" rounded outlined v-model="endingDate"/>
       </div>
     </div>
   </div>
@@ -39,9 +39,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const text = ref('');
-const date = ref('');
-const number = ref(0);
+const name = ref('');
+const description = ref('');
+const note = ref('');
+const startingDate = ref('');
+const endingDate = ref('');
+const maxParticipants = ref(0);
 </script>
 
 <style lang="scss">
@@ -52,6 +55,7 @@ const number = ref(0);
   flex-direction: column;
   justify-content: space-between;
   min-height: 400px;
+  width: 50% !important;
 }
 
 .border-primary-left {
