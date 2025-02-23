@@ -32,6 +32,11 @@ export default {
     collection: 'Collection',
     review: 'Review'
   },
+  ages: {
+    adult: 'Adult',
+    minor: 'Minor',
+    custom: 'Custom'
+  },
   header: {
     search: 'Search...'
   },

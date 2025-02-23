@@ -32,6 +32,11 @@ export default {
     collection: 'Raccolta',
     review: 'Riepilogo'
   },
+  ages: {
+    adult: 'Maggiorenni',
+    minor: 'Minorenni',
+    custom: 'Personalizzata'
+  },
   header: {
     search: 'Cerca...'
   },
