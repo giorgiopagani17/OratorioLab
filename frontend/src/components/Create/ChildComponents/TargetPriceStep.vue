@@ -4,7 +4,8 @@
       <div class="flex justify-center text-center" style="width: 100%">
         <div style="width: 35%">
           <span class="text-h6 text-bold text-primary">N° Target</span>
-          <q-input type="number" rounded outlined v-model="targetNumber" :rules="[val => !val || val <= 10 || 'Maximum value is 10']" placeholder="Esempio: 2" class="q-mt-sm"/>
+          {{ targetNumber }}
+          <q-btn @click="targetNumber++" icon="add" color="primary"/>
         </div>
       </div>
 

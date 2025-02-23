@@ -29,6 +29,7 @@ export default {
     place: 'Spazio',
     image: 'Immagine',
     targetPrice: 'Target e Prezzo',
+    collection: 'Raccolta',
     review: 'Riepilogo'
   },
   header: {

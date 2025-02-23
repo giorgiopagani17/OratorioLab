@@ -1,41 +1,25 @@
 <template>
   <div>
+    <!-- Header -->
     <div class="row items-center justify-between bg-secondary" style="border-radius: 12px 12px 0px 0px">
-      <q-btn
-        flat
-        round
-        color="white"
-        icon="chevron_left"
-        @click="previousMonth"
-      />
+      <q-btn flat round color="white" icon="chevron_left" @click="previousMonth" />
       <div class="text-h6 text-white">{{ currentMonthYear }}</div>
-      <q-btn
-        flat
-        round
-        color="white"
-        icon="chevron_right"
-        @click="nextMonth"
-      />
+      <q-btn flat round color="white" icon="chevron_right" @click="nextMonth" />
     </div>
 
+    <!-- Days of week -->
     <div class="row">
-      <div
-        v-for="day in daysOfWeek"
-        :key="day"
-        class="col text-center q-pa-sm text-weight-medium bg-secondary text-white"
-      >
+      <div v-for="day in daysOfWeek" :key="day"
+           class="col text-center q-pa-sm text-weight-medium bg-secondary text-white">
         {{ day }}
       </div>
     </div>
 
     <!-- Calendar grid -->
     <div class="calendar-grid">
-      <div
-        v-for="(day, index) in calendarDays"
-        :key="index"
-        class="calendar-day q-pa-sm"
-        :class="{ 'other-month': !day.isCurrentMonth }"
-      >
+      <div v-for="(day, index) in calendarDays" :key="index"
+           class="calendar-day q-pa-sm"
+           :class="{ 'other-month': !day.isCurrentMonth }">
         <div class="row items-start justify-between">
           <span :class="{ 'text-weight-medium': day.isToday }">
             {{ day.dayNumber }}
@@ -43,22 +27,18 @@
         </div>
         <div class="events-wrapper">
           <template v-if="day.events.length">
-            <q-badge
-              v-if="day.events.length > 1"
-              color="grey-7"
-              class="event-badge q-mr-xs"
-              rounded
-              @click="showAllEvents(day.events)"
-            >
+            <q-badge v-if="day.events.length > 1"
+                     color="grey-7"
+                     class="event-badge q-mr-xs"
+                     rounded
+                     @click="showAllEvents(day.events)">
               {{ day.events.length }} {{ $t(`types.${text}`) }}
             </q-badge>
-            <q-badge
-              v-if="day.events.length === 1"
-              :color="day.events[0].color"
-              class="event-badge q-mr-xs q-mb-xs"
-              rounded
-              @click="showEventDetails(day.events[0])"
-            >
+            <q-badge v-if="day.events.length === 1"
+                     :color="day.events[0].color"
+                     class="event-badge q-mr-xs q-mb-xs"
+                     rounded
+                     @click="showEventDetails(day.events[0])">
               {{ day.events[0].title }}
             </q-badge>
           </template>
@@ -70,7 +50,7 @@
     <q-dialog v-model="eventDialog" persistent>
       <q-card style="min-width: 350px">
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">Dettagli Evento</div>
+          <div class="text-h6">{{ $t('calendar.eventDetails') }}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
@@ -99,77 +79,48 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const { locale } = useI18n()
     const currentDate = ref(new Date())
     const eventDialog = ref(false)
     const selectedEvent = ref(null)
 
-    const { locale, t } = useI18n();
-
     const events = ref([
       {
         id: 1,
-        title: 'Riunione',
-        description: 'Riunione di team',
-        date: date.formatDate(new Date(), 'YYYY-MM-DD'), // Oggi
-        color: 'primary',
+        title: 'Meeting',
+        description: 'Team meeting',
+        startDate: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        endDate: date.formatDate(date.addToDate(new Date(), { days: 2 }), 'YYYY-MM-DD'),
+        color: 'primary'
       },
       {
         id: 2,
-        title: 'Pranzo',
-        description: 'Pranzo con clienti',
-        date: date.formatDate(new Date(), 'YYYY-MM-DD'), // Oggi
-        color: 'primary',
-      },
-      {
-        id: 3,
-        title: 'Scadenza',
-        description: 'Consegna progetto',
-        date: date.formatDate(date.addToDate(new Date(), { days: 3 }), 'YYYY-MM-DD'),
-        color: 'primary',
-      },
-      {
-        id: 4,
         title: 'Meeting',
-        description: 'Meeting con il team',
-        date: date.formatDate(new Date(), 'YYYY-MM-DD'), // Oggi
-        color: 'primary',
+        description: 'Team meeting',
+        startDate: date.formatDate(new Date(), 'YYYY-MM-DD'),
+        endDate: date.formatDate(date.addToDate(new Date(), { days: 2 }), 'YYYY-MM-DD'),
+        color: 'primary'
       }
     ])
 
-    const daysOfWeek = computed(() => {
-      return locale.value === 'it'
+    const daysOfWeek = computed(() =>
+      locale.value === 'it'
         ? ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']
-        : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    });
+        : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    )
 
     const monthNames = {
       it: {
-        'January': 'Gennaio',
-        'February': 'Febbraio',
-        'March': 'Marzo',
-        'April': 'Aprile',
-        'May': 'Maggio',
-        'June': 'Giugno',
-        'July': 'Luglio',
-        'August': 'Agosto',
-        'September': 'Settembre',
-        'October': 'Ottobre',
-        'November': 'Novembre',
-        'December': 'Dicembre'
+        'January': 'Gennaio', 'February': 'Febbraio', 'March': 'Marzo',
+        'April': 'Aprile', 'May': 'Maggio', 'June': 'Giugno',
+        'July': 'Luglio', 'August': 'Agosto', 'September': 'Settembre',
+        'October': 'Ottobre', 'November': 'Novembre', 'December': 'Dicembre'
       },
       en: {
-        'January': 'January',
-        'February': 'February',
-        'March': 'March',
-        'April': 'April',
-        'May': 'May',
-        'June': 'June',
-        'July': 'July',
-        'August': 'August',
-        'September': 'September',
-        'October': 'October',
-        'November': 'November',
-        'December': 'December'
+        'January': 'January', 'February': 'February', 'March': 'March',
+        'April': 'April', 'May': 'May', 'June': 'June',
+        'July': 'July', 'August': 'August', 'September': 'September',
+        'October': 'October', 'November': 'November', 'December': 'December'
       }
     }
 
@@ -179,51 +130,58 @@ export default defineComponent({
       return `${monthNames[locale.value][month]} ${year}`
     })
 
+    const getEventsForDay = (currentDate) => {
+      return events.value.filter(event => {
+        const start = new Date(event.startDate)
+        const end = new Date(event.endDate)
+        const current = new Date(currentDate)
+        return current >= start && current <= end
+      })
+    }
+
     const calendarDays = computed(() => {
       const year = currentDate.value.getFullYear()
       const month = currentDate.value.getMonth()
-
       const firstDay = new Date(year, month, 1)
       const lastDay = new Date(year, month + 1, 0)
-
       let firstDayOfWeek = firstDay.getDay()
       firstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1
 
       const days = []
 
+      // Previous month days
       const prevMonthLastDay = new Date(year, month, 0).getDate()
       for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+        const prevDate = new Date(year, month - 1, prevMonthLastDay - i)
         days.push({
           dayNumber: prevMonthLastDay - i,
           isCurrentMonth: false,
           isToday: false,
-          events: [],
+          events: getEventsForDay(date.formatDate(prevDate, 'YYYY-MM-DD'))
         })
       }
 
+      // Current month days
       const today = new Date()
       for (let i = 1; i <= lastDay.getDate(); i++) {
         const currentDate = new Date(year, month, i)
-        const isToday = date.isSameDate(currentDate, today)
-        const dayEvents = events.value.filter(event =>
-          date.isSameDate(new Date(event.date), date.formatDate(currentDate, 'YYYY-MM-DD'))
-        )
-
         days.push({
           dayNumber: i,
           isCurrentMonth: true,
-          isToday,
-          events: dayEvents,
+          isToday: date.isSameDate(currentDate, today),
+          events: getEventsForDay(date.formatDate(currentDate, 'YYYY-MM-DD'))
         })
       }
 
+      // Next month days
       const remainingDays = 42 - days.length
       for (let i = 1; i <= remainingDays; i++) {
+        const nextDate = new Date(year, month + 1, i)
         days.push({
           dayNumber: i,
           isCurrentMonth: false,
           isToday: false,
-          events: [],
+          events: getEventsForDay(date.formatDate(nextDate, 'YYYY-MM-DD'))
         })
       }
 
@@ -231,19 +189,11 @@ export default defineComponent({
     })
 
     const previousMonth = () => {
-      currentDate.value = new Date(
-        currentDate.value.getFullYear(),
-        currentDate.value.getMonth() - 1,
-        1
-      )
+      currentDate.value = date.subtractFromDate(currentDate.value, { months: 1 })
     }
 
     const nextMonth = () => {
-      currentDate.value = new Date(
-        currentDate.value.getFullYear(),
-        currentDate.value.getMonth() + 1,
-        1
-      )
+      currentDate.value = date.addToDate(currentDate.value, { months: 1 })
     }
 
     const showEventDetails = (event) => {
@@ -252,18 +202,16 @@ export default defineComponent({
     }
 
     const showAllEvents = (events) => {
-      // Per ora mostriamo solo il primo evento, ma qui puoi implementare
-      // la logica per mostrare tutti gli eventi in un dialog più complesso
       selectedEvent.value = events[0]
       eventDialog.value = true
     }
 
     const formatEventDateTime = (event) => {
-      const eventDate = new Date(event.date)
-      const day = eventDate.getDate()
-      const month = eventDate.toLocaleString('it-IT', { month: 'long' })
-      const year = eventDate.getFullYear()
-      return `${day} ${month} ${year}`
+      const startDate = new Date(event.startDate)
+      const endDate = new Date(event.endDate)
+      const formatOptions = { day: 'numeric', month: 'long', year: 'numeric' }
+      const lang = locale.value === 'it' ? 'it-IT' : 'en-US'
+      return `${startDate.toLocaleDateString(lang, formatOptions)} - ${endDate.toLocaleDateString(lang, formatOptions)}`
     }
 
     return {
@@ -278,10 +226,9 @@ export default defineComponent({
       showEventDetails,
       showAllEvents,
       formatEventDateTime,
-      text: props.type,
-      t
+      text: props.type
     }
-  },
+  }
 })
 </script>
 
@@ -331,7 +278,6 @@ export default defineComponent({
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
-  background-color: #cf0f0f;
   transition: opacity 0.2s ease;
 }
 

@@ -29,6 +29,7 @@ export default {
     place: 'Place',
     image: 'Image',
     targetPrice: 'Target & Price',
+    collection: 'Collection',
     review: 'Review'
   },
   header: {

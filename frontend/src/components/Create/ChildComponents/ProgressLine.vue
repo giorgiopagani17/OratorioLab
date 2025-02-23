@@ -70,6 +70,7 @@ export default defineComponent({
       { title: 'activity', completed: false },
       { title: 'image', completed: false },
       { title: 'targetPrice', completed: false },
+      { title: 'collection', completed: false },
       { title: 'review', completed: false },
     ]
 
@@ -77,6 +78,7 @@ export default defineComponent({
       { title: 'place', completed: false },
       { title: 'event', completed: false },
       { title: 'image', completed: false },
+      { title: 'collection', completed: false },
       { title: 'review', completed: false },
     ]
 
@@ -89,7 +91,7 @@ export default defineComponent({
     const progressWidth = ref(0)
 
     const updateProgressWidth = () => {
-      progressWidth.value = ((currentStep.value + 0.5) / 4) * 100
+      progressWidth.value = ((currentStep.value + 0.5) / 5) * 100
     }
 
     const nextStep = () => {
@@ -113,7 +115,7 @@ export default defineComponent({
     }
 
     const middleStep = () => {
-      progressWidth.value += 12.5
+      progressWidth.value += 10
     }
 
     onMounted(() => {
