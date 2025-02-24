@@ -7,7 +7,7 @@
             v-model="search"
             dense
             input-style="color: white;"
-            :placeholder="t('placeholders.search')"
+            :placeholder="$t('placeholders.search')"
             color="white"
             class="custom-input blue-container-input"
           >

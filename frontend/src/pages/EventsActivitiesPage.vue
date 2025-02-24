@@ -39,7 +39,7 @@ const router = useRouter();
 const buttons: Button[] = [
   {
     title: computed(() => props.type === 'events' ? 'eventsView' : 'activitiesView').value,
-    action: '/visualize'
+    action: '/view'
   },
   {
     title: computed(() => props.type === 'events' ? 'spaceCreate' : 'groupsCreate').value,

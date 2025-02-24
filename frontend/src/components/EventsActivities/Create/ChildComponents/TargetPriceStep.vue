@@ -31,7 +31,7 @@
             maxlength="8"
             outlined
             v-model="commonPrice"
-            :placeholder="t('placeholders.commonPrice')"
+            :placeholder="$t('placeholders.commonPrice')"
             class="q-mt-md"
             :error="!commonPrice"
             hide-bottom-space
