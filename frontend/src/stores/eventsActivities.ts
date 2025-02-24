@@ -21,9 +21,11 @@ interface EventActivity {
 export const useEventsActivitiesStore = defineStore('eventsActivities', {
   state: () => ({
     eventsActivities: [] as EventActivity[],
+    eventsActivitiesIndex: localStorage.getItem('eventsActivitiesIndex') || '0',
   }),
   actions: {
     addEventActivity(eventActivity: Omit<EventActivity, 'image' | 'targets'>) {
+      this.eventsActivitiesIndex = (parseInt(this.eventsActivitiesIndex) + 1).toString();
       this.eventsActivities.push({ ...eventActivity, image: '', targets: [] });
       localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
     },
@@ -41,7 +43,9 @@ export const useEventsActivitiesStore = defineStore('eventsActivities', {
     },
     clearEventActivities() {
       this.eventsActivities = [];
+      this.eventsActivitiesIndex = '0';
       localStorage.removeItem('eventsActivities');
+      localStorage.removeItem('eventsActivitiesIndex');
     },
   },
 });

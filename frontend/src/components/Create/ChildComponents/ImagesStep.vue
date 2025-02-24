@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import {ref, computed, watch, onMounted} from 'vue';
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
 
@@ -69,7 +69,18 @@ const croppedImage = ref<string | null>(null);
 const cropperRef = ref();
 const imageSize = ref({ width: 0, height: 0 });
 
-// Compute default size based on image dimensions
+const validateInputs = () => {
+  const hasErrors = !selectedImage.value;
+
+  window.dispatchEvent(new CustomEvent('inputErrors', {
+    detail: { hasErrors }
+  }));
+};
+
+watch([selectedImage], () => {
+  validateInputs();
+});
+
 const defaultSize = computed(() => ({
   width: imageSize.value.width,
   height: imageSize.value.height
@@ -117,6 +128,10 @@ const resetImage = () => {
   croppedImage.value = null;
   imageSize.value = { width: 0, height: 0 };
 };
+
+onMounted(() => {
+  validateInputs();
+});
 </script>
 
 <style lang="scss">

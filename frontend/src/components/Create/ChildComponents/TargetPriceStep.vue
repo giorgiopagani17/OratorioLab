@@ -27,12 +27,15 @@
         </div>
         <div style="width: 20%" v-if="isPriceForAll" >
           <q-input
-            rounded outlined
+            rounded
+            maxlength="8"
+            outlined
             v-model="commonPrice"
-            maxlength="7"
             :placeholder="t('placeholders.commonPrice')"
             class="q-mt-md"
-            @input="handleCommonPriceInput"
+            :error="!commonPrice"
+            hide-bottom-space
+            @update:model-value="handleCommonPrice"
             @blur="handleCommonPriceBlur"
           >
             <template v-slot:append>
@@ -50,7 +53,7 @@
       </div>
 
       <div v-else v-for="(target, index) in targets" :key="index">
-        <div class="q-mt-md text-center container-border q-px-md q-pt-sm q-pb-xs">
+        <div class="q-mt-md text-center container-border q-px-md q-pt-sm q-pb-md">
           <div class="flex justify-between items-center">
             <div style="width: 25px"></div>
             <span class="text-h5 text-bold text-secondary">Target {{ index + 1 }}</span>
@@ -75,7 +78,7 @@
             <div class="text-left" style="width: 45%">
               <div>
                 <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.name') }}</span>
-                <q-input rounded outlined v-model="target.name" :placeholder="`${t('labels.name')} Target`" @update:model-value="value => target.name = (value?.toString() || '').trim()"/>
+                <q-input rounded outlined v-model="target.name" :placeholder="`${t('labels.name')} Target`" @update:model-value="value => target.name = (value?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
               </div>
               <div class="q-mt-sm">
                 <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.price') }}</span>
@@ -87,9 +90,9 @@
                   v-model="target.displayPrice"
                   :placeholder="`${t('labels.price')} Target`"
                   :error="!isPriceForAll && !target.displayPrice"
-                  :error-message="t('errors.targetPrice')"
-                  @input="handleInput($event, target)"
-                  @blur="handleBlur($event, target)"
+                  hide-bottom-space
+                  @update:model-value="(value) => handleNumbers(value, index)"
+                  @blur="() => handleNumbersBlur(index)"
                 >
                   <template v-slot:append>
                     <q-icon name="euro" color="primary"/>
@@ -119,9 +122,10 @@
                     v-model.number="target.startYear"
                     type="number"
                     :rules="[
-                      val => (!target.endYear || val <= target.endYear) || t('errors.targetStartingYear'),
+                      val => (val !== null && val !== undefined && val !== '' && target.endYear !== null && val <= target.endYear),
                     ]"
-                    :max="target.endYear || new Date().getFullYear() + 10"
+                    hide-bottom-space
+                    :max="new Date().getFullYear() - 1 || target.endYear"
                     :placeholder="`${t('labels.startingYear')} Target`"
                     @update:model-value="validateStartYear"
                   />
@@ -134,8 +138,9 @@
                     v-model.number="target.endYear"
                     type="number"
                     :rules="[
-                      val => val >= (target.startYear || new Date().getFullYear()) || t('errors.targetEndingYear'),
+                      val => val >= (target.startYear || new Date().getFullYear() || val === 0),
                     ]"
+                    hide-bottom-space
                     :min="target.startYear || new Date().getFullYear()"
                     :placeholder="`${t('labels.endingYear')} Target`"
                     @update:model-value="validateEndYear"
@@ -151,7 +156,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 import { useI18n } from 'vue-i18n';
 
 interface Target {
@@ -175,6 +180,29 @@ const ages = computed(() => [
   { label: t('ages.custom'), value: 'custom' }
 ]);
 
+const validateInputs = () => {
+  const hasEmptyTargets = targets.value.some(target =>
+    !target.name.trim() ||
+    !target.displayPrice ||
+    target.displayPrice === '' ||
+    !target.startYear ||
+    !target.endYear ||
+    !target.ageGroup
+  );
+
+  window.dispatchEvent(new CustomEvent('inputErrors', {
+    detail: { hasErrors: hasEmptyTargets }
+  }));
+};
+
+watch([targets, isPriceForAll], () => {
+  validateInputs();
+}, { deep: true });
+
+onMounted(() => {
+  validateInputs();
+});
+
 const addTarget = () => {
   if (targetNumber.value < 20) {
     targetNumber.value++;
@@ -195,45 +223,83 @@ const removeTarget = (index: number) => {
   }
 };
 
-const cleanAndFormatInput = (input: string): string => {
-  const cleanedValue = input.replace(/[^\d.,]/g, '');
-  const normalizedValue = cleanedValue.replace(/\./g, '').replace(',', '.');
-  const parts = normalizedValue.split('.');
-  let beforeDecimal = parts[0];
+const formatOnBlur = (value: string): string => {
+  if (value.endsWith(',')) {
+    return value.slice(0, -1);
+  }
+  if (value.includes(',') && value.split(',')[1] === '') {
+    return value.split(',')[0];
+  }
+  return value;
+};
 
-  if (beforeDecimal.length > 4) {
-    beforeDecimal = beforeDecimal.slice(-4);
+const cleanAndFormatInput = (input: string): string => {
+  if (!input) return '0';
+
+  const lastChar = input.slice(-1);
+  const isDecimalPoint = lastChar === ',';
+
+  const cleanedValue = input.replace(/[^\d,]/g, '');
+  const hasComma = cleanedValue.includes(',');
+
+  if (cleanedValue === ',') return '0,';
+  if (isDecimalPoint && !hasComma) return cleanedValue + ',';
+
+  const parts = cleanedValue.split(',');
+
+  if (parts[0].length > 4) {
+    parts[0] = parts[0].slice(0, 4);
   }
 
-  const newValue = parts[1] ? `${beforeDecimal}.${parts[1]}` : beforeDecimal;
-  const numericValue = parseFloat(newValue);
+  if (parts.length > 2) {
+    parts[1] = parts[1].slice(0, 2);
+    parts.length = 2;
+  } else if (parts.length === 2) {
+    parts[1] = parts[1].slice(0, 2);
+  }
 
-  return isNaN(numericValue) || numericValue === 0
-    ? '0,00'
-    : numericValue.toLocaleString('it-IT', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+  const numericValue = parseFloat(parts.join('.'));
+
+  if (isNaN(numericValue)) return '0';
+  if (numericValue === 0) return isDecimalPoint ? '0,' : '0';
+
+  const formatted = numericValue.toLocaleString('it-IT', {
+    minimumFractionDigits: parts.length === 2 ? parts[1].length : 0,
+    maximumFractionDigits: parts.length === 2 ? parts[1].length : 0
+  });
+
+  return isDecimalPoint ? formatted + ',' : formatted;
+};
+
+const handleNumbers = (value: string | number | null, index: number) => {
+  const val = typeof value === 'string' ? value : String(value);
+  const target = targets.value[index];
+  target.displayPrice = cleanAndFormatInput(val);
+  target.price = parseFloat(target.displayPrice.replace(/\./g, '').replace(',', '.'));
+};
+
+const handleNumbersBlur = (index: number) => {
+  const target = targets.value[index];
+  target.displayPrice = formatOnBlur(target.displayPrice);
+  target.price = parseFloat(target.displayPrice.replace(/\./g, '').replace(',', '.'));
+};
+
+const handleCommonPrice = (value: string | number | null) => {
+  const val = typeof value === 'string' ? value : String(value);
+  const formatted = cleanAndFormatInput(val);
+
+  commonPrice.value = formatted;
+
+  if (isPriceForAll.value) {
+    targets.value.forEach(target => {
+      target.price = parseFloat(formatted.replace(/\./g, '').replace(',', '.'));
+      target.displayPrice = formatted;
     });
+  }
 };
 
-const handleInput = (event: Event, target: Target) => {
-  const input = event.target as HTMLInputElement;
-  target.displayPrice = cleanAndFormatInput(input.value);
-};
-
-const handleBlur = (event: Event, target: Target) => {
-  const input = event.target as HTMLInputElement;
-  target.displayPrice = cleanAndFormatInput(input.value);
-};
-
-const handleCommonPriceInput = (event: Event) => {
-  const input = event.target as HTMLInputElement;
-  commonPrice.value = cleanAndFormatInput(input.value);
-};
-
-const handleCommonPriceBlur = (event: Event) => {
-  const input = event.target as HTMLInputElement;
-  commonPrice.value = cleanAndFormatInput(input.value);
+const handleCommonPriceBlur = () => {
+  commonPrice.value = formatOnBlur(commonPrice.value);
 };
 
 const validateStartYear = (value: string | number | null) => {
@@ -241,9 +307,13 @@ const validateStartYear = (value: string | number | null) => {
   const targetItem = targets.value[targets.value.length - 1];
 
   if (targetItem.endYear && val > targetItem.endYear) {
-    targetItem.startYear = targetItem.endYear;
+    if (targetItem.endYear > new Date().getFullYear() - 1) {
+      targetItem.startYear = new Date().getFullYear() - 1;
+    } else {
+      targetItem.startYear = targetItem.endYear;
+    }
   } else {
-    targetItem.startYear = val;
+    targetItem.startYear = val - 1;
   }
 };
 
@@ -266,21 +336,12 @@ watch(targetNumber, (newVal) => {
       name: '',
       price: isPriceForAll.value ? parseFloat(commonPrice.value.replace(/\./g, '').replace(',', '.')) : 0,
       displayPrice: isPriceForAll.value ? commonPrice.value : '0',
-      startYear: new Date().getFullYear(),
+      startYear: new Date().getFullYear() - 1,
       endYear: new Date().getFullYear(),
       ageGroup: ages.value[2].value
     });
   }
 }, { immediate: true });
-
-watch(commonPrice, (newVal) => {
-  if (isPriceForAll.value) {
-    targets.value.forEach(target => {
-      target.price = parseFloat(newVal.replace(/\./g, '').replace(',', '.'));
-      target.displayPrice = newVal;
-    });
-  }
-});
 
 watch(isPriceForAll, (newVal) => {
   if (newVal === true) {
@@ -295,6 +356,10 @@ watch(isPriceForAll, (newVal) => {
     });
     commonPrice.value = '0,00';
   }
+});
+
+onMounted(() => {
+  validateInputs();
 });
 </script>
 

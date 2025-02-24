@@ -36,6 +36,7 @@
             <q-btn
               color="primary"
               :label="$t('buttons.next')"
+              :disable="isNextButtonDisabled"
               icon-right="arrow_forward"
               @click="emitNextStep"
             />
@@ -47,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
 import ProgressLine from './ChildComponents/ProgressLine.vue';
 import ImagesStep from './ChildComponents/ImagesStep.vue';
 import AttributesStep from './ChildComponents/AttributesStep.vue';
@@ -64,6 +65,23 @@ interface ProgressLineInstance {
 
 const currentStep = ref(0);
 const progressLine = ref<ProgressLineInstance | null>(null);
+const hasInputErrors = ref(true);
+
+const isNextButtonDisabled = computed(() => {
+  return hasInputErrors.value;
+});
+
+onMounted(() => {
+  window.addEventListener('inputErrors', ((event: CustomEvent) => {
+    hasInputErrors.value = event.detail.hasErrors;
+  }) as EventListener);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('inputErrors', ((event: CustomEvent) => {
+    hasInputErrors.value = event.detail.hasErrors;
+  }) as EventListener);
+});
 
 const emitNextStep = () => {
   if (progressLine.value) {
