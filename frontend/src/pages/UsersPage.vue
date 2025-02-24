@@ -55,7 +55,7 @@
         </template>
 
         <template v-slot:no-data>
-          <div class="full-width row flex-center text-secondary">
+          <div class="full-width row flex-center">
             {{ $t('errors.noUserFound') }}
           </div>
         </template>
