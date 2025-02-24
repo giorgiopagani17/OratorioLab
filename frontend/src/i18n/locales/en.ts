@@ -15,6 +15,10 @@ export default {
     groupsCreate: 'Create Group',
     financialBalance: 'Financial Report',
     dragAndDrop: 'Drag image here or click to upload file from your device',
+    major: '18 +',
+    minor: '18 -',
+    male: 'Male',
+    female: 'Female',
   },
   texts: {
     insertTarget: 'Insert the number of targets to create above',
@@ -22,6 +26,8 @@ export default {
   },
   titles: {
     latestEvents: 'Latest Events',
+    allEvents: 'All Events',
+    allActivities: 'All Activities',
   },
   types:{
     activities: 'Activities',
@@ -45,25 +51,29 @@ export default {
     startingYear: 'Starting Year',
     endingYear: 'Ending Year',
     name: 'Name',
+    age: 'Age',
+    dateOfBirth: 'Date of Birth',
+    gender: 'Gender',
     price: 'Price',
     ageRange: 'Age Range',
+    recordsPerPage: 'Records per page:',
   },
   placeholders: {
     commonPrice: 'Common Price',
+    search: 'Search...'
   },
   tooltips: {
     deleteTarget: 'Delete Target',
     targetRequired: '1 Target Required',
     addTarget: 'Add Target',
     maxTarget: 'Maximum number of targets reached',
+    fillAllFields: 'Fill all fields to continue',
   },
   errors: {
     targetPrice: 'Price is required',
     targetStartingYear: 'Check the ending year',
     targetEndingYear: 'Check the starting year',
-  },
-  header: {
-    search: 'Search...'
+    noUserFound: 'No user found',
   },
   menu: {
     home: 'Home',

@@ -9,8 +9,9 @@
             color="primary"
             class="button"
             style="width: 160px;"
+            @click="navigateTo(button.action)"
           >
-            {{ $t(`buttons.${button.action}`) }}
+            {{ $t(`buttons.${button.title}`) }}
           </q-btn>
         </div>
         <div class="flex items-center justify-center q-pl-sm">
@@ -43,6 +44,8 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+
 defineOptions({
   name: 'HomePage'
 });
@@ -60,6 +63,7 @@ interface Button {
 }
 
 const oratorio = 'ORATORIO S. MARIA';
+const router = useRouter();
 
 const cards: Card[] = [
   {
@@ -84,20 +88,24 @@ const cards: Card[] = [
 
 const buttons: Button[] = [
   {
-    title: 'Attività',
+    title: 'activities',
     action: 'activities'
   },
   {
-    title: 'Eventi',
+    title: 'events',
     action: 'events'
   },
   {
-    title: 'Cassa',
+    title: 'cash',
     action: 'cash'
   },
   {
-    title: 'Persone',
-    action: 'people'
+    title: 'people',
+    action: 'users'
   }
 ];
+
+const navigateTo = (url: string) => {
+  router.push(`/${url}`);
+};
 </script>

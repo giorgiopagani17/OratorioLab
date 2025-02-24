@@ -46,7 +46,6 @@
       </div>
     </div>
 
-    <!-- Event Details Dialog -->
     <q-dialog v-model="eventDialog" persistent>
       <q-card style="min-width: 350px">
         <q-card-section class="row items-center q-pb-none">

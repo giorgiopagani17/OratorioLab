@@ -3,17 +3,17 @@
     <div class="small-containers">
       <div>
         <span class="text-h6 text-bold text-primary">Nome Evento</span>
-        <q-input rounded outlined v-model="name" placeholder="Nome Evento"  @update:model-value="value => name = (value?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+        <q-input rounded outlined v-model="name" placeholder="Nome Evento" @blur="() => name = (name?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
       </div>
 
       <div>
         <span class="text-h6 text-bold text-primary">Descrizione</span>
-        <q-input type="textarea" rounded outlined v-model="description" placeholder="Text"  @update:model-value="value => description = (value?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+        <q-input type="textarea" rounded outlined v-model="description" placeholder="Text"  @blur="() => description = (description?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
       </div>
 
       <div>
         <span class="text-h6 text-bold text-primary">Note</span>
-        <q-input rounded outlined v-model="note" placeholder="Nome Evento"  @update:model-value="value => note = (value?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+        <q-input rounded outlined v-model="note" placeholder="Nome Evento" @blur="() => note = (note?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
       </div>
     </div>
 
@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import {onMounted, onUnmounted, ref, watch} from 'vue';
-import { useEventsActivitiesStore } from '../../../stores/eventsActivities';
+import { useEventsActivitiesStore } from '../../../../stores/eventsActivities';
 
 const name = ref('');
 const description = ref('');
@@ -83,19 +83,42 @@ watch([name, description, note, startingDate, endingDate, maxParticipants], () =
 });
 
 const saveToLocalStorage = () => {
-  store.addEventActivity({
-    name: name.value,
-    description: description.value,
-    note: note.value,
+  const currentIndex = parseInt(store.eventsActivitiesIndex);
+  const eventData = {
+    name: name.value.trim(),
+    description: description.value.trim(),
+    note: note.value.trim(),
     maxParticipants: parseFloat(maxParticipants.value.replace(/\./g, '').replace(',', '.')),
     startingDate: startingDate.value,
     endingDate: endingDate.value,
-  });
+  };
+
+  if (store.eventsActivities[currentIndex]) {
+    store.eventsActivities[currentIndex] = {
+      ...store.eventsActivities[currentIndex],
+      ...eventData
+    };
+    localStorage.setItem('eventsActivities', JSON.stringify(store.eventsActivities));
+  } else {
+    store.addEventActivity(eventData);
+  }
 };
 
 onMounted(() => {
   window.addEventListener('saveAttributesStep', saveToLocalStorage);
   validateInputs();
+
+  const currentIndex = parseInt(store.eventsActivitiesIndex);
+  const savedEventActivity = store.eventsActivities[currentIndex];
+
+  if (savedEventActivity) {
+    name.value = savedEventActivity.name;
+    description.value = savedEventActivity.description;
+    note.value = savedEventActivity.note;
+    startingDate.value = savedEventActivity.startingDate;
+    endingDate.value = savedEventActivity.endingDate;
+    maxParticipants.value = savedEventActivity.maxParticipants.toLocaleString('it-IT');
+  }
 });
 
 onUnmounted(() => {

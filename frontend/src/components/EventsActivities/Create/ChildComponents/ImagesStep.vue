@@ -45,29 +45,23 @@
             @change="onChange"
           />
         </div>
-
-        <div v-if="croppedImage" class="preview-container">
-          <h6 class="q-ma-none">Anteprima immagine ritagliata</h6>
-          <q-img
-            :src="croppedImage"
-            spinner-color="primary"
-            style="width: 300px; height: 300px"
-          />
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref, computed, watch, onMounted} from 'vue';
+import {ref, computed, watch, onMounted, onUnmounted} from 'vue';
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
+import { useEventsActivitiesStore } from '../../../../stores/eventsActivities';
 
 const selectedImage = ref<string | null>(null);
 const croppedImage = ref<string | null>(null);
 const cropperRef = ref();
 const imageSize = ref({ width: 0, height: 0 });
+const store = useEventsActivitiesStore();
+const uploader = ref();
 
 const validateInputs = () => {
   const hasErrors = !selectedImage.value;
@@ -115,13 +109,14 @@ const onFileRemoved = () => {
 
 const onChange = ({ canvas }: { canvas: HTMLCanvasElement }) => {
   cropperRef.value = canvas;
+  cropImage();
 };
 
-//const cropImage = () => {
-  //if (cropperRef.value) {
-    //croppedImage.value = cropperRef.value.toDataURL();
-  //}
-//};
+const cropImage = () => {
+  if (cropperRef.value) {
+    croppedImage.value = cropperRef.value.toDataURL();
+  }
+};
 
 const resetImage = () => {
   selectedImage.value = null;
@@ -129,8 +124,33 @@ const resetImage = () => {
   imageSize.value = { width: 0, height: 0 };
 };
 
-onMounted(() => {
+const saveToLocalStorage = () => {
+  if (croppedImage.value) {
+    const currentIndex = parseInt(store.eventsActivitiesIndex);
+    console.log(store.eventsActivitiesIndex)
+    store.addImage(currentIndex, croppedImage.value);
+  }
+};
+
+onMounted(async () => {
+  window.addEventListener('saveAttributesStep', saveToLocalStorage);
   validateInputs();
+
+  const currentIndex = parseInt(store.eventsActivitiesIndex);
+  if (store.eventsActivities[currentIndex]?.image) {
+    selectedImage.value = store.eventsActivities[currentIndex].image;
+    croppedImage.value = store.eventsActivities[currentIndex].image;
+
+    const response = await fetch(store.eventsActivities[currentIndex].image);
+    const blob = await response.blob();
+    const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
+
+    uploader.value.addFiles([file]);
+  }
+});
+
+onUnmounted(() => {
+  window.removeEventListener('saveAttributesStep', saveToLocalStorage);
 });
 </script>
 

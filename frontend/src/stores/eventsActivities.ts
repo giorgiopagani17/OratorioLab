@@ -25,7 +25,6 @@ export const useEventsActivitiesStore = defineStore('eventsActivities', {
   }),
   actions: {
     addEventActivity(eventActivity: Omit<EventActivity, 'image' | 'targets'>) {
-      this.eventsActivitiesIndex = (parseInt(this.eventsActivitiesIndex) + 1).toString();
       this.eventsActivities.push({ ...eventActivity, image: '', targets: [] });
       localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
     },

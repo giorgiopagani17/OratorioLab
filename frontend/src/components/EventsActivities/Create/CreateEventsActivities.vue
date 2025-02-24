@@ -28,7 +28,7 @@
           </div>
 
           <div class="q-mt-sm flex justify-between items-center button-container" style="width: 100%">
-            <q-btn color="primary" :disable="currentStep === 0" @click="emitPrevStep">
+            <q-btn color="primary" @click="emitPrevStep">
               <q-icon name="arrow_back" style="margin-right: 0.75rem"/>
               {{ $t('buttons.back') }}
             </q-btn>
@@ -39,7 +39,11 @@
               :disable="isNextButtonDisabled"
               icon-right="arrow_forward"
               @click="emitNextStep"
-            />
+            >
+              <q-tooltip v-if="isNextButtonDisabled" anchor="top middle" self="bottom middle" :offset="[5, 5]">
+                {{ $t('tooltips.fillAllFields') }}
+              </q-tooltip>
+            </q-btn>
           </div>
         </div>
       </div>
@@ -47,12 +51,15 @@
   </q-page>
 </template>
 
+//todo Modal Confirm Cancel Create
 <script setup lang="ts">
 import {computed, onMounted, onUnmounted, ref} from 'vue';
 import ProgressLine from './ChildComponents/ProgressLine.vue';
 import ImagesStep from './ChildComponents/ImagesStep.vue';
 import AttributesStep from './ChildComponents/AttributesStep.vue';
 import TargetPriceStep from './ChildComponents/TargetPriceStep.vue';
+import {useRouter} from 'vue-router';
+import { useEventsActivitiesStore } from '../../../stores/eventsActivities';
 
 defineOptions({
   name: 'HomePage'
@@ -66,12 +73,15 @@ interface ProgressLineInstance {
 const currentStep = ref(0);
 const progressLine = ref<ProgressLineInstance | null>(null);
 const hasInputErrors = ref(true);
+const router = useRouter();
+const store = useEventsActivitiesStore();
 
 const isNextButtonDisabled = computed(() => {
   return hasInputErrors.value;
 });
 
 onMounted(() => {
+  store.clearEventActivities();
   window.addEventListener('inputErrors', ((event: CustomEvent) => {
     hasInputErrors.value = event.detail.hasErrors;
   }) as EventListener);
@@ -92,7 +102,13 @@ const emitNextStep = () => {
 };
 
 const emitPrevStep = () => {
-  if (progressLine.value) {
+  if(currentStep.value === 0) {
+    const currentPath = router.currentRoute.value.fullPath;
+    if (currentPath.includes('/create')) {
+      const newPath = currentPath.replace('/create', '');
+      router.push(newPath);
+    }
+  } else if (progressLine.value) {
     progressLine.value.prevStep();
     currentStep.value--;
   }

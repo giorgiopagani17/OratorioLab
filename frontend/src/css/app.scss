@@ -28,6 +28,11 @@ body {
   border-bottom-right-radius: 24px;
 }
 
+.container-event-activity {
+  border-radius: 12px;
+  border: solid 2px $secondary;
+}
+
 .container-border {
   border-radius: 25px;
   border: solid 1px $border-color;
@@ -58,7 +63,7 @@ body {
   color: white;
   border-radius: 100px;
   background-color: $secondary;
-  padding: 10px;
+  padding: 11px;
 }
 
 
@@ -103,4 +108,12 @@ body {
 .minimum-size-create-events {
   width: 100%;
   min-height: 400px;
+}
+
+.description-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

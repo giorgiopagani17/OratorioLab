@@ -78,7 +78,7 @@
             <div class="text-left" style="width: 45%">
               <div>
                 <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.name') }}</span>
-                <q-input rounded outlined v-model="target.name" :placeholder="`${t('labels.name')} Target`" @update:model-value="value => target.name = (value?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+                <q-input rounded outlined v-model="target.name" :placeholder="`${t('labels.name')} Target`" @blur="() => target.name = (target.name?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
               </div>
               <div class="q-mt-sm">
                 <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.price') }}</span>
@@ -156,8 +156,9 @@
 </template>
 
 <script setup lang="ts">
-import {computed, onMounted, ref, watch} from 'vue';
+import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useEventsActivitiesStore } from '../../../../stores/eventsActivities';
 
 interface Target {
   name: string;
@@ -169,6 +170,7 @@ interface Target {
 }
 
 const { t } = useI18n();
+const store = useEventsActivitiesStore();
 const targetNumber = ref(1);
 const targets = ref<Target[]>([]);
 const commonPrice = ref('0,00');
@@ -198,10 +200,6 @@ const validateInputs = () => {
 watch([targets, isPriceForAll], () => {
   validateInputs();
 }, { deep: true });
-
-onMounted(() => {
-  validateInputs();
-});
 
 const addTarget = () => {
   if (targetNumber.value < 20) {
@@ -358,8 +356,25 @@ watch(isPriceForAll, (newVal) => {
   }
 });
 
+const saveToLocalStorage = () => {
+  const formattedTargets = targets.value.map(target => ({
+    name: target.name,
+    price: target.price,
+    startYear: target.startYear,
+    endYear: target.endYear
+  }));
+
+  const currentIndex = parseInt(store.eventsActivitiesIndex);
+  store.addTargets(currentIndex, formattedTargets);
+};
+
 onMounted(() => {
+  window.addEventListener('saveAttributesStep', saveToLocalStorage);
   validateInputs();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('saveAttributesStep', saveToLocalStorage);
 });
 </script>
 
