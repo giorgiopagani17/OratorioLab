@@ -313,7 +313,7 @@ const validateStartYear = (value: string | number | null) => {
       targetItem.startYear = targetItem.endYear;
     }
   } else {
-    targetItem.startYear = val - 1;
+    targetItem.startYear = val;
   }
 };
 
@@ -335,7 +335,7 @@ watch(targetNumber, (newVal) => {
     targets.value.push({
       name: '',
       price: isPriceForAll.value ? parseFloat(commonPrice.value.replace(/\./g, '').replace(',', '.')) : 0,
-      displayPrice: isPriceForAll.value ? commonPrice.value : '0',
+      displayPrice: isPriceForAll.value ? commonPrice.value : '0,00',
       startYear: new Date().getFullYear() - 1,
       endYear: new Date().getFullYear(),
       ageGroup: ages.value[2].value
