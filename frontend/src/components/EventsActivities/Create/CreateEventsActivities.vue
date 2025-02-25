@@ -7,6 +7,9 @@
         </div>
         <div class="q-pa-md container-body flex items-center justify-center">
           <div v-if="$route.path.includes('events')" class="minimum-size-create-events">
+            <div v-if="currentStep === 0" class="minimum-size-create-events">
+              <SpaceStep />
+            </div>
             <div v-if="currentStep === 1" class="minimum-size-create-events">
               <AttributesStep />
             </div>
@@ -57,6 +60,7 @@ import {computed, onMounted, onUnmounted, ref} from 'vue';
 import ProgressLine from './ChildComponents/ProgressLine.vue';
 import ImagesStep from './ChildComponents/ImagesStep.vue';
 import AttributesStep from './ChildComponents/AttributesStep.vue';
+import SpaceStep from './ChildComponents/SpaceStep.vue';
 import TargetPriceStep from './ChildComponents/TargetPriceStep.vue';
 import {useRouter} from 'vue-router';
 import { useEventsActivitiesStore } from '../../../stores/eventsActivities';

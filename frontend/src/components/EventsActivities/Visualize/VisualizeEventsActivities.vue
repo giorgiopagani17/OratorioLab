@@ -48,7 +48,7 @@
               <div style="width: 24%" class="flex column justify-center items-end q-pr-md">
                 <span class="text-secondary text-right" style="font-size: 16px">{{ formatDates(eventActivity.startDate, eventActivity.endDate) }}</span>
                 <span class="text-grey-8 text-right description-text q-mb-lg" style="font-size: 16px">Prezzo: {{ eventActivity.price }}€</span>
-                <q-btn color="primary" style="width: 100px">
+                <q-btn color="primary" style="width: 100px" @click="navigateToDetail(eventActivity.id)">
                   Visualizza
                 </q-btn>
               </div>
@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import {computed, ref} from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import activities from '../../../data/activities.json'
 import events from '../../../data/events.json'
 
@@ -87,6 +87,7 @@ interface Button {
 
 const search = ref<string>('');
 const route = useRoute();
+const router = useRouter();
 const pageType = computed(() => route.path.includes('events') ? 'Events' : 'Activities');
 
 const formatDates = (startDate: string, endDate: string): string => {
@@ -125,9 +126,6 @@ const eventsActivities = computed<EventActivityDisplay[]>(() => {
   }))
 })
 
-
-console.log(eventsActivities.value);
-
 const buttons: Button[] = [
   {
     title: 'Filtro 1',
@@ -146,6 +144,11 @@ const buttons: Button[] = [
     action: 'https://quasar.dev'
   }
 ];
+
+const navigateToDetail = (id: number) => {
+  const currentPath = route.path;
+  router.push(`${currentPath}/${id}`);
+};
 </script>
 
 <style lang="scss">

@@ -33,19 +33,21 @@
       :width="250"
     >
       <div class="drawer-container">
-        <q-list class="q-mt-md">
-          <EssentialLink
-            v-for="link in linksList"
-            :key="link.title"
-            v-bind="link"
-          />
-        </q-list>
+        <q-scroll-area class="col drawer-scroll">
+          <q-list class="q-mt-md">
+            <EssentialLink
+              v-for="link in linksList"
+              :key="link.title"
+              v-bind="link"
+            />
+          </q-list>
+        </q-scroll-area>
 
-        <div class="q-mb-md q-mt-auto border-top-primary flex justify-center">
+        <div class="drawer-footer">
           <q-btn
             color="primary"
             :label="t('buttons.logout')"
-            class="q-mt-md"
+            class="q-my-md logout-btn"
             style="width: 200px;"
             @click="logout"
           />
@@ -111,15 +113,40 @@ const leftDrawerOpen = ref(false);
 </script>
 
 <style lang="scss">
+.q-layout {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+}
+
+.q-page-container {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .drawer-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   height: 100%;
+}
+
+.drawer-scroll {
+  height: calc(100% - 70px);
+}
+
+.drawer-footer {
+  border-top: 2px solid $primary;
+  padding: 1rem;
+  text-align: center;
+  background: white;
+}
+
+.logout-btn {
+  margin: 0 auto;
 }
 
 .border-top-primary {
   border-top: 2px solid $primary;
 }
 </style>
-
