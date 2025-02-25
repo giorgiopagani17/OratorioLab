@@ -75,8 +75,8 @@ export default defineComponent({
     ]
 
     const eventSteps = [
-      { title: 'place', completed: false },
       { title: 'event', completed: false },
+      { title: 'place', completed: false },
       { title: 'image', completed: false },
       { title: 'collection', completed: false },
       { title: 'review', completed: false },

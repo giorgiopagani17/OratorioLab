@@ -2,34 +2,34 @@
   <div class="flex">
     <div class="small-containers">
       <div>
-        <span class="text-h6 text-bold text-primary">Nome Evento</span>
-        <q-input rounded outlined v-model="name" placeholder="Nome Evento" @blur="() => name = (name?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+        <span class="text-h6 text-bold text-primary">{{ $t(`labels.${type}Name`) }}</span>
+        <q-input rounded outlined v-model="name" :placeholder="$t('placeholders.insertText')" @blur="() => name = (name?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
       </div>
 
       <div>
-        <span class="text-h6 text-bold text-primary">Descrizione</span>
-        <q-input type="textarea" rounded outlined v-model="description" placeholder="Text"  @blur="() => description = (description?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+        <span class="text-h6 text-bold text-primary">{{ $t('labels.description') }}</span>
+        <q-input type="textarea" rounded outlined v-model="description" :placeholder="$t('placeholders.insertText')"  @blur="() => description = (description?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
       </div>
 
       <div>
-        <span class="text-h6 text-bold text-primary">Note</span>
-        <q-input rounded outlined v-model="note" placeholder="Nome Evento" @blur="() => note = (note?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+        <span class="text-h6 text-bold text-primary">{{ $t('labels.note') }}</span>
+        <q-input rounded outlined v-model="note" :placeholder="$t('placeholders.insertText')" @blur="() => note = (note?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
       </div>
     </div>
 
     <div class="small-containers border-primary-left">
       <div>
-        <span class="text-h6 text-bold text-primary">Max Partecipanti</span>
-        <q-input class="q-mb-xs" rounded outlined maxlength="6" v-model="maxParticipants" placeholder="Nome Evento" @update:model-value="handleMaxParticipants" :rules="[val => parseFloat(val.replace(/\./g, '').replace(',', '.')) > 0]" hide-bottom-space/>
+        <span class="text-h6 text-bold text-primary">{{ $t('labels.maxParticipants') }}</span>
+        <q-input class="q-mb-xs" rounded outlined maxlength="6" v-model="maxParticipants" :placeholder="$t('placeholders.insertNumber')" @update:model-value="handleMaxParticipants" :rules="[val => parseFloat(val.replace(/\./g, '').replace(',', '.')) > 0]" hide-bottom-space/>
       </div>
 
       <div>
-        <span class="text-h6 text-bold text-primary">Data Inizio</span>
+        <span class="text-h6 text-bold text-primary">{{ $t('labels.startDate') }}</span>
         <q-input type="datetime-local" class="q-mb-xs" rounded outlined v-model="startingDate" :rules="[val => !!val]" hide-bottom-space/>
       </div>
 
       <div>
-        <span class="text-h6 text-bold text-primary">Data Fine</span>
+        <span class="text-h6 text-bold text-primary">{{ $t('labels.endDate') }}</span>
         <q-input type="datetime-local" class="q-mb-xs" rounded outlined v-model="endingDate" :rules="[val => !!val, val => !startingDate || new Date(val) > new Date(startingDate)]" hide-bottom-space/>
       </div>
     </div>
@@ -39,7 +39,10 @@
 <script setup lang="ts">
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import { useEventsActivitiesStore } from '../../../../stores/eventsActivities';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
+const type = ref(route.path.includes('activities') ? 'activity' : 'event');
 const name = ref('');
 const description = ref('');
 const note = ref('');

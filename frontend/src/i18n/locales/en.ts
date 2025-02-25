@@ -19,6 +19,8 @@ export default {
     minor: '18 -',
     male: 'Male',
     female: 'Female',
+    backToEvents: 'Back to events',
+    backToActivities: 'Back to activities'
   },
   texts: {
     insertTarget: 'Insert the number of targets to create above',
@@ -29,6 +31,8 @@ export default {
     allEvents: 'All Events',
     allActivities: 'All Activities',
     dayDetails: 'Day Details',
+    selectedLocation: 'Selected Location:',
+    civicNumber: 'Civic Number',
   },
   types:{
     activities: 'Activities',
@@ -52,16 +56,26 @@ export default {
     startingYear: 'Starting Year',
     endingYear: 'Ending Year',
     name: 'Name',
+    description: 'Description',
+    note: 'Note',
+    maxParticipants: 'Max Participants',
+    startDate: 'Start Date',
+    endDate: 'End Date',
     age: 'Age',
     dateOfBirth: 'Date of Birth',
     gender: 'Gender',
     price: 'Price',
     ageRange: 'Age Range',
     recordsPerPage: 'Records per page:',
+    address: 'Enter the address',
+    eventName: 'Event Name',
+    activityName: 'Activity Name',
   },
   placeholders: {
     commonPrice: 'Common Price',
-    search: 'Search...'
+    search: 'Search...',
+    insertText: 'Insert text here',
+    insertNumber: 'Insert number here',
   },
   tooltips: {
     deleteTarget: 'Delete Target',

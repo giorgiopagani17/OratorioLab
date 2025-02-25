@@ -20,6 +20,10 @@
           <q-btn v-for="button in buttons" :key="button.title" color="primary" class="button" style="width: 150px;">
             {{ button.title }}
           </q-btn>
+
+          <q-btn color="grey" class="button" style="width: 150px;" @click="router.back()">
+            {{ $t('buttons.back') }}
+          </q-btn>
         </div>
       </div>
 
@@ -137,10 +141,6 @@ const buttons: Button[] = [
   },
   {
     title: 'Filtro 3',
-    action: 'https://quasar.dev'
-  },
-  {
-    title: 'Filtro 4',
     action: 'https://quasar.dev'
   }
 ];

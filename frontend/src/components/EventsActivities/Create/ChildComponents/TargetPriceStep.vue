@@ -12,10 +12,10 @@
             @click="!isTarget20 && addTarget()"
           >
             <q-tooltip v-if="isTarget20" class="bg-negative" anchor="top middle" self="bottom middle" :offset="[5, 5]">
-              {{ t('tooltips.maxTarget') }}
+              {{ $t('tooltips.maxTarget') }}
             </q-tooltip>
             <q-tooltip v-else anchor="top middle" self="bottom middle" :offset="[5, 5]">
-              {{ t('tooltips.addTarget') }}
+              {{ $t('tooltips.addTarget') }}
             </q-tooltip>
           </q-icon>
         </div>
@@ -23,7 +23,7 @@
 
       <div class="flex justify-center items-center text-center" style="width: 100%; height: 80px">
         <div style="width: 40%">
-          <q-checkbox v-model="isPriceForAll" :label="t('texts.priceForAll')" color="secondary" class="q-mt-md"/>
+          <q-checkbox v-model="isPriceForAll" :label="$t('texts.priceForAll')" color="secondary" class="q-mt-md"/>
         </div>
         <div style="width: 20%" v-if="isPriceForAll" >
           <q-input
@@ -48,7 +48,7 @@
       <div v-if="targets.length === 0" class="q-my-auto">
         <div class="text-center">
           <q-icon name="arrow_upward" size="40px" class="text-grey-5"/>
-          <p class="text-h6 text-bold text-grey-5"> {{ t('texts.insertTarget') }}</p>
+          <p class="text-h6 text-bold text-grey-5"> {{ $t('texts.insertTarget') }}</p>
         </div>
       </div>
 
@@ -67,28 +67,28 @@
               :disable="targetNumber === 1"
             >
               <q-tooltip v-if="targetNumber === 1" class="bg-negative" anchor="top middle" self="bottom middle" :offset="[5, 5]">
-                {{ t('tooltips.targetRequired') }}
+                {{ $t('tooltips.targetRequired') }}
               </q-tooltip>
               <q-tooltip v-else anchor="top middle" self="bottom middle" :offset="[5, 5]">
-                {{ t('tooltips.deleteTarget') }}
+                {{ $t('tooltips.deleteTarget') }}
               </q-tooltip>
             </q-btn>
           </div>
           <div class="flex justify-between items-center q-pt-sm">
             <div class="text-left" style="width: 45%">
               <div>
-                <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.name') }}</span>
-                <q-input rounded outlined v-model="target.name" :placeholder="`${t('labels.name')} Target`" @blur="() => target.name = (target.name?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+                <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.name') }}</span>
+                <q-input rounded outlined v-model="target.name" :placeholder="`${$t('labels.name')} Target`" @blur="() => target.name = (target.name?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
               </div>
               <div class="q-mt-sm">
-                <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.price') }}</span>
+                <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.price') }}</span>
                 <q-input
                   rounded
                   maxlength="8"
                   outlined
                   :disable="isPriceForAll"
                   v-model="target.displayPrice"
-                  :placeholder="`${t('labels.price')} Target`"
+                  :placeholder="`${$t('labels.price')} Target`"
                   :error="!isPriceForAll && !target.displayPrice"
                   hide-bottom-space
                   @update:model-value="(value) => handleNumbers(value, index)"
@@ -101,7 +101,7 @@
               </div>
             </div>
             <div class="text-left" style="width: 45%">
-              <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.ageRange') }}</span>
+              <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.ageRange') }}</span>
               <q-select
                 rounded
                 outlined
@@ -115,7 +115,7 @@
               />
               <div class="row q-col-gutter-sm q-mt-sm">
                 <div class="col-6 text-left">
-                  <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.startingYear') }}</span>
+                  <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.startingYear') }}</span>
                   <q-input
                     rounded
                     outlined
@@ -126,12 +126,12 @@
                     ]"
                     hide-bottom-space
                     :max="new Date().getFullYear() - 1 || target.endYear"
-                    :placeholder="`${t('labels.startingYear')} Target`"
+                    :placeholder="`${$t('labels.startingYear')} Target`"
                     @update:model-value="validateStartYear"
                   />
                 </div>
                 <div class="col-6 text-left">
-                  <span class="text-bold text-primary" style="font-size: 17px;">{{ t('labels.endingYear') }}</span>
+                  <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.endingYear') }}</span>
                   <q-input
                     rounded
                     outlined
@@ -142,7 +142,7 @@
                     ]"
                     hide-bottom-space
                     :min="target.startYear || new Date().getFullYear()"
-                    :placeholder="`${t('labels.endingYear')} Target`"
+                    :placeholder="`${$t('labels.endingYear')} Target`"
                     @update:model-value="validateEndYear"
                   />
                 </div>

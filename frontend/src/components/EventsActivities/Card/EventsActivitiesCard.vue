@@ -2,7 +2,16 @@
   <q-page class="row items-center justify-evenly q-pa-md page-background">
       <div class="container-border" style="width: 95%">
         <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
-          Evento Pizzata
+          <div class="flex justify-between">
+            <div>
+              <span>{{ isEvent ? 'Evento' : 'Attività' }} <span v-if="eventActivity" class="text-primary">{{ eventActivity.name }}</span></span>
+            </div>
+            <div>
+              <span @click="router.back()" class="cursor-pointer text-grey-5 q-mr-md hover-underline" style="font-size: 15px">
+                {{ $t(`buttons.backTo${isEvent ? 'Events' : 'Activities'}`) }}
+              </span>
+            </div>
+          </div>
         </div>
         <div class="q-pa-lg container-body" style="height: 75vh;">
           <div class="flex justify-between">
@@ -47,6 +56,11 @@
                 <span class="text-h6 text-bold text-secondary">Telefono:</span><br/>
                 <span style="font-size: 15px">3924444141</span>
               </div>
+
+              <div class="q-mt-md">
+                <span class="text-h6 text-bold text-primary">Prezzo {{ isEvent ? 'Evento' : 'Attività' }}:</span><br/>
+                <span style="font-size: 15px">200€</span>
+              </div>
             </div>
 
             <div v-if="eventActivity" class="flex justify-center q-mt-md">
@@ -68,7 +82,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import activities from '../../../data/activities.json';
 import events from '../../../data/events.json';
 
@@ -77,9 +91,8 @@ const props = defineProps<{
 }>();
 
 const route = useRoute();
-
+const router = useRouter();
 const isEvent = computed(() => route.path.includes('events'));
-
 const eventActivity = computed(() => {
   const data = isEvent.value ? events.events : activities.activities;
   const item = data.find(item => item.id === props.id);
@@ -124,5 +137,4 @@ const formatHours = (dateString: string): string => {
   return dateString.split('T')[1].substring(0, 5);
 };
 </script>
-
 

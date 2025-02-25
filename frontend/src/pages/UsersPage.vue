@@ -40,7 +40,7 @@
         bordered
         virtual-scroll
         :rows-per-page-options="[7, 15, 30, 50]"
-        :rows-per-page-label="t('labels.recordsPerPage')"
+        :rows-per-page-label="$t('labels.recordsPerPage')"
         :pagination="pagination"
         @update:pagination="onPaginationChange"
       >

@@ -5,9 +5,8 @@
         <q-input
           filled
           v-model="address"
-          label="Enter your address"
+          :label="$t('labels.address')"
           @update:model-value="onInput"
-          @blur="() => { suggestions = [] }"
           color="secondary"
           clearable
           :loading="loading"
@@ -37,7 +36,7 @@
         <q-input
           filled
           v-model="civicNumber"
-          label="Civic number"
+          :label="$t('titles.civicNumber')"
           color="secondary"
           clearable
           debounce="300"
@@ -53,14 +52,14 @@
       <div id="map" style="height: 282px; width: 80%; border-radius: 12px" v-if="selectedLocation"></div>
 
       <div class="selected-location q-mt-md q-pl-md" v-if="selectedLocation" style="width: 20%">
-        <div class="text-subtitle1 text-weight-bold text-primary">Selected Location:</div>
+        <div class="text-subtitle1 text-weight-bold text-primary">{{ $t('titles.selectedLocation') }}</div>
         <div class="text-body2 q-mt-xs">{{ selectedAddress }}</div>
         <div class="text-caption text-grey">
           Lat: {{ selectedLocation.lat.toFixed(6) }} <br/>
           Lon: {{ selectedLocation.lon.toFixed(6) }}
         </div>
 
-        <div class="text-subtitle1 text-weight-bold text-primary q-mt-md">Civic Number:</div>
+        <div class="text-subtitle1 text-weight-bold text-primary q-mt-md">{{ $t('titles.civicNumber') }}</div>
         <div class="text-body2 q-mt-xs">{{ civicNumber || 'Nessuno' }}</div>
       </div>
     </div>
@@ -69,6 +68,7 @@
 
 <script>
 import axios from 'axios';
+import {useEventsActivitiesStore} from '../../../../stores/eventsActivities';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
@@ -89,6 +89,8 @@ export default {
   name: 'AddressInput',
   data() {
     return {
+      store: useEventsActivitiesStore(),
+
       address: '',
       civicNumber: '',
       suggestions: [],
@@ -111,7 +113,7 @@ export default {
       }
     },
     validateInputs() {
-      const hasErrors = !this.selectedLocation || !this.civicNumber;
+      const hasErrors = !this.selectedLocation || !this.civicNumber.trim();
       window.dispatchEvent(new CustomEvent('inputErrors', {
         detail: { hasErrors }
       }));
@@ -149,22 +151,15 @@ export default {
           },
         });
 
-        const address = response.data.address;
-        // Check for various possible street name fields
-        const street = address.road || address.street || address.pedestrian || address.footway || '';
-        // Check for various possible municipality/city name fields
-        const municipality = address.municipality || address.city || address.town || address.village || '';
-
-        // Combine street and municipality if both exist
-        if (street && municipality) {
-          this.selectedAddress = `${street}, ${municipality}`;
-        } else if (street) {
-          this.selectedAddress = street;
-        } else if (municipality) {
-          this.selectedAddress = municipality;
-        } else {
-          this.selectedAddress = 'Location details not available';
-        }
+        const addr = response.data.address;
+        this.selectedAddress = [
+          addr.road,
+          addr.house_number,
+          addr.postcode,
+          addr.city,
+          addr.state,
+          addr.country
+        ].filter(Boolean).join(', ');
       } catch (error) {
         console.error('Error fetching address:', error);
         this.selectedAddress = 'Address not found';
@@ -196,7 +191,19 @@ export default {
       this.map.setView([this.selectedLocation.lat, this.selectedLocation.lon], 16);
       this.marker = L.marker([this.selectedLocation.lat, this.selectedLocation.lon]).addTo(this.map);
       this.getAddressFromCoordinates();
-    }
+    },
+    saveToLocalStorage() {
+      const currentIndex = parseInt(this.store.eventsActivitiesIndex);
+      const coordinates = [{
+        latitude: this.selectedLocation.lat,
+        longitude: this.selectedLocation.lon,
+        civicNumber: this.civicNumber,
+        address: this.selectedAddress
+      }];
+      if (this.store.eventsActivities[currentIndex]) {
+        this.store.addCoordinates(currentIndex, coordinates);
+      }
+    },
   },
   watch: {
     selectedLocation: {
@@ -212,13 +219,30 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(async () => {
+    this.address = 'SP 36 Nembro-Selvino-Aviatico, 24027, Lombardia, Italia';
+    window.addEventListener('saveAttributesStep', this.saveToLocalStorage);
+
+    const currentIndex = parseInt(this.store.eventsActivitiesIndex);
+    const savedEventActivity = this.store.eventsActivities[currentIndex];
+
+    if (savedEventActivity?.place?.[0]) {
+      this.selectedLocation = {
+        lat: savedEventActivity.place[0].latitude,
+        lon: savedEventActivity.place[0].longitude
+      };
+      this.civicNumber = savedEventActivity.place[0].civicNumber;
+      this.address = savedEventActivity.place[0].address;
+    }
+
+    this.$nextTick( () => {
       this.initMap();
-      await this.getAddressFromCoordinates();
-      this.address = this.selectedAddress;
+      this.getAddressFromCoordinates();
     });
+
+    this.validateInputs();
   },
   beforeUnmount() {
+    window.removeEventListener('saveAttributesStep', this.saveToLocalStorage);
     if (this.map) {
       this.map.remove();
     }

@@ -46,7 +46,7 @@
         <div class="drawer-footer">
           <q-btn
             color="primary"
-            :label="t('buttons.logout')"
+            :label="$t('buttons.logout')"
             class="q-my-md logout-btn"
             style="width: 200px;"
             @click="logout"
