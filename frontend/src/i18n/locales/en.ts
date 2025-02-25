@@ -6,6 +6,7 @@ export default {
     people: 'People',
     back: 'Back',
     next: 'Next',
+    exit: 'Exit',
     logout: 'Logout',
     eventsView: 'View Events',
     activitiesView: 'View Activities',
