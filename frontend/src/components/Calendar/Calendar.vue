@@ -15,7 +15,6 @@
       </div>
     </div>
 
-    <!-- Calendar grid -->
     <div class="calendar-grid">
       <div v-for="(day, index) in calendarDays" :key="index"
            class="calendar-day q-pa-sm"
@@ -46,18 +45,22 @@
       </div>
     </div>
 
-    <q-dialog v-model="eventDialog" persistent>
+    <q-dialog v-model="eventDialog">
       <q-card style="min-width: 350px">
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">{{ $t('calendar.eventDetails') }}</div>
+        <q-card-section class="row items-center q-pb-sm">
+          <div class="text-h5 text-bold text-primary">{{ $t('titles.dayDetails') }}</div>
           <q-space />
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
 
-        <q-card-section v-if="selectedEvent">
-          <div class="text-h6">{{ selectedEvent.title }}</div>
-          <div class="text-subtitle2">{{ formatEventDateTime(selectedEvent) }}</div>
-          <div class="q-mt-md">{{ selectedEvent.description }}</div>
+        <q-card-section style="max-height: 290px; overflow: auto">
+          <div v-for="event in selectedEvents" :key="event.id">
+            <div class="text-h6">{{ event.title }}</div>
+            <div class="text-subtitle2">{{ formatEventDateTime(event) }}</div>
+            <div class="text-subtitle3">Prezzo: {{ event.price }}€</div>
+            <div class="q-mt-sm">{{ event.description }}</div>
+            <q-separator v-if="!isLastEvent(event)" class="q-my-md" />
+          </div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -68,6 +71,8 @@
 import { defineComponent, ref, computed } from 'vue'
 import { date } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import activities from '../../data/activities.json'
+import events from '../../data/events.json'
 
 export default defineComponent({
   name: 'EventCalendar',
@@ -81,26 +86,21 @@ export default defineComponent({
     const { locale } = useI18n()
     const currentDate = ref(new Date())
     const eventDialog = ref(false)
-    const selectedEvent = ref(null)
+    const selectedEvents = ref([])
 
-    const events = ref([
-      {
-        id: 1,
-        title: 'Meeting',
-        description: 'Team meeting',
-        startDate: date.formatDate(new Date(), 'YYYY-MM-DD'),
-        endDate: date.formatDate(date.addToDate(new Date(), { days: 2 }), 'YYYY-MM-DD'),
-        color: 'primary'
-      },
-      {
-        id: 2,
-        title: 'Meeting',
-        description: 'Team meeting',
-        startDate: date.formatDate(new Date(), 'YYYY-MM-DD'),
-        endDate: date.formatDate(date.addToDate(new Date(), { days: 2 }), 'YYYY-MM-DD'),
-        color: 'primary'
-      }
-    ])
+    const items = computed(() => {
+      const data = props.type === 'activities' ? activities.activities : events.events
+      return data.map(item => ({
+        id: item.id,
+        title: item.name,
+        description: item.description,
+        startDate: item.startDate.split('T')[0],
+        endDate: item.endDate.split('T')[0],
+        price: item.price,
+        color: 'primary',
+        fullData: item
+      }))
+    })
 
     const daysOfWeek = computed(() =>
       locale.value === 'it'
@@ -129,12 +129,16 @@ export default defineComponent({
       return `${monthNames[locale.value][month]} ${year}`
     })
 
-    const getEventsForDay = (currentDate) => {
-      return events.value.filter(event => {
-        const start = new Date(event.startDate)
-        const end = new Date(event.endDate)
-        const current = new Date(currentDate)
-        return current >= start && current <= end
+    const getEventsForDay = (dateStr) => {
+      console.log('Checking date:', dateStr) // Debug line
+      return items.value.filter(event => {
+        // Convert all dates to timestamps for comparison
+        const currentDay = new Date(dateStr).getTime()
+        const eventStart = new Date(event.startDate).getTime()
+        const eventEnd = new Date(event.endDate).getTime()
+
+        // Check if current day falls within the event period
+        return currentDay >= eventStart && currentDay <= eventEnd
       })
     }
 
@@ -148,39 +152,39 @@ export default defineComponent({
 
       const days = []
 
-      // Previous month days
       const prevMonthLastDay = new Date(year, month, 0).getDate()
       for (let i = firstDayOfWeek - 1; i >= 0; i--) {
         const prevDate = new Date(year, month - 1, prevMonthLastDay - i)
+        const formattedDate = date.formatDate(prevDate, 'YYYY-MM-DD')
         days.push({
           dayNumber: prevMonthLastDay - i,
           isCurrentMonth: false,
           isToday: false,
-          events: getEventsForDay(date.formatDate(prevDate, 'YYYY-MM-DD'))
+          events: getEventsForDay(formattedDate)
         })
       }
 
-      // Current month days
       const today = new Date()
       for (let i = 1; i <= lastDay.getDate(); i++) {
         const currentDate = new Date(year, month, i)
+        const formattedDate = date.formatDate(currentDate, 'YYYY-MM-DD')
         days.push({
           dayNumber: i,
           isCurrentMonth: true,
           isToday: date.isSameDate(currentDate, today),
-          events: getEventsForDay(date.formatDate(currentDate, 'YYYY-MM-DD'))
+          events: getEventsForDay(formattedDate)
         })
       }
 
-      // Next month days
       const remainingDays = 42 - days.length
       for (let i = 1; i <= remainingDays; i++) {
         const nextDate = new Date(year, month + 1, i)
+        const formattedDate = date.formatDate(nextDate, 'YYYY-MM-DD')
         days.push({
           dayNumber: i,
           isCurrentMonth: false,
           isToday: false,
-          events: getEventsForDay(date.formatDate(nextDate, 'YYYY-MM-DD'))
+          events: getEventsForDay(formattedDate)
         })
       }
 
@@ -196,12 +200,12 @@ export default defineComponent({
     }
 
     const showEventDetails = (event) => {
-      selectedEvent.value = event
+      selectedEvents.value = [event]
       eventDialog.value = true
     }
 
     const showAllEvents = (events) => {
-      selectedEvent.value = events[0]
+      selectedEvents.value = events
       eventDialog.value = true
     }
 
@@ -213,6 +217,10 @@ export default defineComponent({
       return `${startDate.toLocaleDateString(lang, formatOptions)} - ${endDate.toLocaleDateString(lang, formatOptions)}`
     }
 
+    const isLastEvent = (event) => {
+      return selectedEvents.value.indexOf(event) === selectedEvents.value.length - 1
+    }
+
     return {
       currentDate,
       daysOfWeek,
@@ -221,7 +229,8 @@ export default defineComponent({
       previousMonth,
       nextMonth,
       eventDialog,
-      selectedEvent,
+      selectedEvents,
+      isLastEvent,
       showEventDetails,
       showAllEvents,
       formatEventDateTime,

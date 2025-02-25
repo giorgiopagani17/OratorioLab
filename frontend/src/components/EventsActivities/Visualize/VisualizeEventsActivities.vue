@@ -46,8 +46,8 @@
               </div>
 
               <div style="width: 24%" class="flex column justify-center items-end q-pr-md">
-                <span class="text-secondary text-right" style="font-size: 16px">{{ formatDates(eventActivity.startingDate, eventActivity.endingDate) }}</span>
-                <span class="text-grey-8 text-right description-text q-mb-lg" style="font-size: 16px">Prezzo: 200€</span>
+                <span class="text-secondary text-right" style="font-size: 16px">{{ formatDates(eventActivity.startDate, eventActivity.endDate) }}</span>
+                <span class="text-grey-8 text-right description-text q-mb-lg" style="font-size: 16px">Prezzo: {{ eventActivity.price }}€</span>
                 <q-btn color="primary" style="width: 100px">
                   Visualizza
                 </q-btn>
@@ -63,19 +63,21 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue';
 import { useRoute } from 'vue-router';
+import activities from '../../../data/activities.json'
+import events from '../../../data/events.json'
 
 defineOptions({
   name: 'UserPage'
 });
 
-interface EventActivity {
+interface EventActivityDisplay {
+  id: number;
   name: string;
   description: string;
-  note: string;
-  maxParticipants: number;
-  startingDate: string;
-  endingDate: string;
+  startDate: string;
+  endDate: string;
   image: string;
+  price: number;
 }
 
 interface Button {
@@ -109,35 +111,22 @@ const formatDates = (startDate: string, endDate: string): string => {
   return `${formattedStart} - ${formattedEnd}`;
 };
 
-const eventsActivities: EventActivity[] = [
-  {
-    name: 'Event 1',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam porttitor mauris, quis sollicitudin sapien justo in libero. Nulla facilisi. Pellentesque convallis ultricies, dolor nec venenatis sollicitudin, nisi ante interdum nunc, ac varius sapien odio in ante.',
-    note: 'Note 1',
-    maxParticipants: 100,
-    startingDate: '2022-01-01',
-    endingDate: '2022-01-02',
-    image: 'https://www.altrasoluzione.com/images/blog/come-creare-le-immagini-per-un-sito-web/gioconda1000x1000.jpg'
-  },
-  {
-    name: 'Event 2',
-    description: 'Description 2',
-    note: 'Note 2',
-    maxParticipants: 200,
-    startingDate: '2022-02-01',
-    endingDate: '2022-02-02',
-    image: 'https://www.altrasoluzione.com/images/blog/come-creare-le-immagini-per-un-sito-web/gioconda1000x1000.jpg'
-  },
-  {
-    name: 'Event 3',
-    description: 'Description 3',
-    note: 'Note 3',
-    maxParticipants: 300,
-    startingDate: '2022-03-01',
-    endingDate: '2022-03-02',
-    image: 'https://www.altrasoluzione.com/images/blog/come-creare-le-immagini-per-un-sito-web/gioconda1000x1000.jpg'
-  }
-];
+const eventsActivities = computed<EventActivityDisplay[]>(() => {
+  const data = pageType.value === 'Activities' ? activities.activities : events.events
+  return data.map(item => ({
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    startDate: item.startDate.split('T')[0],
+    endDate: item.endDate.split('T')[0],
+    image: item.image || 'https://cdn.quasar.dev/img/paris.jpg',
+    fullData: item,
+    price: 'targets' in item ? item.targets[0].price : item.price
+  }))
+})
+
+
+console.log(eventsActivities.value);
 
 const buttons: Button[] = [
   {

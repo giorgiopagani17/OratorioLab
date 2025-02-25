@@ -1,0 +1,74 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "name": "Summer Camp 2024",
+      "description": "Annual summer camp for children aged 8-14",
+      "notes": "Remember to bring swimming gear and sunscreen",
+      "startDate": "2025-06-15T09:00:00",
+      "endDate": "2025-06-22T16:00:00",
+      "price": 250.00,
+      "image": "https://images.squarespace-cdn.com/content/v1/5bbabf4594d71a8aed72b8af/1708907406066-DT6JIS0K4HDMTQDIJG2N/Checkout+Icon.png?format=1000w"
+    },
+    {
+      "id": 2,
+      "name": "Easter Workshop",
+      "description": "Creative workshop for Easter celebrations",
+      "notes": "All materials will be provided",
+      "startDate": "2025-03-24T14:30:00",
+      "endDate": "2025-03-24T17:30:00",
+      "price": 45.00,
+      "image": "https://as1.ftcdn.net/v2/jpg/07/49/84/28/1000_F_749842804_lIdAhcBi32iaEBYSW0ex82GKve9LGxWP.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Youth Weekend Retreat",
+      "description": "Spiritual and recreational weekend for teenagers",
+      "notes": "Parents meeting on Friday at 18:00",
+      "startDate": "2025-05-10T18:00:00",
+      "endDate": "2025-05-12T16:00:00",
+      "price": 120.00,
+      "image": "https://images.squarespace-cdn.com/content/v1/5a5ef6aaedaed80a99a91657/1735950732620-BH3KTBJXM828IU7WKP54/IMPACT_IGNITE_WINTER_RETREAT_WEBBOX.jpg?format=1000w"
+    },
+    {
+      "id": 4,
+      "name": "Christmas Concert",
+      "description": "Annual Christmas concert and celebration",
+      "notes": "Rehearsals start two weeks before",
+      "startDate": "2025-12-20T20:00:00",
+      "endDate": "2025-12-20T22:30:00",
+      "price": 15.00,
+      "image": "https://m.media-amazon.com/images/I/715Gimb12nL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Sports Tournament",
+      "description": "Multi-sport tournament for all age groups",
+      "notes": "Teams must register at least one week before",
+      "startDate": "2025-09-05T08:30:00",
+      "endDate": "2025-09-05T18:00:00",
+      "price": 80.00,
+      "image": "https://www.bauerfeind-sports.it/media/58/47/e5/1700060279/elbow-support-rivera-fitness-lifestyle-1000x1000.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Trekking Bergamo",
+      "description": "Guided trekking tour in the mountains",
+      "notes": "Bring comfortable shoes and a packed lunch",
+      "startDate": "2025-02-24T14:30:00",
+      "endDate": "2025-02-24T17:30:00",
+      "price": 45.00,
+      "image": "https://as2.ftcdn.net/v2/jpg/06/53/73/17/1000_F_653731770_8erefG63SCOpFIWnljroGzYgJcv2DB4m.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Game Night",
+      "description": "Board games and card games night",
+      "notes": "Snacks and drinks will be provided",
+      "startDate": "2025-02-10T19:30:00",
+      "endDate": "2025-02-10T23:30:00",
+      "price": 10.00,
+      "image": "https://as1.ftcdn.net/v2/jpg/02/55/50/44/1000_F_255504449_3YGyPDp05diLiBlaxwsIoxMxP2GQFEs8.jpg"
+    }
+  ]
+}

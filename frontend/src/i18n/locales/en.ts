@@ -28,6 +28,7 @@ export default {
     latestEvents: 'Latest Events',
     allEvents: 'All Events',
     allActivities: 'All Activities',
+    dayDetails: 'Day Details',
   },
   types:{
     activities: 'Activities',
