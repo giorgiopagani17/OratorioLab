@@ -93,6 +93,7 @@ const search = ref<string>('');
 const router = useRouter();
 
 const logout = () => {
+  localStorage.clear();
   router.push('/');
 };
 
