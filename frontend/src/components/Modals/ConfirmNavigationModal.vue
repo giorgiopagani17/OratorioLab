@@ -2,7 +2,7 @@
   <q-dialog v-model="show" persistent>
     <q-card class="bg-white q-pa-md">
       <q-card-section class="text-center">
-        <q-avatar icon="warning" size="70px" color="primary" text-color="white"/>
+        <q-avatar icon="warning" size="70px" color="warning" text-color="white"/>
         <div class="q-mt-md" style="font-size: 22px">Hai dei progressi non salvati!</div>
         <div class="text-grey-7 q-mt-xs" style="font-size: 16px">Se esci ora, tutti i dati inseriti verranno <br/> eliminati definitivamente</div>
       </q-card-section>
