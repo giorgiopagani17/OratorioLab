@@ -8,13 +8,6 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  if (localStorage.getItem('eventsActivities') && to.path !== '/events/create' && to.path !== '/events/create/' && to.path !== '/activities/create' && to.path !== '/activities/create/') {
-    window.dispatchEvent(new CustomEvent('showConfirmModal'));
-  }
-  next();
-});
-
 const app = createApp(App);
 app.use(router);
 

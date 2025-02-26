@@ -31,7 +31,7 @@
           </div>
 
           <div class="q-mt-sm flex justify-between items-center button-container" style="width: 100%">
-            <q-btn v-if="currentStep === 0" color="grey" @click="router.back()">
+            <q-btn v-if="currentStep === 0" color="grey" @click="exit()">
               <q-icon name="arrow_back" style="margin-right: 0.75rem"/>
               {{ $t('buttons.exit') }}
             </q-btn>
@@ -56,8 +56,6 @@
         </div>
       </div>
     </div>
-
-    <ConfirmNavigationModal />
   </q-page>
 </template>
 
@@ -119,6 +117,15 @@ const emitPrevStep = () => {
   } else if (progressLine.value) {
     progressLine.value.prevStep();
     currentStep.value--;
+  }
+};
+
+const exit = () => {
+  const currentPath = router.currentRoute.value.fullPath;
+  if (currentPath.includes('events')) {
+    router.push('/events');
+  } else {
+    router.push('/activities');
   }
 };
 </script>

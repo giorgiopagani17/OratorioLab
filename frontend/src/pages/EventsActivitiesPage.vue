@@ -39,24 +39,21 @@ const router = useRouter();
 const buttons: Button[] = [
   {
     title: computed(() => props.type === 'events' ? 'eventsView' : 'activitiesView').value,
-    action: 'view'
+    action: '/view'
   },
   {
     title: computed(() => props.type === 'events' ? 'spaceCreate' : 'groupsCreate').value,
-    action: computed(() => props.type === 'events' ? 'space' : 'groups').value,
+    action: computed(() => props.type === 'events' ? '/space' : '/groups').value,
   },
   {
     title: 'financialBalance',
-    action: 'balance'
+    action: '/balance'
   }
 ];
 
 const navigateTo = (url: string) => {
-  if(!props.type){
-    return
-  } else {
-    const currentPath = router.currentRoute.value.fullPath;
-    router.push(`${currentPath}${url}`);
+  if(props.type){
+    router.push(`/${props.type}${url}`);
   }
 };
 </script>

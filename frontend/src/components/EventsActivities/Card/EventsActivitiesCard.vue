@@ -7,7 +7,7 @@
               <span>{{ isEvent ? 'Evento' : 'Attività' }} <span v-if="eventActivity" class="text-primary">{{ eventActivity.name }}</span></span>
             </div>
             <div>
-              <span @click="router.back()" class="cursor-pointer text-grey-5 q-mr-md hover-underline" style="font-size: 15px">
+              <span @click="router.push(`/${isEvent ? 'events' : 'activities'}/view`)" class="cursor-pointer text-grey-5 q-mr-md hover-underline" style="font-size: 15px">
                 {{ $t(`buttons.backTo${isEvent ? 'Events' : 'Activities'}`) }}
               </span>
             </div>

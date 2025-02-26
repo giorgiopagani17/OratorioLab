@@ -32,8 +32,8 @@ export default {
   },
   titles: {
     latestEvents: 'Ultimi Eventi',
-    allEvents: 'Tutti gli Eventi',
-    allActivities: 'Tutte le Attività',
+    eventsAll: 'Tutti gli Eventi',
+    activitiesAll: 'Tutte le Attività',
     dayDetails: 'Dettagli Giornata',
     selectedLocation: 'Luogo Selezionato:',
     civicNumber: 'Numero Civico',

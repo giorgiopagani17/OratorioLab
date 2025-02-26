@@ -21,7 +21,7 @@
             {{ $t(`buttons.${button.title}`) }}
           </q-btn>
 
-          <q-btn color="grey" class="button" style="width: 150px;" @click="router.back()">
+          <q-btn color="grey" class="button" style="width: 150px;" @click="router.push('/'+ pageType)">
             {{ $t('buttons.back') }}
           </q-btn>
         </div>
@@ -29,7 +29,7 @@
 
       <div class="q-mt-lg container-border">
         <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
-          {{ $t(`titles.all${pageType}`) }}
+          {{ $t(`titles.${pageType}All`) }}
         </div>
         <div class="q-pa-lg container-body">
           <div class="q-px-md" style="height: calc(100vh - 310px); overflow-y: auto;">
@@ -93,7 +93,7 @@ interface Button {
 const search = ref<string>('');
 const route = useRoute();
 const router = useRouter();
-const pageType = computed(() => route.path.includes('events') ? 'Events' : 'Activities');
+const pageType = computed(() => route.path.includes('events') ? 'events' : 'activities');
 
 const formatDates = (startDate: string, endDate: string): string => {
   const start = new Date(startDate);
@@ -169,7 +169,7 @@ const applyFilters = (items?: EventActivityDisplay[]): EventActivityDisplay[] =>
 };
 
 const eventsActivities = computed<EventActivityDisplay[]>(() => {
-  const data = pageType.value === 'Activities' ? activities.activities : events.events;
+  const data = pageType.value === 'activities' ? activities.activities : events.events;
   const items: EventActivityDisplay[] = data.map(item => ({
     id: item.id,
     name: item.name,
