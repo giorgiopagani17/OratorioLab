@@ -21,7 +21,10 @@ export default {
     male: 'Maschi',
     female: 'Femmine',
     backToEvents: 'Torna agli eventi',
-    backToActivities: 'Torna alle attività'
+    backToActivities: 'Torna alle attività',
+    tomorrow: 'Domani',
+    gratis: 'Gratuite',
+    current: 'In Corso',
   },
   texts: {
     insertTarget: 'Inserisci un numero di target da creare qui sopra',

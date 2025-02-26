@@ -128,6 +128,7 @@ const pagination = ref<QPagination>({
 const onPaginationChange = (newPagination: QPagination) => {
   pagination.value = newPagination;
 };
+
 const toggleFilter = (button: Button) => {
   buttons.value = buttons.value.map(btn => ({
     ...btn,

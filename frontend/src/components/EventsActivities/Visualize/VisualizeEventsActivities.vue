@@ -17,8 +17,8 @@
           </q-input>
         </div>
         <div class="flex items-center justify-center q-pl-sm">
-          <q-btn v-for="button in buttons" :key="button.title" color="primary" class="button" style="width: 150px;">
-            {{ button.title }}
+          <q-btn v-for="button in buttons" :key="button.title" :color="button.active ? 'secondary' : 'primary'" class="button" style="width: 150px;" @click="toggleFilter(button)">
+            {{ $t(`buttons.${button.title}`) }}
           </q-btn>
 
           <q-btn color="grey" class="button" style="width: 150px;" @click="router.back()">
@@ -87,6 +87,7 @@ interface EventActivityDisplay {
 interface Button {
   title: string;
   action: string;
+  active: boolean;
 }
 
 const search = ref<string>('');
@@ -116,9 +117,60 @@ const formatDates = (startDate: string, endDate: string): string => {
   return `${formattedStart} - ${formattedEnd}`;
 };
 
+const toggleFilter = (button: Button) => {
+  buttons.value = buttons.value.map(btn => ({
+    ...btn,
+    active: btn === button ? !btn.active : false
+  }));
+  applyFilters();
+};
+
+const applyFilters = (items?: EventActivityDisplay[]): EventActivityDisplay[] => {
+  let filteredItems = items ? [...items] : [...eventsActivities.value];
+  const activeFilter = buttons.value.find(btn => btn.active);
+
+  if (activeFilter) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    switch (activeFilter.action) {
+      case 'tomorrow':
+        filteredItems = filteredItems.filter((item: EventActivityDisplay) => {
+          const startDate = new Date(item.startDate);
+          startDate.setHours(0, 0, 0, 0);
+          return startDate.getTime() === tomorrow.getTime();
+        });
+        break;
+      case 'gratis':
+        filteredItems = filteredItems.filter((item: EventActivityDisplay) => item.price === 0);
+        break;
+      case 'current':
+        filteredItems = filteredItems.filter((item: EventActivityDisplay) => {
+          const startDate = new Date(item.startDate);
+          const endDate = new Date(item.endDate);
+          const now = new Date();
+          return startDate <= now && endDate >= now;
+        });
+        break;
+    }
+  }
+
+  if (search.value) {
+    const searchLower = search.value.toLowerCase();
+    filteredItems = filteredItems.filter((item: EventActivityDisplay) =>
+      item.name.toLowerCase().includes(searchLower) ||
+      item.description.toLowerCase().includes(searchLower)
+    );
+  }
+
+  return filteredItems;
+};
+
 const eventsActivities = computed<EventActivityDisplay[]>(() => {
-  const data = pageType.value === 'Activities' ? activities.activities : events.events
-  return data.map(item => ({
+  const data = pageType.value === 'Activities' ? activities.activities : events.events;
+  const items: EventActivityDisplay[] = data.map(item => ({
     id: item.id,
     name: item.name,
     description: item.description,
@@ -127,23 +179,15 @@ const eventsActivities = computed<EventActivityDisplay[]>(() => {
     image: item.image || 'https://cdn.quasar.dev/img/paris.jpg',
     fullData: item,
     price: 'targets' in item ? item.targets[0].price : item.price
-  }))
-})
+  }));
+  return applyFilters(items);
+});
 
-const buttons: Button[] = [
-  {
-    title: 'Filtro 1',
-    action: 'https://quasar.dev'
-  },
-  {
-    title: 'Filtro 2',
-    action: 'https://quasar.dev'
-  },
-  {
-    title: 'Filtro 3',
-    action: 'https://quasar.dev'
-  }
-];
+const buttons = ref<Button[]>([
+  { title: 'tomorrow', action: 'tomorrow', active: false },
+  { title: 'gratis', action: 'gratis', active: false },
+  { title: 'current', action: 'current', active: false },
+]);
 
 const navigateToDetail = (id: number) => {
   const currentPath = route.path;

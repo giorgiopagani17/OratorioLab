@@ -21,7 +21,10 @@ export default {
     male: 'Male',
     female: 'Female',
     backToEvents: 'Back to events',
-    backToActivities: 'Back to activities'
+    backToActivities: 'Back to activities',
+    tomorrow: 'Tomorrow',
+    gratis: 'Gratis',
+    current: 'Current',
   },
   texts: {
     insertTarget: 'Insert the number of targets to create above',

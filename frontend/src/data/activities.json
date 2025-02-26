@@ -34,7 +34,7 @@
       "targets": [
         {
           "name": "Beginners",
-          "price": 90.00,
+          "price": 0.00,
           "startYear": 2014,
           "endYear": 2016
         },
