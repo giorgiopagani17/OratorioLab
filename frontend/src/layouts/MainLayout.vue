@@ -34,13 +34,13 @@
     >
       <div class="drawer-container">
         <q-scroll-area class="col drawer-scroll">
-          <q-list class="q-mt-md">
+          <q-list class="q-mt-sm">
             <EssentialLink
               v-for="link in linksList"
               :key="link.title"
               v-bind="link"
               style="border-radius: 24px"
-              class="text-secondary"
+              :class="{ 'text-primary text-bold': isActiveLink(link.link), 'text-secondary': !isActiveLink(link.link) }"
             />
           </q-list>
 
@@ -52,7 +52,7 @@
               :key="link.title"
               v-bind="link"
               style="border-radius: 24px"
-              class="text-grey-7"
+              :class="{ 'text-primary text-bold': isActiveLink(link.link), 'text-grey-7': !isActiveLink(link.link) }"
             />
           </q-list>
         </q-scroll-area>
@@ -81,9 +81,10 @@ import { useI18n } from 'vue-i18n';
 import EssentialLink from 'components/EssentialLink.vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import { EssentialLinkProps } from '@/components/EssentialLink.vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const { t } = useI18n();
+const leftDrawerOpen = ref(false);
 
 defineOptions({
   name: 'MainLayout'
@@ -91,6 +92,7 @@ defineOptions({
 
 const search = ref<string>('');
 const router = useRouter();
+const route = useRoute();
 
 const logout = () => {
   localStorage.clear();
@@ -142,7 +144,10 @@ const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
 
-const leftDrawerOpen = ref(false);
+
+const isActiveLink = (link?: string) => {
+  return link ? route.path.includes(link) : false;
+};
 </script>
 
 <style lang="scss">
