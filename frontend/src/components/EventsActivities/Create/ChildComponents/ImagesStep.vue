@@ -54,7 +54,7 @@
 import {ref, computed, watch, onMounted, onUnmounted} from 'vue';
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
-import { useEventsActivitiesStore } from '../../../../stores/eventsActivities';
+import { useEventsActivitiesStore } from '@/stores/eventsActivities';
 
 const selectedImage = ref<string | null>(null);
 const croppedImage = ref<string | null>(null);

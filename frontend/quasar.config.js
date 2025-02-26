@@ -10,6 +10,7 @@
 
 
 import { configure } from 'quasar/wrappers';
+import path from 'node:path';
 
 
 module.exports = configure(function (/* ctx */) {
@@ -47,6 +48,12 @@ module.exports = configure(function (/* ctx */) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
+      extendViteConf(viteConf) {
+        viteConf.resolve.alias = {
+          ...viteConf.resolve.alias,
+          '@': path.resolve(__dirname, 'src'),
+        };
+      },
       target: {
         browser: [ 'es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1' ],
         node: 'node20'

@@ -73,7 +73,7 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from 'vue';
 import type { QTableColumn } from 'quasar';
-import usersData from '../data/users.json';
+import usersData from '@/data/users.json';
 import { useI18n } from 'vue-i18n';
 
 defineOptions({

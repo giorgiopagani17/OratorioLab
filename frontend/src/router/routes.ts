@@ -28,12 +28,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:section(activities|events)',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: 'create', component: () => import('../components/EventsActivities/Create/CreateEventsActivities.vue'), props: (route) => ({ type: route.query.type, section: route.params.section }) }]
+    children: [{ path: 'create', component: () => import('@/components/EventsActivities/Create/CreateEventsActivities.vue'), props: (route) => ({ type: route.query.type, section: route.params.section }) }]
   },
   {
     path: '/:section(activities|events)',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: 'view', component: () => import('../components/EventsActivities/Visualize/VisualizeEventsActivities.vue'), props: (route) => ({ type: route.query.type, section: route.params.section }) }]
+    children: [{ path: 'view', component: () => import('@/components/EventsActivities/Visualize/VisualizeEventsActivities.vue'), props: (route) => ({ type: route.query.type, section: route.params.section }) }]
   },
   {
     path: '/:section(activities|events)',
@@ -41,7 +41,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'view/:id',
-        component: () => import('../components/EventsActivities/Card/EventsActivitiesCard.vue'),
+        component: () => import('@/components/EventsActivities/Card/EventsActivitiesCard.vue'),
         props: (route) => ({
           id: Number(route.params.id),
           section: route.params.section

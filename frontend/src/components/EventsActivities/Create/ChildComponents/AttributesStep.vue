@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import {onMounted, onUnmounted, ref, watch} from 'vue';
-import { useEventsActivitiesStore } from '../../../../stores/eventsActivities';
+import { useEventsActivitiesStore } from '@/stores/eventsActivities';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();

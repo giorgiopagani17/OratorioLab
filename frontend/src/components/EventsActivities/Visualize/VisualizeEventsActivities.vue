@@ -67,8 +67,8 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import activities from '../../../data/activities.json'
-import events from '../../../data/events.json'
+import activities from '@/data/activities.json'
+import events from '@/data/events.json'
 
 defineOptions({
   name: 'UserPage'

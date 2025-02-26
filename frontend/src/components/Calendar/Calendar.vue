@@ -74,8 +74,8 @@
 import { defineComponent, ref, computed } from 'vue'
 import { date } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import activities from '../../data/activities.json'
-import events from '../../data/events.json'
+import activities from '@/data/activities.json'
+import events from '@/data/events.json'
 
 export default defineComponent({
   name: 'EventCalendar',

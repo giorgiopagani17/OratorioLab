@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import {ref, onMounted, onUnmounted, watch} from 'vue';
-import { useEventsActivitiesStore } from '../../stores/eventsActivities';
+import { useEventsActivitiesStore } from '@/stores/eventsActivities';
 import { useRouter, useRoute } from 'vue-router';
 
 const show = ref(false);

@@ -158,7 +158,7 @@
 <script setup lang="ts">
 import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useEventsActivitiesStore } from '../../../../stores/eventsActivities';
+import { useEventsActivitiesStore } from '@/stores/eventsActivities';
 
 interface Target {
   name: string;

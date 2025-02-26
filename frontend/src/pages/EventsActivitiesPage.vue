@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import Calendar from '../components/Calendar/Calendar.vue';
+import Calendar from '@/components/Calendar/Calendar.vue';
 import { useRouter } from 'vue-router';
 import { defineProps, computed } from 'vue';
 
