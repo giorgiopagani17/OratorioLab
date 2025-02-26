@@ -59,7 +59,7 @@
             <div class="text-subtitle2">{{ formatEventDateTime(event) }}</div>
             <div class="text-subtitle3">Prezzo:
               <span v-if="event.price > 0" class="text-secondary text-bold">{{ event.price }}€</span>
-              <span v-else class="text-secondary text-bold">{{ $t('buttons.gratis') }}</span>
+              <span v-else class="text-secondary text-bold">{{ $t('texts.gratis') }}</span>
             </div>
             <div class="q-mt-sm">{{ event.description }}</div>
             <q-separator v-if="!isLastEvent(event)" class="q-my-md" />

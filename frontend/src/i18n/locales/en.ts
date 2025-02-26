@@ -29,6 +29,7 @@ export default {
   texts: {
     insertTarget: 'Insert the number of targets to create above',
     priceForAll: 'Prices are the same for all targets',
+    gratis: 'Gratis',
   },
   titles: {
     latestEvents: 'Latest Events',
@@ -93,6 +94,11 @@ export default {
     targetStartingYear: 'Check the ending year',
     targetEndingYear: 'Check the starting year',
     noUserFound: 'No user found',
+  },
+  warnings: {
+    warningProgressTitle: 'You have unsaved progress!',
+    warningProgressDescription1: 'If you exit now, all entered data will be',
+    warningProgressDescription2: 'permanently deleted.',
   },
   menu: {
     home: 'Home',

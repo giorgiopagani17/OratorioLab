@@ -29,6 +29,7 @@ export default {
   texts: {
     insertTarget: 'Inserisci un numero di target da creare qui sopra',
     priceForAll: 'I Prezzi sono uguali per tutti i target',
+    gratis: 'Gratuito',
   },
   titles: {
     latestEvents: 'Ultimi Eventi',
@@ -93,6 +94,11 @@ export default {
     targetStartingYear: 'Controlla l\'anno di fine',
     targetEndingYear: 'Controllo l\'anno di inizio',
     noUserFound: 'Nessun utente trovato',
+  },
+  warnings: {
+    warningProgressTitle: 'Hai dei progressi non salvati!',
+    warningProgressDescription1: 'Se esci ora, tutti i dati inseriti verranno',
+    warningProgressDescription2: 'eliminati definitivamente.',
   },
   menu: {
     home: 'Home',

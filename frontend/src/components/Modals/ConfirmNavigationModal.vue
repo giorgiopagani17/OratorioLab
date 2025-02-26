@@ -3,8 +3,8 @@
     <q-card class="bg-white q-pa-md">
       <q-card-section class="text-center">
         <q-avatar icon="warning" size="70px" color="warning" text-color="white"/>
-        <div class="q-mt-md" style="font-size: 22px">Hai dei progressi non salvati!</div>
-        <div class="text-grey-7 q-mt-xs" style="font-size: 16px">Se esci ora, tutti i dati inseriti verranno <br/> eliminati definitivamente</div>
+        <div class="q-mt-md" style="font-size: 22px">{{ $t('warnings.warningProgressTitle') }}</div>
+        <div class="text-grey-7 q-mt-xs" style="font-size: 16px">{{ $t('warnings.warningProgressDescription1') }} <br/> {{ $t('warnings.warningProgressDescription2') }}</div>
       </q-card-section>
 
       <q-card-actions align="center">
