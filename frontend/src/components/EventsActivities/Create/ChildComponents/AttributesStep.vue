@@ -88,6 +88,7 @@ watch([name, description, note, startingDate, endingDate, maxParticipants], () =
 const saveToLocalStorage = () => {
   const currentIndex = parseInt(store.eventsActivitiesIndex);
   const eventData = {
+    type: type.value,
     name: name.value.trim(),
     description: description.value.trim(),
     note: note.value.trim(),

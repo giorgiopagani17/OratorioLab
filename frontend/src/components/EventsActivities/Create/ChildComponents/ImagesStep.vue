@@ -127,7 +127,6 @@ const resetImage = () => {
 const saveToLocalStorage = () => {
   if (croppedImage.value) {
     const currentIndex = parseInt(store.eventsActivitiesIndex);
-    console.log(store.eventsActivitiesIndex)
     store.addImage(currentIndex, croppedImage.value);
   }
 };

@@ -98,6 +98,9 @@ export default {
     home: 'Home',
     registry: 'Anagrafiche',
     events: 'Eventi',
-    activities: 'Attività'
+    activities: 'Attività',
+    setting: 'Impostazioni',
+    pricing: 'Prezzi',
+    privacyPolicy: 'Privacy Policy',
   }
 }

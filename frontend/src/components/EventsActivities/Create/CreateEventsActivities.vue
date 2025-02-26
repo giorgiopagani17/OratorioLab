@@ -56,6 +56,8 @@
         </div>
       </div>
     </div>
+
+    <ConfirmNavigationModal />
   </q-page>
 </template>
 
@@ -68,7 +70,6 @@ import AttributesStep from './ChildComponents/AttributesStep.vue';
 import PlaceStep from './ChildComponents/PlaceStep.vue';
 import TargetPriceStep from './ChildComponents/TargetPriceStep.vue';
 import {useRouter} from 'vue-router';
-import { useEventsActivitiesStore } from '../../../stores/eventsActivities';
 
 defineOptions({
   name: 'HomePage'
@@ -83,14 +84,12 @@ const currentStep = ref(0);
 const progressLine = ref<ProgressLineInstance | null>(null);
 const hasInputErrors = ref(true);
 const router = useRouter();
-const store = useEventsActivitiesStore();
 
 const isNextButtonDisabled = computed(() => {
   return hasInputErrors.value;
 });
 
 onMounted(() => {
-  store.clearEventActivities();
   window.addEventListener('inputErrors', ((event: CustomEvent) => {
     hasInputErrors.value = event.detail.hasErrors;
   }) as EventListener);

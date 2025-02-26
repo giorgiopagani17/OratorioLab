@@ -39,6 +39,20 @@
               v-for="link in linksList"
               :key="link.title"
               v-bind="link"
+              style="border-radius: 24px"
+              class="text-secondary"
+            />
+          </q-list>
+
+          <hr style="border: none; height: 2px; background-color: #E0E0E0;" />
+
+          <q-list>
+            <EssentialLink
+              v-for="link in settingsList"
+              :key="link.title"
+              v-bind="link"
+              style="border-radius: 24px"
+              class="text-grey-7"
             />
           </q-list>
         </q-scroll-area>
@@ -85,24 +99,42 @@ const logout = () => {
 const linksList = computed((): EssentialLinkProps[] => [
   {
     title: t('menu.home'),
-    icon: 'school',
+    icon: 'home',
     link: '/home'
   },
   {
     title: t('menu.registry'),
-    icon: 'record_voice_over',
+    icon: 'people',
     link: '/users'
   },
   {
     title: t('menu.events'),
-    icon: 'code',
+    icon: 'event',
     link: '/events'
   },
   {
     title: t('menu.activities'),
-    icon: 'chat',
+    icon: 'local_activity',
     link: '/activities'
   }
+]);
+
+const settingsList = computed((): EssentialLinkProps[] => [
+  {
+    title: t('menu.setting'),
+    icon: 'settings',
+    link: '/settings'
+  },
+  {
+    title: t('menu.pricing'),
+    icon: 'payments',
+    link: '/pricing'
+  },
+  {
+    title: t('menu.privacyPolicy'),
+    icon: 'privacy_tip',
+    link: '/privacypolicy'
+  },
 ]);
 
 const toggleLeftDrawer = () => {

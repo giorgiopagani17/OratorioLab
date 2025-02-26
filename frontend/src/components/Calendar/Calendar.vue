@@ -57,7 +57,10 @@
           <div v-for="event in selectedEvents" :key="event.id">
             <div class="text-h6">{{ event.title }}</div>
             <div class="text-subtitle2">{{ formatEventDateTime(event) }}</div>
-            <div class="text-subtitle3">Prezzo: {{ event.price }}€</div>
+            <div class="text-subtitle3">Prezzo:
+              <span v-if="event.price > 0" class="text-secondary text-bold">{{ event.price }}€</span>
+              <span v-else class="text-secondary text-bold">{{ $t('buttons.gratis') }}</span>
+            </div>
             <div class="q-mt-sm">{{ event.description }}</div>
             <q-separator v-if="!isLastEvent(event)" class="q-my-md" />
           </div>
@@ -96,7 +99,7 @@ export default defineComponent({
         description: item.description,
         startDate: item.startDate.split('T')[0],
         endDate: item.endDate.split('T')[0],
-        price: item.price,
+        price: props.type === 'activities' ? item.targets[0].price : item.price,
         color: 'primary',
         fullData: item
       }))
@@ -130,7 +133,6 @@ export default defineComponent({
     })
 
     const getEventsForDay = (dateStr) => {
-      console.log('Checking date:', dateStr) // Debug line
       return items.value.filter(event => {
         // Convert all dates to timestamps for comparison
         const currentDay = new Date(dateStr).getTime()

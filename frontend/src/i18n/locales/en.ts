@@ -98,6 +98,9 @@ export default {
     home: 'Home',
     registry: 'Registry',
     events: 'Events',
-    activities: 'Activities'
+    activities: 'Activities',
+    setting: 'Settings',
+    pricing: 'Pricing',
+    privacyPolicy: 'Privacy Policy',
   }
 }

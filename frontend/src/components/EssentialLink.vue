@@ -2,7 +2,7 @@
   <q-item
     clickable
     tag="a"
-    :href="link"
+    :to="link"
   >
     <q-item-section
       v-if="icon"
@@ -12,7 +12,7 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
+      <q-item-label style="font-size: 17px">{{ title }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>

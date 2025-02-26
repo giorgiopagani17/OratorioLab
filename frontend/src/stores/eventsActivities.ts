@@ -15,6 +15,7 @@ interface Target {
 }
 
 interface EventActivity {
+  type: string;
   name: string;
   description: string;
   note: string;
