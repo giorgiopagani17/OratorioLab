@@ -33,7 +33,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:section(activities|events)',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: 'view', component: () => import('@/pages/EventsActivities/Visualize/VisualizeEventsActivities.vue'), props: (route) => ({ type: route.query.type, section: route.params.section }) }]
+    children: [{ path: 'view', component: () => import('@/pages/EventsActivities/View/AllEventsActivities.vue'), props: (route) => ({ type: route.query.type, section: route.params.section }) }]
   },
   {
     path: '/:section(activities|events)',
@@ -41,7 +41,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'view/:id',
-        component: () => import('@/pages/EventsActivities/Card/EventsActivitiesCard.vue'),
+        component: () => import('@/pages/EventsActivities/View/SingleEventActivity.vue'),
         props: (route) => ({
           id: Number(route.params.id),
           section: route.params.section

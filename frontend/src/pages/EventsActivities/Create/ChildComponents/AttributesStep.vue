@@ -71,8 +71,8 @@
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import { useEventsActivitiesStore } from '@/stores/eventsActivities';
 import { useRoute } from 'vue-router';
-import InputTextCustom from '@/components/Input/InputText.vue';
-import InputNumberCustom from '@/components/Input/InputNumber.vue';
+import InputTextCustom from '@/components/Inputs/InputText.vue';
+import InputNumberCustom from '@/components/Inputs/InputNumber.vue';
 
 const route = useRoute();
 const type = ref(route.path.includes('activities') ? 'activity' : 'event');
