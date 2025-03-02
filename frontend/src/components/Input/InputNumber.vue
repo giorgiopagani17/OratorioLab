@@ -1,12 +1,11 @@
-<!-- frontend/src/components/InputNumber.vue -->
 <template>
   <q-input
-    rounded
+    :rounded="rounded"
+    :outlined="outlined"
     :maxlength="maxLength"
-    outlined
     :disable="!isDisabled"
     v-model="localDisplayValue"
-    :placeholder="`${$t('labels.price')} Target`"
+    :placeholder="placeholder"
     :error="!isDisabled && !localDisplayValue"
     hide-bottom-space
     @update:model-value="handleUpdate"
@@ -34,11 +33,30 @@ const props = defineProps({
     type: Number,
     default: 1000
   },
+  rounded: {
+    type: Boolean,
+    default: false
+  },
+  outlined: {
+    type: Boolean,
+    default: false
+  },
+  placeholder: {
+    type: String,
+    default: ''
+  },
+  update: {
+    type: Function,
+    default: null
+  },
+  blur: {
+    type: Function,
+    default: null
+  }
 });
 
 const emit = defineEmits(['update:modelValue']);
-const localDisplayValue= ref(props.modelValue);
-
+const localDisplayValue = ref(props.modelValue);
 
 const cleanAndFormatInput = (input: string): string => {
   if (!input) return '0';
@@ -82,11 +100,13 @@ const handleUpdate = (value: string | number | null) => {
   const val = typeof value === 'string' ? value : String(value);
   localDisplayValue.value = cleanAndFormatInput(val);
   emit('update:modelValue', localDisplayValue.value);
+  if (props.update) props.update(value);
 };
 
 const handleBlur = () => {
   localDisplayValue.value = formatOnBlur(localDisplayValue.value);
   emit('update:modelValue', localDisplayValue.value);
+  if (props.blur) props.blur();
 };
 
 const formatOnBlur = (value: string): string => {

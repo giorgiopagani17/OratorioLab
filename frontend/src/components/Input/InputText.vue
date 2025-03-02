@@ -26,6 +26,10 @@ const props = defineProps({
   rules: {
     type: Array as () => ((val: string | null | undefined) => boolean)[],
     default: () => [(val: string | null | undefined) => !!val]
+  },
+  blur: {
+    type: Function,
+    default: null
   }
 });
 
@@ -39,5 +43,6 @@ watch(inputValue, (newValue) => {
 
 const handleBlur = () => {
   inputValue.value = (inputValue.value?.toString() || '').trim();
+  if (props.blur) props.blur();
 };
 </script>
