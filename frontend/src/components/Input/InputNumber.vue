@@ -1,43 +1,20 @@
 <template>
   <q-input
-    :rounded="rounded"
-    :outlined="outlined"
+    v-bind="inputProps"
+    :disable="isDisabled"
+    v-model="model"
     :maxlength="maxLength"
-    :disable="!isDisabled"
-    v-model="localDisplayValue"
     :placeholder="placeholder"
-    :error="!isDisabled && !localDisplayValue"
-    hide-bottom-space
     @update:model-value="handleUpdate"
     @blur="handleBlur"
   />
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps } from 'vue';
+const model = defineModel<string>();
 
 const props = defineProps({
-  modelValue: {
-    type: String,
-    required: true
-  },
   isDisabled: {
-    type: Boolean,
-    required: true
-  },
-  index: {
-    type: Number,
-    required: true
-  },
-  maxLength: {
-    type: Number,
-    default: 1000
-  },
-  rounded: {
-    type: Boolean,
-    default: false
-  },
-  outlined: {
     type: Boolean,
     default: false
   },
@@ -46,19 +23,24 @@ const props = defineProps({
     default: ''
   },
   update: {
-    type: Function,
+    type: String,
     default: null
   },
   blur: {
-    type: Function,
+    type: String,
     default: null
+  },
+  maxLength: {
+    type: Number,
+    default: null
+  },
+  inputProps: {
+    type: Object,
+    default: () => ({})
   }
 });
 
-const emit = defineEmits(['update:modelValue']);
-const localDisplayValue = ref(props.modelValue);
-
-const cleanAndFormatInput = (input: string): string => {
+const cleanAndFormatInputWithDecimals = (input: string): string => {
   if (!input) return '0';
 
   const lastChar = input.slice(-1);
@@ -96,20 +78,17 @@ const cleanAndFormatInput = (input: string): string => {
   return isDecimalPoint ? formatted + ',' : formatted;
 };
 
-const handleUpdate = (value: string | number | null) => {
-  const val = typeof value === 'string' ? value : String(value);
-  localDisplayValue.value = cleanAndFormatInput(val);
-  emit('update:modelValue', localDisplayValue.value);
-  if (props.update) props.update(value);
+const cleanAndFormatInputWithoutDecimals = (input: string): string => {
+  const cleanedValue = input.replace(/[^\d,]/g, '');
+  const normalizedValue = cleanedValue.replace(',', '.');
+  const numericValue = parseFloat(normalizedValue);
+
+  return isNaN(numericValue) || numericValue === 0
+    ? '0'
+    : numericValue.toLocaleString('it-IT');
 };
 
-const handleBlur = () => {
-  localDisplayValue.value = formatOnBlur(localDisplayValue.value);
-  emit('update:modelValue', localDisplayValue.value);
-  if (props.blur) props.blur();
-};
-
-const formatOnBlur = (value: string): string => {
+const formatOnBlurWithDecimals = (value: string): string => {
   if (value.endsWith(',')) {
     return value.slice(0, -1);
   }
@@ -119,10 +98,19 @@ const formatOnBlur = (value: string): string => {
   return value;
 };
 
-watch(() => props.modelValue, (newValue) => {
-  localDisplayValue.value = newValue;
-});
-</script>
+const handleUpdate = (value: string | number | null) => {
+  if (props.update === 'formatNumberDecimals') {
+    const val = typeof value === 'string' ? value : String(value);
+    model.value = cleanAndFormatInputWithDecimals(val);
+  } else if(props.update === 'formatNumberNoDecimals') {
+    const val = typeof value === 'string' ? value : String(value);
+    model.value = cleanAndFormatInputWithoutDecimals(val);
+  }
+};
 
-<style scoped lang="scss">
-</style>
+const handleBlur = () => {
+  if (props.blur === 'formatNumberDecimals' && model.value) {
+    model.value = formatOnBlurWithDecimals(model.value);
+  }
+};
+</script>

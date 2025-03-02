@@ -1,48 +1,50 @@
 <template>
   <q-input
-    rounded
-    outlined
-    v-model="inputValue"
+    v-bind="inputProps"
+    v-model="model"
+    :maxlength="maxLength"
     :placeholder="placeholder"
     @blur="handleBlur"
     :rules="rules"
-    hide-bottom-space
     type="text"
   />
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+const model = defineModel<string>();
 
 const props = defineProps({
-  modelValue: {
-    type: String,
-    required: true
-  },
   placeholder: {
     type: String,
     default: ''
   },
   rules: {
     type: Array as () => ((val: string | null | undefined) => boolean)[],
-    default: () => [(val: string | null | undefined) => !!val]
+    default: () => []
   },
   blur: {
-    type: Function,
+    type: String,
     default: null
+  },
+  maxLength: {
+    type: Number,
+    default: null
+  },
+  inputProps: {
+    type: Object,
+    default: () => ({})
   }
 });
 
-const emit = defineEmits(['update:modelValue']);
-
-const inputValue = ref(props.modelValue);
-
-watch(inputValue, (newValue) => {
-  emit('update:modelValue', newValue);
-});
+const trimText = () => {
+  if (model.value) {
+    model.value = model.value.toString().trim();
+  }
+};
 
 const handleBlur = () => {
-  inputValue.value = (inputValue.value?.toString() || '').trim();
-  if (props.blur) props.blur();
+  if (props.blur === 'trimText') {
+    trimText();
+  }
 };
 </script>

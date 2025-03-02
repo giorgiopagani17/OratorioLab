@@ -3,7 +3,17 @@
     <div class="small-containers">
       <div>
         <span class="text-h6 text-bold text-primary">{{ $t(`labels.${type}Name`) }}</span>
-        <q-input rounded outlined v-model="name" :placeholder="$t('placeholders.insertText')" @blur="() => name = (name?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+        <InputTextCustom
+          :input-props="{
+            rounded: true,
+            outlined: true,
+            hideBottomSpace: true
+          }"
+          v-model="name"
+          :placeholder="$t('placeholders.insertText')"
+          blur="trimText"
+          :rules="[val => !!val]"
+        />
       </div>
 
       <div>
@@ -13,14 +23,35 @@
 
       <div>
         <span class="text-h6 text-bold text-primary">{{ $t('labels.note') }}</span>
-        <q-input rounded outlined v-model="note" :placeholder="$t('placeholders.insertText')" @blur="() => note = (note?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+        <InputTextCustom
+          :input-props="{
+            rounded: true,
+            outlined: true,
+            hideBottomSpace: true,
+          }"
+          v-model="note"
+          :placeholder="$t('placeholders.insertText')"
+          blur="trimText"
+          :rules="[val => !!val]"
+        />
       </div>
     </div>
 
     <div class="small-containers border-primary-left">
       <div>
         <span class="text-h6 text-bold text-primary">{{ $t('labels.maxParticipants') }}</span>
-        <q-input class="q-mb-xs" rounded outlined maxlength="6" v-model="maxParticipants" :placeholder="$t('placeholders.insertNumber')" @update:model-value="handleMaxParticipants" :rules="[val => parseFloat(val.replace(/\./g, '').replace(',', '.')) > 0]" hide-bottom-space/>
+        <InputNumberCustom
+          :input-props="{
+            rounded: true,
+            outlined: true,
+            hideBottomSpace: true,
+          }"
+          :maxLength="6"
+          v-model="maxParticipants"
+          :placeholder="$t('placeholders.insertNumber')"
+          update="formatNumberNoDecimals"
+          :rules="[(val: string) => parseFloat(val.replace(/\./g, '').replace(',', '.')) > 0]"
+        />
       </div>
 
       <div>
@@ -40,6 +71,8 @@
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import { useEventsActivitiesStore } from '@/stores/eventsActivities';
 import { useRoute } from 'vue-router';
+import InputTextCustom from '@/components/Input/InputText.vue';
+import InputNumberCustom from '@/components/Input/InputNumber.vue';
 
 const route = useRoute();
 const type = ref(route.path.includes('activities') ? 'activity' : 'event');
@@ -50,21 +83,6 @@ const startingDate = ref('');
 const endingDate = ref('');
 const maxParticipants = ref('');
 const store = useEventsActivitiesStore();
-
-const cleanAndFormatInput = (input: string): string => {
-  const cleanedValue = input.replace(/[^\d,]/g, '');
-  const normalizedValue = cleanedValue.replace(',', '.');
-  const numericValue = parseFloat(normalizedValue);
-
-  return isNaN(numericValue) || numericValue === 0
-    ? '0'
-    : numericValue.toLocaleString('it-IT');
-};
-
-const handleMaxParticipants = (value: string | number | null) => {
-  const val = typeof value === 'string' ? value : String(value);
-  maxParticipants.value = cleanAndFormatInput(val);
-};
 
 const validateInputs = () => {
   const hasErrors = !name.value.trim() ||
