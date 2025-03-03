@@ -1,6 +1,6 @@
 <template>
-  <q-page class="row items-center justify-evenly q-pa-md page-background">
-    <div :class="{'w-95': $q.screen.gt.sm, 'q-pt-sm w-100': $q.screen.lt.md}">
+  <q-page class="row items-center justify-evenly q-pa-md">
+    <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
       <div class="q-mt-auto container-border">
         <div class="bg-secondary text-bold text-white container-header">
           <ProgressLine ref="progressLine"/>

@@ -1,13 +1,9 @@
-// app global css in SCSS form
-.page-background {
+body {
+  font-family: 'Futura', sans-serif;
   background-color: $main;
 }
 
-body {
-  font-family: 'Futura', sans-serif;
-}
-
-.container{
+.container {
   background-color: white;
   border-radius: 24px;
   border: solid 1px $border-color;
@@ -115,8 +111,8 @@ body {
   }
 }
 
-.wallpaper{
-  background-image: url('@/assets/wallpaper.png');
+.wallpaper {
+  background-image: url('@/assets/wallpaper.png') !important;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

@@ -1,6 +1,6 @@
 <template>
-  <q-page class="row items-center justify-evenly q-pa-md page-background">
-    <div :class="{'w-95': $q.screen.gt.sm, 'q-pt-sm w-100': $q.screen.lt.md}">
+  <q-page class="row items-center justify-evenly q-pa-md">
+    <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
       <div class="row container q-px-lg q-py-md">
         <div class="col-12 col-md-3 q-my-auto  lt-md">
           <div class="q-px-sm q-my-sm">

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row items-center justify-evenly q-pa-md page-background">
+  <q-page class="row items-center justify-evenly q-pa-md">
       <div class="container-border" style="width: 95%">
         <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
           <div class="flex justify-between">

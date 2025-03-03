@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center" style="height: 100vh">
+  <div class="flex items-center justify-center wallpaper" style="height: 100vh">
     <div v-if="!isLoading" class="q-mt-lg border" style="width: 45vh">
       <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
         Login
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, onBeforeUnmount, ref} from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import LoadingPage from 'components/LoadingPage.vue';
 
@@ -31,14 +31,6 @@ const handleLogin = async () => {
   isLoading.value = false;
   router.push('/home');
 };
-
-onMounted(() => {
-  document.documentElement.classList.add('wallpaper');
-});
-
-onBeforeUnmount(() => {
-  document.documentElement.classList.remove('wallpaper');
-});
 </script>
 
 <style scoped lang="scss">
