@@ -52,12 +52,19 @@ body {
   border-radius: 100px;
 
   &:hover {
-    transform: scale(1.1) !important;
+    transform: scale(1.06) !important;
   }
 }
 
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
+}
+
 .blue-container {
-  margin: 10px;
   font-size: 20px;
   font-weight: bold;
   color: white;
@@ -85,8 +92,27 @@ body {
   border: none !important;
 }
 
-.border-right-grey-custom {
-  border-right: 2px solid $border-color;
+.border-right-grey-responsive {
+  @media (min-width: $breakpoint-md-min) {
+    border-right: 2px solid $border-color;
+    padding-right: 16px;
+  }
+}
+
+.padding-left-responsive {
+  @media (min-width: $breakpoint-md-min) {
+    padding-left: 16px;
+  }
+}
+
+.blue-right-container {
+  @media (max-width: $breakpoint-sm-max) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  @media (min-width: $breakpoint-md-min) {
+    padding-left: 12px;
+  }
 }
 
 .wallpaper{
@@ -120,4 +146,12 @@ body {
 
 .hover-underline:hover {
   text-decoration: underline;
+}
+
+.w-95 {
+  width: 95%;
+}
+
+.w-100 {
+  width: 100%;
 }

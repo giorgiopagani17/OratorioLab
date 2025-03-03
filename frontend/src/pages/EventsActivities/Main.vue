@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md page-background">
-    <div style="width: 90%">
+    <div :class="{'w-95': $q.screen.gt.sm, 'q-pt-sm w-100': $q.screen.lt.md}">
       <div class="container flex justify-center q-mb-lg" style="padding: 12px">
         <div class="flex items-center justify-center q-pr-sm border-right-grey-custom">
           <q-btn color="secondary" class="button" @click="navigateTo('/create')">

@@ -258,9 +258,11 @@ export default defineComponent({
 .calendar-day {
   background-color: white;
   min-height: 65px;
+  max-height: 100px;
   position: relative;
   padding: 8px;
   transition: background-color 0.2s ease;
+  overflow: hidden;
 }
 
 .calendar-day:hover {
@@ -272,13 +274,6 @@ export default defineComponent({
   background-color: #f8f8f8;
 }
 
-.events-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-top: 4px;
-}
-
 .event-badge {
   font-size: 0.75rem;
   padding: 2px 6px;
@@ -287,8 +282,18 @@ export default defineComponent({
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
+  max-width: calc(100% - 4px);
+  width: fit-content;
   transition: opacity 0.2s ease;
+}
+
+.events-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 4px;
+  max-height: calc(100% - 24px); /* Leave space for date number */
+  overflow: hidden; /* Hide overflow */
 }
 
 .event-badge:hover {
@@ -301,5 +306,50 @@ export default defineComponent({
 
 .row .col:last-child {
   border-top-right-radius: 0;
+}
+
+@media (max-width: 600px) {
+  .calendar-grid {
+    font-size: 0.85rem;
+  }
+
+  .calendar-day {
+    min-height: 70px;
+    max-height: 70px;
+  }
+
+  .event-badge {
+    font-size: 0.7rem;
+    padding: 1px 4px;
+  }
+
+  .text-h6 {
+    font-size: 1rem !important;
+  }
+
+  .row .col {
+    padding: 4px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .calendar-grid {
+    font-size: 0.75rem;
+  }
+
+  .calendar-day {
+    min-height: 60px;
+    max-height: 60px;
+  }
+
+  .events-wrapper {
+    margin-top: 2px;
+    gap: 1px;
+  }
+
+  .event-badge {
+    font-size: 0.65rem;
+    padding: 1px 3px;
+  }
 }
 </style>

@@ -1,22 +1,33 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md page-background">
-    <div style="width: 90%">
-      <div class="container flex justify-center q-mb-lg" style="padding: 12px">
-        <div class="flex items-center justify-center q-pr-sm border-right-grey-custom">
-          <q-btn
-            v-for="button in buttons"
-            :key="button.title"
-            color="primary"
-            class="button"
-            style="width: 160px;"
-            @click="navigateTo(button.action)"
-          >
-            {{ $t(`buttons.${button.title}`) }}
-          </q-btn>
+    <div :class="{'w-95': $q.screen.gt.sm, 'q-pt-sm w-100': $q.screen.lt.md}">
+      <div class="row container q-px-lg q-py-md">
+        <div class="col-12 col-md-3 q-my-auto  lt-md">
+          <div class="q-px-sm q-my-sm">
+            <div class="blue-container text-center text-truncate">
+              {{ oratorio }}
+            </div>
+          </div>
         </div>
-        <div class="flex items-center justify-center q-pl-sm">
-          <div class="blue-container">
-            {{ oratorio }}
+        <div class="col-12 col-md-9 border-right-grey-responsive">
+          <div class="row justify-center">
+            <div class="col-3 col-sm-6 col-md-3 q-px-sm " v-for="button in buttons" :key="button.title">
+              <q-btn
+                color="primary"
+                class="button full-width "
+                @click="navigateTo(button.action)"
+              >
+                <span class="gt-xs text-truncate">{{ $t(`buttons.${button.title}`) }}</span>
+                <q-icon class="lt-sm" size="30px" :name="getIcon(button.action)" />
+              </q-btn>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-3 q-my-auto padding-left-responsive gt-sm">
+          <div class="q-px-sm">
+            <div class="blue-container text-center text-truncate">
+              {{ oratorio }}
+            </div>
           </div>
         </div>
       </div>
@@ -62,7 +73,7 @@ interface Button {
   action: string;
 }
 
-const oratorio = 'ORATORIO S. MARIA';
+const oratorio = 'ORATORIO';
 const router = useRouter();
 
 const cards: Card[] = [
@@ -104,6 +115,16 @@ const buttons: Button[] = [
     action: 'users'
   }
 ];
+
+const getIcon = (action: string): string => {
+  const icons: Record<string, string> = {
+    activities: 'local_activity',
+    events: 'event',
+    cash: 'payments',
+    users: 'people'
+  };
+  return icons[action] || 'help';
+};
 
 const navigateTo = (url: string) => {
   router.push(`/${url}`);

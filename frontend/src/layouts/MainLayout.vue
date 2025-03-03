@@ -14,7 +14,7 @@
           input-style="color: white;"
           :placeholder="$t('placeholders.search')"
           color="white"
-          class="custom-input"
+          class="custom-input gt-xs"
         >
           <template v-slot:prepend>
             <q-icon name="search" color="white"/>

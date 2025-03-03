@@ -1,35 +1,40 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md page-background">
-    <div style="width: 90%">
-      <div class="container flex justify-center q-mb-lg" style="padding: 12px">
-        <div class="flex items-center justify-center q-pr-sm border-right-grey-custom">
-          <q-input
-            v-model="search"
-            dense
-            input-style="color: white;"
-            :placeholder="$t('placeholders.search')"
-            color="white"
-            class="custom-input blue-container-input"
-          >
-            <template v-slot:prepend>
-              <q-icon name="search" color="white"/>
-            </template>
-          </q-input>
+    <div :class="{'w-95': $q.screen.gt.sm, 'q-pt-sm w-100': $q.screen.lt.md}">
+      <div class="row container q-px-lg q-py-md">
+        <div class="col-12 col-md-4 q-my-auto border-right-grey-responsive">
+          <div class="q-px-sm">
+            <q-input
+              v-model="search"
+              dense
+              input-style="color: white;"
+              :placeholder="$t('placeholders.search')"
+              color="white"
+              class="custom-input blue-container-input full-width"
+            >
+              <template v-slot:prepend>
+                <q-icon name="search" color="white"/>
+              </template>
+            </q-input>
+          </div>
         </div>
-        <div class="flex items-center justify-center q-pl-sm">
-          <q-btn
-            v-for="button in buttons"
-            :key="button.title"
-            :color="button.active ? 'secondary' : 'primary'"
-            class="button q-mx-xs"
-            style="width: 150px;"
-            @click="toggleFilter(button)"
-          >
-            {{ $t(`buttons.${button.title}`) }}
-          </q-btn>
+
+        <div class="col-12 col-md-8">
+          <div class="row justify-center padding-left-responsive">
+            <div class="col-6 col-md-3 col-sm-3 q-px-sm" v-for="button in buttons" :key="button.title">
+              <q-btn
+                :color="button.active ? 'secondary' : 'primary'"
+                class="button full-width"
+                @click="toggleFilter(button)"
+              >
+                {{ $t(`buttons.${button.title}`) }}
+              </q-btn>
+            </div>
+          </div>
         </div>
       </div>
 
+      <div class="table-container">
       <q-table
         style="border-radius: 24px; min-height: 436px"
         class="q-mt-lg"
@@ -66,6 +71,7 @@
           </q-td>
         </template>
       </q-table>
+      </div>
     </div>
   </q-page>
 </template>
@@ -180,28 +186,45 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+
 .q-table {
   table-layout: fixed;
+  position: relative;
+  min-width: 900px;
+  scroll-snap-align: start;
 
   th, td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 0;
   }
 
-  td > div {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
+  th:first-child,
+  td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: white;
   }
 
-  thead tr th:nth-child(1) { width: 25%; }
-  thead tr th:nth-child(2) { width: 10%; }
-  thead tr th:nth-child(3) { width: 15%; }
-  thead tr th:nth-child(4) { width: 15%; }
-  thead tr th:nth-child(5) { width: 35%; }
+  th:first-child {
+    z-index: 3;
+    background: var(--q-secondary);
+  }
+
+  thead tr {
+    th:th:nth-child(2) { width: 10%; }
+    th:nth-child(3) { width: 15%; }
+    th:nth-child(4) { width: 15%; }
+    th:nth-child(5) { width: 35%; }
+  }
 }
 
 .input-blue {
