@@ -82,6 +82,7 @@ import EssentialLink from 'components/EssentialLink.vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import { EssentialLinkProps } from '@/components/EssentialLink.vue';
 import { useRouter, useRoute } from 'vue-router';
+import { useDetailsStore } from '@/stores/details';
 
 const { t } = useI18n();
 const leftDrawerOpen = ref(false);
@@ -93,6 +94,7 @@ defineOptions({
 const search = ref<string>('');
 const router = useRouter();
 const route = useRoute();
+const detailsStore = useDetailsStore();
 
 const logout = () => {
   localStorage.clear();
@@ -142,6 +144,7 @@ const settingsList = computed((): EssentialLinkProps[] => [
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
+  detailsStore.setLeftDrawerOpen(leftDrawerOpen.value.toString());
 };
 
 

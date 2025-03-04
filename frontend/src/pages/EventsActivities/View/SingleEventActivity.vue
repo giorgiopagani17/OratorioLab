@@ -16,7 +16,7 @@
         <div class="q-pa-lg container-body" style="height: 75vh;">
           <div class="flex justify-between">
             <div  v-if="eventActivity">
-              <q-img :src="eventActivity.image" style="width: 275px; height: 275px; border-radius: 12px"/>
+              <q-img :src="eventActivity.image" style="width: 325px; height: 325px; border-radius: 12px"/>
             </div>
 
             <div  v-if="eventActivity" style="width: 40%" class="flex column justify-center">
@@ -25,28 +25,28 @@
                 <span class="text-h6 q-ml-md">{{ eventActivity.name }}</span>
               </div>
 
-              <div class="q-mt-md">
+              <div class="q-mt-lg">
                 <span class="text-h6 text-bold text-secondary">Data: </span>
                 <span class="text-h6 q-ml-md">{{ formatDates(eventActivity.startDate, eventActivity.endDate) }}</span>
               </div>
 
-              <div class="q-mt-md">
+              <div class="q-mt-lg">
                 <span class="text-h6 text-bold text-secondary">Ora di Inizio: </span>
                 <span class="text-h6 q-ml-md">{{ formatHours(eventActivity.startDate) }}</span>
               </div>
 
-              <div class="q-mt-md">
+              <div class="q-mt-lg">
                 <span class="text-h6 text-bold text-secondary">Luogo: </span>
                 <span class="text-h6 q-ml-md">Oratorio S. Maria</span>
               </div>
 
-              <div class="q-mt-md">
+              <div class="q-mt-lg">
                 <span class="text-h6 text-bold text-secondary">Note: </span>
                 <span class="text-h6 q-ml-md">{{ eventActivity.note }}</span>
               </div>
             </div>
 
-            <div  v-if="eventActivity" style="width: 25%" class="flex column justify-center items-center text-center q-pr-md">
+            <div  v-if="eventActivity" style="width: 25%" class="flex column justify-center items-start text-start q-pr-md">
               <div>
                 <span class="text-h6 text-bold text-secondary">Organizzatore:</span><br/>
                 <span style="font-size: 15px">Chiesa di Bergamo</span>
@@ -62,17 +62,25 @@
                 <span style="font-size: 15px">200€</span>
               </div>
             </div>
+          </div>
 
-            <div v-if="eventActivity" class="flex justify-center q-mt-md">
-              <div>
-                <span class="text-h6 text-bold text-secondary">Descrizione:</span> <br/>
-                <span style="font-size: 15px">{{ eventActivity.description }}</span>
-              </div>
+          <hr class="q-my-lg hr-custom"/>
+
+          <div v-if="eventActivity" class="flex justify-between q-mt-md" style="width: 100%">
+            <div style="width: 70%;">
+              <span class="text-h6 text-bold text-secondary">Descrizione:</span> <br/>
+              <span class="text-h6" >{{ eventActivity.description }}</span>
             </div>
 
-            <div v-else>
-              Nessun Evento Trovato
+            <div style="width: 30%;">
+              <q-btn color="primary">
+                Vedi Iscrizioni
+              </q-btn>
             </div>
+          </div>
+
+          <div v-else>
+            Nessun Evento Trovato
           </div>
 
         </div>

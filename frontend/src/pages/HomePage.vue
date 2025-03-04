@@ -11,14 +11,19 @@
         </div>
         <div class="col-12 col-md-9 border-right-grey-responsive">
           <div class="row justify-center">
-            <div class="col-3 col-sm-6 col-md-3 q-px-sm " v-for="button in buttons" :key="button.title">
+            <div class="col-3 col-sm-6 col-md-3 q-px-sm" v-for="button in buttons" :key="button.title">
               <q-btn
                 color="primary"
-                class="button full-width "
+                class="button full-width flex-center"
                 @click="navigateTo(button.action)"
               >
-                <span class="gt-xs text-truncate">{{ $t(`buttons.${button.title}`) }}</span>
-                <q-icon class="lt-sm" size="30px" :name="getIcon(button.action)" />
+                <div class="hide-1274 flex-center">
+                  <q-icon v-if="isIconVisible" class="gt-sm hide-icon" :name="button.icon" />
+                  <span v-else class="gt-sm">{{ $t(`buttons.${button.title}`) }}</span>
+                </div>
+                <span class="show-1274">{{ $t(`buttons.${button.title}`) }}</span>
+                <span class="lt-md gt-xs">{{ $t(`buttons.${button.title}`) }}</span>
+                <q-icon class="lt-sm" :name="button.icon" />
               </q-btn>
             </div>
           </div>
@@ -56,6 +61,8 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import {useDetailsStore} from '@/stores/details';
+import {computed} from 'vue';
 
 defineOptions({
   name: 'HomePage'
@@ -71,10 +78,15 @@ interface Card {
 interface Button {
   title: string;
   action: string;
+  icon: string;
 }
 
 const oratorio = 'ORATORIO';
 const router = useRouter();
+const detailsStore = useDetailsStore();
+const isIconVisible = computed(() => {
+  return detailsStore.leftDrawerOpen === 'true';
+});
 
 const cards: Card[] = [
   {
@@ -100,31 +112,25 @@ const cards: Card[] = [
 const buttons: Button[] = [
   {
     title: 'activities',
-    action: 'activities'
+    action: 'activities',
+    icon: 'local_activity'
   },
   {
     title: 'events',
-    action: 'events'
+    action: 'events',
+    icon: 'event'
   },
   {
     title: 'cash',
-    action: 'cash'
+    action: 'cash',
+    icon: 'payments'
   },
   {
     title: 'people',
-    action: 'users'
+    action: 'users',
+    icon: 'people'
   }
 ];
-
-const getIcon = (action: string): string => {
-  const icons: Record<string, string> = {
-    activities: 'local_activity',
-    events: 'event',
-    cash: 'payments',
-    users: 'people'
-  };
-  return icons[action] || 'help';
-};
 
 const navigateTo = (url: string) => {
   router.push(`/${url}`);

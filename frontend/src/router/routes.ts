@@ -18,12 +18,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/events',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/EventsActivities/Main.vue'), props: { type: 'events' } }],
+    children: [{ path: '', component: () => import('pages/EventsActivities/HomeEventsActivities.vue'), props: { type: 'events' } }],
   },
   {
     path: '/activities',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/EventsActivities/Main.vue'), props: { type: 'activities' } }],
+    children: [{ path: '', component: () => import('pages/EventsActivities/HomeEventsActivities.vue'), props: { type: 'activities' } }],
   },
   {
     path: '/:section(activities|events)',

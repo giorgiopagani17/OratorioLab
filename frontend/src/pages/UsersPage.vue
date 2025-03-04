@@ -21,13 +21,19 @@
 
         <div class="col-12 col-md-8">
           <div class="row justify-center padding-left-responsive">
-            <div class="col-6 col-md-3 col-sm-3 q-px-sm" v-for="button in buttons" :key="button.title">
+            <div class="col-3 col-sm-6 col-md-3 q-px-sm q-px-sm" v-for="button in buttons" :key="button.title">
               <q-btn
                 :color="button.active ? 'secondary' : 'primary'"
-                class="button full-width"
+                class="button full-width flex-center"
                 @click="toggleFilter(button)"
               >
-                {{ $t(`buttons.${button.title}`) }}
+                <div class="hide-1274 flex-center">
+                  <q-icon v-if="isIconVisible" class="gt-sm" :name="button.icon" />
+                  <span v-else class="gt-sm">{{ $t(`buttons.${button.title}`) }}</span>
+                </div>
+                <span class="show-1274">{{ $t(`buttons.${button.title}`) }}</span>
+                <span class="lt-md gt-xs">{{ $t(`buttons.${button.title}`) }}</span>
+                <q-icon class="lt-sm" :name="button.icon" />
               </q-btn>
             </div>
           </div>
@@ -81,6 +87,7 @@ import {computed, onMounted, ref, watch} from 'vue';
 import type { QTableColumn } from 'quasar';
 import usersData from '@/data/users.json';
 import { useI18n } from 'vue-i18n';
+import { useDetailsStore } from '@/stores/details';
 
 defineOptions({
   name: 'UserPage'
@@ -96,6 +103,7 @@ interface UserRow {
 
 interface Button {
   title: string;
+  icon: string;
   action: string;
   active: boolean;
 }
@@ -110,6 +118,10 @@ const search = ref<string>('');
 const allUsers = ref<UserRow[]>([]);
 const rows = ref<UserRow[]>([]);
 const { t } = useI18n();
+const detailsStore = useDetailsStore();
+const isIconVisible = computed(() => {
+  return detailsStore.leftDrawerOpen === 'true';
+});
 
 const columns = computed<QTableColumn<UserRow>[]>(() => [
   { name: 'name', label: t('labels.name'), align: 'left', field: 'name', sortable: false },
@@ -120,10 +132,10 @@ const columns = computed<QTableColumn<UserRow>[]>(() => [
 ]);
 
 const buttons = ref<Button[]>([
-  { title: 'major', action: 'over18', active: false },
-  { title: 'minor', action: 'under18', active: false },
-  { title: 'male', action: 'male', active: false },
-  { title: 'female', action: 'female', active: false }
+  { title: 'major', icon:'person', action: 'over18', active: false },
+  { title: 'minor', icon:'child_care', action: 'under18', active: false },
+  { title: 'male', icon:'male', action: 'male', active: false },
+  { title: 'female', icon:'female', action: 'female', active: false }
 ]);
 
 const pagination = ref<QPagination>({
