@@ -148,7 +148,7 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .small-containers {
   flex-grow: 1;
   display: flex;

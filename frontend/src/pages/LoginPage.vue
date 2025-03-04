@@ -32,6 +32,3 @@ const handleLogin = async () => {
   router.push('/home');
 };
 </script>
-
-<style scoped lang="scss">
-</style>

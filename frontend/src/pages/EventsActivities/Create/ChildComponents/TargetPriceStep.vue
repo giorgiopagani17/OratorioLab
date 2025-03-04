@@ -378,7 +378,7 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .input-target-container {
   flex-grow: 1;
   display: flex;

@@ -153,7 +153,7 @@ const isActiveLink = (link?: string) => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .q-layout {
   position: fixed;
   width: 100%;

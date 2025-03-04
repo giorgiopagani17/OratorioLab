@@ -197,7 +197,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .table-container {
   width: 100%;
   overflow-x: auto;

@@ -134,7 +134,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .progress-container {
   width: 90%;
   margin: 0 auto;

@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import Calendar from '@/components/Calendar/Calendar.vue';
 import { useRouter } from 'vue-router';
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 
 defineOptions({
   name: 'UserPage'
@@ -66,7 +66,7 @@ const navigateTo = (url: string) => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .input-blue {
   border: none !important;
   border-radius: 100px;

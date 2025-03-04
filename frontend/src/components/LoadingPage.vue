@@ -17,7 +17,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .loading-container {
   display: flex;
   flex-direction: column;

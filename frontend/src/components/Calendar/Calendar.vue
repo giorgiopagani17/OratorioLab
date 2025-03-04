@@ -242,7 +242,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);

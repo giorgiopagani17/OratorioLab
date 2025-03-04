@@ -153,7 +153,7 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .containers {
   width: 100%;
   min-height: 400px;

@@ -195,7 +195,7 @@ const navigateToDetail = (id: number) => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .input-blue {
   border: none !important;
   border-radius: 100px;
