@@ -3,15 +3,15 @@
     <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
       <div class="row container q-px-lg q-py-md">
         <div class="col-3 col-sm-3 col-md-3 q-px-sm q-my-auto border-right-grey-responsive">
-          <q-btn color="secondary" class="button full-width" @click="navigateTo('/create')">
-            <span class="hide-750">{{ $t(`buttons.${type}Create`) }}</span>
-            <q-icon class="show-750" name="add" />
+          <q-btn color="secondary" class="button full-width" @click="navigateTo('/create')" >
+            <span class="hide-650">{{ $t(`buttons.create`) }}</span>
+            <q-icon class="show-650" name="add" />
           </q-btn>
         </div>
         <div class="col-3 col-sm-3 col-md-3 q-px-sm padding-left-responsive" v-for="button in buttons" :key="button.title">
           <q-btn @click="navigateTo(button.action)" color="primary" class="button full-width">
-            <span class="hide-750">{{ $t(`buttons.${button.title}`) }}</span>
-            <q-icon class="show-750" :name="button.icon" />
+            <span class="hide-650">{{ $t(`buttons.${button.title}`) }}</span>
+            <q-icon class="show-650" :name="button.icon" />
           </q-btn>
         </div>
       </div>
@@ -43,7 +43,7 @@ const router = useRouter();
 
 const buttons = computed<Button[]>(() => [
   {
-    title: type.value === 'events' ? 'eventsView' : 'activitiesView',
+    title: type.value,
     action: '/view',
     icon: 'visibility'
   },

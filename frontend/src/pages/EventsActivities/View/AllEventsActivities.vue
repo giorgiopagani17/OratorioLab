@@ -2,7 +2,7 @@
   <q-page class="row items-center justify-evenly q-pa-md">
     <div style="width: 90%; height: 100%">
       <div class="container flex justify-center q-mb-lg" style="padding: 12px">
-        <div class="flex items-center justify-center q-pr-sm border-right-grey-custom">
+        <div class="flex items-center justify-center q-pr-sm border-right-grey-responsive">
           <q-input
             v-model="search"
             dense
@@ -44,7 +44,7 @@
                 <q-img :src="eventActivity.image" style="width: 150px; height: 150px; border-bottom-left-radius: 9px; border-top-left-radius: 9px"/>
               </div>
 
-              <div style="width: 50%" class="flex column justify-center">
+              <div style="width: 50%" class="flex column justify-center q-pl-md">
                 <span class="text-h5 text-bold text-secondary q-mb-sm">{{ eventActivity.name }}</span>
                 <span class="text-grey-7 description-text">{{ eventActivity.description }}</span>
               </div>

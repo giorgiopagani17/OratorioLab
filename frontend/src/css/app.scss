@@ -41,7 +41,6 @@ body {
 }
 
 .button {
-  height: 70px;
   margin: 10px;
   font-size: 20px;
   font-weight: bold;
@@ -50,10 +49,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @media (max-width: 599px) {
-    height: 50px;
-  }
 
   &:hover {
     transform: scale(1.06) !important;
@@ -68,8 +63,15 @@ body {
   display: block;
 }
 
+.long-text-truncate {
+  white-space: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
+}
+
 .blue-container {
-  height: 70px;
   font-size: 20px;
   font-weight: bold;
   color: white;
@@ -79,27 +81,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  @media (max-width: 599px) {
-    height: 50px;
-  }
 }
 
 
 .blue-container-input {
-  height: 70px;
   margin: 10px;
   font-size: 20px;
   font-weight: bold;
   color: white;
   border-radius: 100px;
   background-color: #004AAD;
-  padding: 14px 12px;
-
-  @media (max-width: 599px) {
-    height: 50px;
-    padding: 4px 12px;
-  }
+  padding: 6px 12px;
 }
 
 .custom-input .q-field__control:before {
@@ -192,14 +184,14 @@ body {
   }
 }
 
-@media (max-width: 750px) {
-  .hide-750 {
+@media (min-width: 650px) {
+  .show-650 {
     display: none;
   }
 }
 
-@media (min-width: 750px) {
-  .show-750 {
+@media (max-width: 649px) {
+  .hide-650 {
     display: none;
   }
 }
