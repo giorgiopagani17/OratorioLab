@@ -10,7 +10,7 @@
               input-style="color: white;"
               :placeholder="$t('placeholders.search')"
               color="white"
-              class="custom-input blue-container-input full-width"
+              class="custom-input blue-container-input full-width q-pt-auto"
             >
               <template v-slot:prepend>
                 <q-icon name="search" color="white"/>

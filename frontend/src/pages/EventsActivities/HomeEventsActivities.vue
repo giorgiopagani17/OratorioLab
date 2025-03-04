@@ -3,13 +3,13 @@
     <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
       <div class="row container q-px-lg q-py-md">
         <div class="col-3 col-sm-3 col-md-3 q-px-sm q-my-auto border-right-grey-responsive">
-          <q-btn color="secondary" class="button full-width button-bigger" @click="navigateTo('/create')">
+          <q-btn color="secondary" class="button full-width" @click="navigateTo('/create')">
             <span class="hide-750">{{ $t(`buttons.${type}Create`) }}</span>
             <q-icon class="show-750" name="add" />
           </q-btn>
         </div>
         <div class="col-3 col-sm-3 col-md-3 q-px-sm padding-left-responsive" v-for="button in buttons" :key="button.title">
-          <q-btn @click="navigateTo(button.action)" color="primary" class="button full-width button-bigger">
+          <q-btn @click="navigateTo(button.action)" color="primary" class="button full-width">
             <span class="hide-750">{{ $t(`buttons.${button.title}`) }}</span>
             <q-icon class="show-750" :name="button.icon" />
           </q-btn>
@@ -70,18 +70,5 @@ const navigateTo = (url: string) => {
 .input-blue {
   border: none !important;
   border-radius: 100px;
-}
-
-.button-bigger {
-  height: 70px;
-  white-space: normal;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media (max-width: 599px) {
-    height: 50px;
-  }
 }
 </style>

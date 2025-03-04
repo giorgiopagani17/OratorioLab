@@ -41,11 +41,19 @@ body {
 }
 
 .button {
+  height: 70px;
   margin: 10px;
   font-size: 20px;
   font-weight: bold;
   color: white;
   border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 599px) {
+    height: 50px;
+  }
 
   &:hover {
     transform: scale(1.06) !important;
@@ -61,23 +69,37 @@ body {
 }
 
 .blue-container {
+  height: 70px;
   font-size: 20px;
   font-weight: bold;
   color: white;
   border-radius: 100px;
   background-color: $secondary;
   padding: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 599px) {
+    height: 50px;
+  }
 }
 
 
 .blue-container-input {
+  height: 70px;
   margin: 10px;
   font-size: 20px;
   font-weight: bold;
   color: white;
   border-radius: 100px;
   background-color: #004AAD;
-  padding: 6px 12px;
+  padding: 14px 12px;
+
+  @media (max-width: 599px) {
+    height: 50px;
+    padding: 4px 12px;
+  }
 }
 
 .custom-input .q-field__control:before {
