@@ -41,7 +41,6 @@ body {
 }
 
 .button {
-  margin: 10px;
   font-size: 20px;
   font-weight: bold;
   color: white;
@@ -85,7 +84,6 @@ body {
 
 
 .blue-container-input {
-  margin: 10px;
   font-size: 20px;
   font-weight: bold;
   color: white;
@@ -111,7 +109,13 @@ body {
 
 .padding-left-responsive {
   @media (min-width: $breakpoint-md-min) {
-    padding-left: 16px;
+    padding-left: 10px;
+  }
+}
+
+.margin-bottom-responsive {
+  @media (max-width: $breakpoint-md-min) {
+    margin-bottom: 1rem;
   }
 }
 

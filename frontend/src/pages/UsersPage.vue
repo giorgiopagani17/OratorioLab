@@ -1,9 +1,14 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md">
     <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
-      <div class="row container q-px-lg q-py-md">
-        <div class="col-12 col-md-4 q-my-auto border-right-grey-responsive">
-          <div class="q-px-sm">
+      <HeaderSection
+        leftColXs="col-12"
+        leftColMd="col-md-4"
+        rightColXs="col-12"
+        rightColMd="col-md-8">
+
+        <template v-slot:left>
+          <div class="col-12 margin-bottom-responsive">
             <q-input
               v-model="search"
               dense
@@ -17,67 +22,29 @@
               </template>
             </q-input>
           </div>
-        </div>
+        </template>
 
-        <div class="col-12 col-md-8">
-          <div class="row justify-center padding-left-responsive">
-            <div class="col-3 col-sm-6 col-md-3 q-px-sm q-px-sm" v-for="button in buttons" :key="button.title">
-              <q-btn
-                :color="button.active ? 'secondary' : 'primary'"
-                class="button full-width flex-center"
-                @click="toggleFilter(button)"
-              >
-                <div class="hide-1274 flex-center">
-                  <q-icon v-if="isIconVisible" class="gt-sm" :name="button.icon" />
-                  <span v-else class="gt-sm">{{ $t(`buttons.${button.title}`) }}</span>
-                </div>
-                <span class="show-1274">{{ $t(`buttons.${button.title}`) }}</span>
-                <span class="lt-md gt-xs">{{ $t(`buttons.${button.title}`) }}</span>
-                <q-icon class="lt-sm" :name="button.icon" />
-              </q-btn>
-            </div>
+        <template v-slot:right>
+          <div class="col-3 q-px-sm" v-for="button in buttons" :key="button.title">
+            <ResponsiveButton
+              :text="$t(`buttons.${button.title}`)"
+              :icon="button.icon"
+              :active="button.active"
+              @click="toggleFilter(button)"
+            />
           </div>
-        </div>
-      </div>
+        </template>
+      </HeaderSection>
 
-      <div class="table-container">
-      <q-table
-        style="border-radius: 24px; min-height: 436px"
-        class="q-mt-lg"
+      <DataTable
         :rows="rows"
         :columns="columns"
         row-key="name"
-        flat
-        bordered
-        virtual-scroll
-        :rows-per-page-options="[7, 15, 30, 50]"
-        :rows-per-page-label="$t('labels.recordsPerPage')"
         :pagination="pagination"
+        :loading="loading"
         @update:pagination="onPaginationChange"
-      >
-        <template v-slot:header-cell="props">
-          <q-th
-            :props="props"
-            class="bg-secondary text-white"
-            style="font-size: 15px; font-weight: bold;"
-          >
-            {{ props.col.label }}
-          </q-th>
-        </template>
-
-        <template v-slot:no-data>
-          <div class="full-width row flex-center">
-            {{ $t('errors.noUserFound') }}
-          </div>
-        </template>
-
-        <template v-slot:body-cell="props">
-          <q-td :props="props">
-            {{ props.value }}
-          </q-td>
-        </template>
-      </q-table>
-      </div>
+        @request-data="fetchData"
+      />
     </div>
   </q-page>
 </template>
@@ -87,7 +54,9 @@ import {computed, onMounted, ref, watch} from 'vue';
 import type { QTableColumn } from 'quasar';
 import usersData from '@/data/users.json';
 import { useI18n } from 'vue-i18n';
-import { useDetailsStore } from '@/stores/details';
+import HeaderSection from '@/components/Sections/HeaderSection.vue';
+import ResponsiveButton from '@/components/Buttons/ResponsiveButton.vue';
+import DataTable from '@/components/Tables/DataTable.vue';
 
 defineOptions({
   name: 'UserPage'
@@ -118,10 +87,7 @@ const search = ref<string>('');
 const allUsers = ref<UserRow[]>([]);
 const rows = ref<UserRow[]>([]);
 const { t } = useI18n();
-const detailsStore = useDetailsStore();
-const isIconVisible = computed(() => {
-  return detailsStore.leftDrawerOpen === 'true';
-});
+const loading = ref<boolean>(false);
 
 const columns = computed<QTableColumn<UserRow>[]>(() => [
   { name: 'name', label: t('labels.name'), align: 'left', field: 'name', sortable: false },
@@ -142,6 +108,17 @@ const pagination = ref<QPagination>({
   rowsPerPage: 7,
   page: 1,
 });
+
+const fetchData = async (paginationData: QPagination) => {
+  loading.value = true;
+  try {
+    console.log('chiamata api', paginationData);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    loading.value = false;
+  }
+};
 
 const onPaginationChange = (newPagination: QPagination) => {
   pagination.value = newPagination;
@@ -196,51 +173,3 @@ onMounted(() => {
   rows.value = usersData.users;
 });
 </script>
-
-<style lang="scss" scoped>
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;
-}
-
-.q-table {
-  table-layout: fixed;
-  position: relative;
-  min-width: 900px;
-  scroll-snap-align: start;
-
-  th, td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  th:first-child,
-  td:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    background: white;
-  }
-
-  th:first-child {
-    z-index: 3;
-    background: var(--q-secondary);
-  }
-
-  thead tr {
-    th:th:nth-child(2) { width: 10%; }
-    th:nth-child(3) { width: 15%; }
-    th:nth-child(4) { width: 15%; }
-    th:nth-child(5) { width: 35%; }
-  }
-}
-
-.input-blue {
-  border: none !important;
-  border-radius: 100px;
-}
-</style>

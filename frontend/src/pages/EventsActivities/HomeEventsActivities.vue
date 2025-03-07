@@ -1,20 +1,31 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md">
     <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
-      <div class="row container q-px-lg q-py-md">
-        <div class="col-3 col-sm-3 col-md-3 q-px-sm q-my-auto border-right-grey-responsive">
-          <q-btn color="secondary" class="button full-width" @click="navigateTo('/create')" >
-            <span class="hide-650">{{ $t(`buttons.create`) }}</span>
-            <q-icon class="show-650" name="add" />
-          </q-btn>
-        </div>
-        <div class="col-3 col-sm-3 col-md-3 q-px-sm padding-left-responsive" v-for="button in buttons" :key="button.title">
-          <q-btn @click="navigateTo(button.action)" color="primary" class="button full-width">
-            <span class="hide-650">{{ $t(`buttons.${button.title}`) }}</span>
-            <q-icon class="show-650" :name="button.icon" />
-          </q-btn>
-        </div>
-      </div>
+
+      <HeaderSection
+        leftColXs="col-3"
+        rightColXs="col-9"
+      >
+
+        <template v-slot:left>
+          <ResponsiveButton
+            :text="$t('buttons.create')"
+            icon="add"
+            color="secondary"
+            @click="navigateTo('/create')"
+          />
+        </template>
+
+        <template v-slot:right>
+          <div class="q-px-sm col-4" v-for="button in buttons" :key="button.title">
+            <ResponsiveButton
+              :text="$t(`buttons.${button.title}`)"
+              :icon="button.icon"
+              @click="navigateTo(button.action)"
+            />
+          </div>
+        </template>
+      </HeaderSection>
 
       <Calendar :type="type" class="q-mt-lg"/>
     </div>
@@ -25,6 +36,8 @@
 import Calendar from '@/components/Calendar/Calendar.vue';
 import { useRouter } from 'vue-router';
 import { computed } from 'vue';
+import HeaderSection from '@/components/Sections/HeaderSection.vue';
+import ResponsiveButton from '@/components/Buttons/ResponsiveButton.vue';
 
 defineOptions({
   name: 'UserPage'
