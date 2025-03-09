@@ -50,6 +50,20 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: '/:section(activities|events)',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: 'view/:id/subscriptions',
+        component: () => import('@/pages/Subscriptions/View/AllSubscriptions.vue'),
+        props: (route) => ({
+          id: Number(route.params.id),
+          section: route.params.section
+        })
+      }
+    ]
+  },
+  {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
   },
