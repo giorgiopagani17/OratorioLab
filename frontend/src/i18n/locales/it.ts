@@ -105,5 +105,6 @@ export default {
     setting: 'Impostazioni',
     pricing: 'Prezzi',
     privacyPolicy: 'Privacy Policy',
+    finance: 'Bilancio',
   }
 }

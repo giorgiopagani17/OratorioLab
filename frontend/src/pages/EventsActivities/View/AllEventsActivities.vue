@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md">
-    <div style="width: 90%; height: 100%">
+    <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
       <HeaderSection
         leftColXs="col-12"
         leftColMd="col-md-4"
@@ -37,7 +37,7 @@
               icon="arrow_back"
               color="grey"
               :active="false"
-              @click="router.push('/'+ pageType)"
+              @click="router.push('/'+ props.section)"
             />
           </div>
         </template>
@@ -45,7 +45,7 @@
 
       <div class="q-mt-lg container-border">
         <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
-          {{ $t(`titles.${pageType}All`) }}
+          {{ $t(`titles.${props.section}All`) }}
         </div>
         <div class="q-pa-lg container-body">
           <div class="q-px-md" style="height: calc(100vh - 310px); overflow-y: auto;">
@@ -109,10 +109,14 @@ interface Button {
   icon: string;
 }
 
+const props = defineProps<{
+  id: number;
+  section: string;
+}>();
+
 const search = ref<string>('');
-const route = useRoute();
 const router = useRouter();
-const pageType = computed(() => route.path.includes('events') ? 'events' : 'activities');
+const route = useRoute();
 
 const formatDates = (startDate: string, endDate: string): string => {
   const start = new Date(startDate);
@@ -188,7 +192,7 @@ const applyFilters = (items?: EventActivityDisplay[]): EventActivityDisplay[] =>
 };
 
 const eventsActivities = computed<EventActivityDisplay[]>(() => {
-  const data = pageType.value === 'activities' ? activities.activities : events.events;
+  const data = props.section === 'activities' ? activities.activities : events.events;
   const items: EventActivityDisplay[] = data.map(item => ({
     id: item.id,
     name: item.name,

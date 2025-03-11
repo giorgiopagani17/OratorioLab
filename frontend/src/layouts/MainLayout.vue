@@ -44,7 +44,7 @@
             />
           </q-list>
 
-          <hr style="border: none; height: 2px; background-color: #FF904D;" />
+          <hr style="border: none; height: 2px; background-color: #004AAD;" />
 
           <q-list class="q-mt-sm">
             <EssentialLink
@@ -138,25 +138,10 @@ const linksList1 = computed((): EssentialLinkProps[] => [
 
 const linksList2 = computed((): EssentialLinkProps[] => [
   {
-    title: t('menu.home'),
-    icon: 'home',
-    link: '/home'
+    title: t('menu.finance'),
+    icon: 'attach_money',
+    link: '/finance'
   },
-  {
-    title: t('menu.registry'),
-    icon: 'people',
-    link: '/users'
-  },
-  {
-    title: t('menu.events'),
-    icon: 'event',
-    link: '/events'
-  },
-  {
-    title: t('menu.activities'),
-    icon: 'local_activity',
-    link: '/activities'
-  }
 ]);
 
 const settingsList = computed((): EssentialLinkProps[] => [

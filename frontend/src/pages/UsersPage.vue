@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md">
-    <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
+    <div :class="{'q-py-sm w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
       <HeaderSection
         leftColXs="col-12"
         leftColMd="col-md-4"
@@ -90,11 +90,11 @@ const { t } = useI18n();
 const loading = ref<boolean>(false);
 
 const columns = computed<QTableColumn<UserRow>[]>(() => [
-  { name: 'name', label: t('labels.name'), align: 'left', field: 'name', sortable: false },
-  { name: 'age', label: t('labels.age'), align: 'left', field: 'age', sortable: false },
-  { name: 'dateOfBirth', label: t('labels.dateOfBirth'), align: 'left', field: 'dateOfBirth', sortable: false },
-  { name: 'gender', label: t('labels.gender'), align: 'left', field: 'gender', sortable: false },
-  { name: 'email', label: 'Email', align: 'left', field: 'email', sortable: false },
+  { name: 'name', label: t('labels.name'), align: 'left', field: 'name', sortable: false, width: 200 },
+  { name: 'age', label: t('labels.age'), align: 'left', field: 'age', sortable: false, width: 100 },
+  { name: 'dateOfBirth', label: t('labels.dateOfBirth'), align: 'left', field: 'dateOfBirth', sortable: false, width: 150 },
+  { name: 'gender', label: t('labels.gender'), align: 'left', field: 'gender', sortable: false, width: 120 },
+  { name: 'email', label: 'Email', align: 'left', field: 'email', sortable: false, width: 250 },
 ]);
 
 const buttons = ref<Button[]>([

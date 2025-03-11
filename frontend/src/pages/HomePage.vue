@@ -25,7 +25,11 @@
         </template>
       </HeaderSection>
 
-      <BodySection title="titles.latestEvents">
+      <BodySection titleTranslate="titles.latestEvents">
+        <template v-slot:leftHeader>
+          {{ $t('titles.latestEvents')}}
+        </template>
+
         <q-card v-for="card in cards" :key="card.title" class="card">
           <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
             <div class="absolute-bottom text-h6">

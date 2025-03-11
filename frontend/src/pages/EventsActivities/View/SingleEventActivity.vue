@@ -1,90 +1,162 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md">
-      <div class="container-border" style="width: 95%">
-        <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
-          <div class="flex justify-between">
-            <div>
-              <span>{{ isEvent ? 'Evento' : 'Attività' }} <span v-if="eventActivity" class="text-primary">{{ eventActivity.name }}</span></span>
+    <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
+      <BodySection>
+        <template v-slot:leftHeader>
+          <div class="flex items-center">
+            <q-btn
+              flat
+              round
+              color="white"
+              icon="arrow_back"
+              size="sm"
+              @click="router.push(`/${isEvent ? 'events' : 'activities'}/view`)"
+            />
+            <span class="q-ml-xs">
+              {{ $t(`menu.${props.section}`) }}
+            </span>
+          </div>
+        </template>
+
+
+        <div class="q-pa-sm full-width">
+          <div v-if="eventActivity">
+            <div class="row q-col-gutter-lg">
+              <div class="col-12 col-lg-8">
+                <div class="row q-col-gutter-lg">
+                  <div class="col-12 col-sm-5">
+                    <q-card class="no-shadow" style="border-radius: 12px">
+                      <q-img
+                        :src="eventActivity.image"
+                        class="rounded-borders full-width"
+                        style="max-height: 350px; object-fit: cover"
+                      >
+                        <div class="absolute-bottom text-subtitle2 bg-secondary-7 text-white q-pa-xs">
+                          <div class="row items-center">
+                            <q-icon name="event" size="xs" class="q-mr-xs" />
+                            {{ formatDates(eventActivity.startDate, eventActivity.endDate) }}
+                          </div>
+                        </div>
+                      </q-img>
+                    </q-card>
+                  </div>
+
+                  <div class="col-12 col-sm-7">
+                    <q-card flat bordered class="full-height" style="border-radius: 12px">
+                      <q-card-section>
+                        <div class="row items-center q-mb-md">
+                          <q-icon name="badge" color="secondary" size="sm" class="q-mr-sm" />
+                          <div class="text-h6 text-secondary text-bold">{{ eventActivity.name }}</div>
+                        </div>
+
+                        <q-separator class="q-my-sm" />
+
+                        <div class="row q-mb-sm">
+                          <div class="col-4 text-weight-bold text-secondary">Data:</div>
+                          <div class="col-8">{{ formatDates(eventActivity.startDate, eventActivity.endDate) }}</div>
+                        </div>
+
+                        <div class="row q-mb-sm">
+                          <div class="col-4 text-weight-bold text-secondary">Ora:</div>
+                          <div class="col-8">{{ formatHours(eventActivity.startDate) }}</div>
+                        </div>
+
+                        <div class="row q-mb-sm">
+                          <div class="col-4 text-weight-bold text-secondary">Luogo:</div>
+                          <div class="col-8">Oratorio S. Maria</div>
+                        </div>
+
+                        <div class="row q-mb-sm">
+                          <div class="col-4 text-weight-bold text-secondary">Note:</div>
+                          <div class="col-8">{{ eventActivity.note || 'Nessuna nota' }}</div>
+                        </div>
+                      </q-card-section>
+                    </q-card>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-lg-4">
+                <q-card flat bordered class="full-height" style="border-radius: 12px">
+                  <q-card-section class="bg-tertiary full-height column">
+                    <div class="col">
+                      <div class="text-h6 text-weight-bold text-secondary q-mb-md">
+                        Informazioni
+                      </div>
+
+                      <div class="row q-mb-md items-center">
+                        <div class="col-auto">
+                          <q-icon name="group" color="secondary" size="sm" />
+                        </div>
+                        <div class="col q-ml-md flex items-center">
+                          <div class="text-weight-bold text-secondary">Organizzatore:</div>
+                          <div class="q-ml-md">Chiesa di Bergamo</div>
+                        </div>
+                      </div>
+
+                      <div class="row q-mb-md items-center">
+                        <div class="col-auto">
+                          <q-icon name="phone" color="secondary" size="sm" />
+                        </div>
+                        <div class="col q-ml-md flex items-center">
+                          <div class="text-weight-bold text-secondary">Telefono:</div>
+                          <div class="q-ml-md">3924444141</div>
+                        </div>
+                      </div>
+
+                      <div class="row q-mb-md items-center">
+                        <div class="col-auto">
+                          <q-icon name="euro" color="primary" size="sm" />
+                        </div>
+                        <div class="col q-ml-md flex items-center">
+                          <div class="text-weight-bold text-primary">Prezzo {{ isEvent ? 'Evento' : 'Attività' }}:</div>
+                          <div class="q-ml-md" style="font-size: 16px">{{ eventActivity.price }}€</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-auto q-mt-auto">
+                      <q-btn
+                        color="primary"
+                        class="full-width"
+                        @click="navigateTo('/subscriptions')"
+                        icon="how_to_reg"
+                      >
+                        Vedi Iscrizioni
+                      </q-btn>
+                    </div>
+                  </q-card-section>
+                </q-card>
+              </div>
+
+              <div class="col-xs-12 col-sm-6 col-lg-12">
+                <q-card flat bordered class="full-height" style="border-radius: 12px">
+                  <q-card-section class="full-height">
+                    <div class="text-h6 text-weight-bold text-secondary q-mb-md flex items-center">
+                      <q-icon name="description" color="secondary" size="sm" class="q-mr-sm" />
+                      Descrizione
+                    </div>
+                    <p class="text-body1 q-ma-none">{{ eventActivity.description }}</p>
+                  </q-card-section>
+                </q-card>
+              </div>
             </div>
-            <div>
-              <span @click="router.push(`/${isEvent ? 'events' : 'activities'}/view`)" class="cursor-pointer text-grey-5 q-mr-md hover-underline" style="font-size: 15px">
-                {{ $t(`buttons.backTo${isEvent ? 'Events' : 'Activities'}`) }}
-              </span>
-            </div>
+          </div>
+
+          <div v-else class="text-center q-pa-xl">
+            <q-icon name="error_outline" size="4rem" color="grey-7" />
+            <div class="text-h6 text-grey-7 q-mt-md">Nessun Evento Trovato</div>
+            <q-btn
+              color="primary"
+              class="q-mt-lg"
+              @click="router.push(`/${isEvent ? 'events' : 'activities'}/view`)"
+              icon="arrow_back"
+              label="Torna alla lista"
+            />
           </div>
         </div>
-        <div class="q-pa-lg container-body" style="height: 75vh;">
-          <div class="flex justify-between">
-            <div  v-if="eventActivity">
-              <q-img :src="eventActivity.image" style="width: 325px; height: 325px; border-radius: 12px"/>
-            </div>
-
-            <div  v-if="eventActivity" style="width: 40%" class="flex column justify-center">
-              <div>
-                <span class="text-h6 text-bold text-secondary">Nome: </span>
-                <span class="text-h6 q-ml-md">{{ eventActivity.name }}</span>
-              </div>
-
-              <div class="q-mt-lg">
-                <span class="text-h6 text-bold text-secondary">Data: </span>
-                <span class="text-h6 q-ml-md">{{ formatDates(eventActivity.startDate, eventActivity.endDate) }}</span>
-              </div>
-
-              <div class="q-mt-lg">
-                <span class="text-h6 text-bold text-secondary">Ora di Inizio: </span>
-                <span class="text-h6 q-ml-md">{{ formatHours(eventActivity.startDate) }}</span>
-              </div>
-
-              <div class="q-mt-lg">
-                <span class="text-h6 text-bold text-secondary">Luogo: </span>
-                <span class="text-h6 q-ml-md">Oratorio S. Maria</span>
-              </div>
-
-              <div class="q-mt-lg">
-                <span class="text-h6 text-bold text-secondary">Note: </span>
-                <span class="text-h6 q-ml-md">{{ eventActivity.note }}</span>
-              </div>
-            </div>
-
-            <div  v-if="eventActivity" style="width: 25%" class="flex column justify-center items-start text-start q-pr-md">
-              <div>
-                <span class="text-h6 text-bold text-secondary">Organizzatore:</span><br/>
-                <span style="font-size: 15px">Chiesa di Bergamo</span>
-              </div>
-
-              <div class="q-mt-md">
-                <span class="text-h6 text-bold text-secondary">Telefono:</span><br/>
-                <span style="font-size: 15px">3924444141</span>
-              </div>
-
-              <div class="q-mt-md">
-                <span class="text-h6 text-bold text-primary">Prezzo {{ isEvent ? 'Evento' : 'Attività' }}:</span><br/>
-                <span style="font-size: 15px">200€</span>
-              </div>
-            </div>
-          </div>
-
-          <hr class="q-my-lg hr-custom"/>
-
-          <div v-if="eventActivity" class="flex justify-between q-mt-md" style="width: 100%">
-            <div style="width: 70%;">
-              <span class="text-h6 text-bold text-secondary">Descrizione:</span> <br/>
-              <span class="text-h6" >{{ eventActivity.description }}</span>
-            </div>
-
-            <div style="width: 30%;">
-              <q-btn color="primary">
-                Vedi Iscrizioni
-              </q-btn>
-            </div>
-          </div>
-
-          <div v-else>
-            Nessun Evento Trovato
-          </div>
-
-        </div>
-      </div>
+      </BodySection>
+    </div>
   </q-page>
 </template>
 
@@ -93,9 +165,11 @@ import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import activities from '@/data/activities.json';
 import events from '@/data/events.json';
+import BodySection from '@/components/Sections/BodySection.vue';
 
 const props = defineProps<{
-  id: number
+  id: number;
+  section: string;
 }>();
 
 const route = useRoute();
@@ -144,5 +218,8 @@ const formatDates = (startDate: string, endDate: string): string => {
 const formatHours = (dateString: string): string => {
   return dateString.split('T')[1].substring(0, 5);
 };
-</script>
 
+const navigateTo = (path: string) => {
+  router.push('/' + props.section + '/view/' + props.id + path);
+};
+</script>

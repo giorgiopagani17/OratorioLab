@@ -11,8 +11,8 @@
       virtual-scroll
       :rows-per-page-options="props.rowsPerPageOptions"
       :rows-per-page-label="$t(props.rowsPerPageLabel || 'labels.recordsPerPage')"
-      :pagination="props.pagination"
-      :loading="props.loading"
+      :pagination="pagination"
+      :loading="tableLoading"
       @update:pagination="handlePaginationChange"
     >
       <template v-slot:loading>
@@ -23,7 +23,11 @@
         <q-th
           :props="slotProps"
           class="bg-secondary text-white"
-          style="font-size: 15px; font-weight: bold;"
+          :style="{
+            fontSize: '15px',
+            fontWeight: 'bold',
+            width: slotProps.col.width ? `${slotProps.col.width}px!important` : '150px'
+          }"
         >
           {{ slotProps.col.label }}
         </q-th>
@@ -36,7 +40,16 @@
       </template>
 
       <template v-slot:body-cell="slotProps">
-        <q-td :props="slotProps">
+        <q-td
+          :props="slotProps"
+          :style="{
+            width: slotProps.col.width ? `${slotProps.col.width}px!important` : '150px',
+            maxWidth: slotProps.col.width ? `${slotProps.col.width}px!important` : '150px',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis'
+          }"
+        >
           {{ slotProps.value }}
         </q-td>
       </template>
@@ -47,13 +60,9 @@
 </template>
 
 <script setup lang="ts">
+import { watch } from 'vue';
+import { useDataTable } from '@/composables/useDataTable';
 import { QTableColumn } from 'quasar';
-
-interface Pagination {
-  page: number;
-  rowsPerPage: number;
-  rowsNumber?: number;
-}
 
 interface TableRow {
   [key: string]: unknown;
@@ -63,26 +72,26 @@ const props = withDefaults(defineProps<{
   rows: TableRow[];
   columns: QTableColumn[];
   rowKey: string;
-  pagination: Pagination;
   rowsPerPageOptions?: number[];
   rowsPerPageLabel?: string;
   noDataMessage?: string;
   loading?: boolean;
 }>(), {
-  rowsPerPageOptions: () => [7, 15, 30, 50],
+  rowsPerPageOptions: () => [15, 30, 50],
   rowsPerPageLabel: 'labels.recordsPerPage',
   noDataMessage: 'errors.noUserFound',
 });
 
-const emit = defineEmits<{
-  (e: 'update:pagination', pagination: Pagination): void;
-  (e: 'request-data', pagination: Pagination): void;
-}>();
+const {
+  loading: tableLoading,
+  pagination,
+  handlePaginationChange,
+  setRows,
+} = useDataTable();
 
-const handlePaginationChange = (newPagination: Pagination) => {
-  emit('update:pagination', newPagination);
-  emit('request-data', newPagination);
-};
+watch(() => props.rows, (newRows: TableRow[]) => {
+  setRows(newRows);
+}, { immediate: true });
 </script>
 
 <style lang="scss" scoped>
@@ -105,25 +114,14 @@ const handlePaginationChange = (newPagination: Pagination) => {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+}
 
-  th:first-child,
-  td:first-child {
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    background: white;
-  }
+:deep(.q-table th),
+:deep(.q-table td) {
+  width: auto;
+}
 
-  th:first-child {
-    z-index: 3;
-    background: var(--q-secondary);
-  }
-
-  thead tr {
-    th:nth-child(2) { width: 10%; }
-    th:nth-child(3) { width: 15%; }
-    th:nth-child(4) { width: 15%; }
-    th:nth-child(5) { width: 35%; }
-  }
+:deep(.q-table tbody td) {
+  max-width: none;
 }
 </style>
