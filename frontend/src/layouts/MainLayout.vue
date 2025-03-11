@@ -36,7 +36,19 @@
         <q-scroll-area class="col drawer-scroll">
           <q-list class="q-mt-sm">
             <EssentialLink
-              v-for="link in linksList"
+              v-for="link in linksList1"
+              :key="link.title"
+              v-bind="link"
+              style="border-radius: 24px"
+              :class="{ 'text-primary text-bold': isActiveLink(link.link), 'text-secondary': !isActiveLink(link.link) }"
+            />
+          </q-list>
+
+          <hr style="border: none; height: 2px; background-color: #FF904D;" />
+
+          <q-list class="q-mt-sm">
+            <EssentialLink
+              v-for="link in linksList2"
               :key="link.title"
               v-bind="link"
               style="border-radius: 24px"
@@ -101,7 +113,30 @@ const logout = () => {
   router.push('/');
 };
 
-const linksList = computed((): EssentialLinkProps[] => [
+const linksList1 = computed((): EssentialLinkProps[] => [
+  {
+    title: t('menu.home'),
+    icon: 'home',
+    link: '/home'
+  },
+  {
+    title: t('menu.registry'),
+    icon: 'people',
+    link: '/users'
+  },
+  {
+    title: t('menu.events'),
+    icon: 'event',
+    link: '/events'
+  },
+  {
+    title: t('menu.activities'),
+    icon: 'local_activity',
+    link: '/activities'
+  }
+]);
+
+const linksList2 = computed((): EssentialLinkProps[] => [
   {
     title: t('menu.home'),
     icon: 'home',

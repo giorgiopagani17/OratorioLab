@@ -1,31 +1,47 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md">
     <div style="width: 90%; height: 100%">
-      <div class="container flex justify-center q-mb-lg" style="padding: 12px">
-        <div class="flex items-center justify-center q-pr-sm border-right-grey-responsive">
-          <q-input
-            v-model="search"
-            dense
-            input-style="color: white;"
-            :placeholder="$t('placeholders.search')"
-            color="white"
-            class="custom-input blue-container-input"
-          >
-            <template v-slot:prepend>
-              <q-icon name="search" color="white"/>
-            </template>
-          </q-input>
-        </div>
-        <div class="flex items-center justify-center q-pl-sm">
-          <q-btn v-for="button in buttons" :key="button.title" :color="button.active ? 'secondary' : 'primary'" class="button" style="width: 150px;" @click="toggleFilter(button)">
-            {{ $t(`buttons.${button.title}`) }}
-          </q-btn>
-
-          <q-btn color="grey" class="button" style="width: 150px;" @click="router.push('/'+ pageType)">
-            {{ $t('buttons.back') }}
-          </q-btn>
-        </div>
-      </div>
+      <HeaderSection
+        leftColXs="col-12"
+        leftColMd="col-md-4"
+        rightColXs="col-12"
+        rightColMd="col-md-8">
+        <template #left>
+          <div class="col-12 margin-bottom-responsive">
+            <q-input
+              v-model="search"
+              dense
+              input-style="color: white;"
+              :placeholder="$t('placeholders.search')"
+              color="white"
+              class="custom-input blue-container-input"
+            >
+              <template v-slot:prepend>
+                <q-icon name="search" color="white"/>
+              </template>
+            </q-input>
+          </div>
+        </template>
+        <template #right>
+          <div class="col-3 q-px-sm" v-for="button in buttons" :key="button.title">
+            <ResponsiveButton
+              :text="$t(`buttons.${button.title}`)"
+              :icon="button.icon"
+              :active="button.active"
+              @click="toggleFilter(button)"
+            />
+          </div>
+          <div class="col-3 q-px-sm">
+            <ResponsiveButton
+              :text="$t('buttons.back')"
+              icon="arrow_back"
+              color="grey"
+              :active="false"
+              @click="router.push('/'+ pageType)"
+            />
+          </div>
+        </template>
+      </HeaderSection>
 
       <div class="q-mt-lg container-border">
         <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
@@ -69,6 +85,8 @@ import {computed, ref} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import activities from '@/data/activities.json'
 import events from '@/data/events.json'
+import HeaderSection from '@/components/Sections/HeaderSection.vue';
+import ResponsiveButton from '@/components/Buttons/ResponsiveButton.vue';
 
 defineOptions({
   name: 'UserPage'
@@ -88,6 +106,7 @@ interface Button {
   title: string;
   action: string;
   active: boolean;
+  icon: string;
 }
 
 const search = ref<string>('');
@@ -184,9 +203,9 @@ const eventsActivities = computed<EventActivityDisplay[]>(() => {
 });
 
 const buttons = ref<Button[]>([
-  { title: 'tomorrow', action: 'tomorrow', active: false },
-  { title: 'gratis', action: 'gratis', active: false },
-  { title: 'current', action: 'current', active: false },
+  { title: 'tomorrow', action: 'tomorrow', icon: 'event', active: false },
+  { title: 'gratis', action: 'gratis', icon: 'money_off', active: false },
+  { title: 'current', action: 'current', icon: 'today', active: false },
 ]);
 
 const navigateToDetail = (id: number) => {
