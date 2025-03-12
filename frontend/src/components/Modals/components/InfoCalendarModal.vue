@@ -3,7 +3,7 @@
     v-model="isOpen"
     :persistent="false"
     :show-header="true"
-    :title="$t('titles.dayDetails')"
+    :title="$t('titles.details')"
     titleColor="primary"
     width="400px"
   >

@@ -34,7 +34,7 @@ export default {
     latestEvents: 'Latest Events',
     eventsAll: 'All Events',
     activitiesAll: 'All Activities',
-    dayDetails: 'Day Details',
+    details: 'Details',
     selectedLocation: 'Selected Location:',
     civicNumber: 'Civic Number',
     info: 'Information',

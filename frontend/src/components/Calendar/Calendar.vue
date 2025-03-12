@@ -113,12 +113,10 @@ export default defineComponent({
 
     const getEventsForDay = (dateStr) => {
       return items.value.filter(event => {
-        // Convert all dates to timestamps for comparison
         const currentDay = new Date(dateStr).getTime()
         const eventStart = new Date(event.startDate).getTime()
         const eventEnd = new Date(event.endDate).getTime()
 
-        // Check if current day falls within the event period
         return currentDay >= eventStart && currentDay <= eventEnd
       })
     }

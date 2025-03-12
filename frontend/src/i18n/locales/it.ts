@@ -34,7 +34,7 @@ export default {
     latestEvents: 'Ultimi Eventi',
     eventsAll: 'Tutti gli Eventi',
     activitiesAll: 'Tutte le Attività',
-    dayDetails: 'Dettagli Giornata',
+    details: 'Dettagli',
     selectedLocation: 'Luogo Selezionato:',
     civicNumber: 'Numero Civico',
     info: 'Informazioni',
