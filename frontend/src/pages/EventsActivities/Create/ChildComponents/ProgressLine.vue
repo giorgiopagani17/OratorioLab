@@ -37,7 +37,6 @@
           <span v-else>{{ index + 1 }}</span>
         </div>
 
-        <!-- Step Title -->
         <div
           class="step-title"
           :class="{
@@ -45,7 +44,8 @@
             'completed': currentStep > index
           }"
         >
-          {{ $t(`steps.${step.title}`) }}
+          <span class="gt-xs">{{ $t(`steps.${step.title}`) }}</span>
+          <q-icon :name="step.icon" size="sm" class="lt-sm"/>
         </div>
       </div>
     </div>
@@ -67,17 +67,17 @@ export default defineComponent({
     const { t } = useI18n();
 
     const activitySteps = [
-      { title: 'activity', completed: false },
-      { title: 'image', completed: false },
-      { title: 'targetPrice', completed: false },
-      { title: 'review', completed: false },
+      { title: 'activity', icon: 'event', completed: false },
+      { title: 'image', icon: 'image', completed: false },
+      { title: 'targetPrice', icon: 'attach_money', completed: false },
+      { title: 'review', icon: 'rate_review', completed: false },
     ]
 
     const eventSteps = [
-      { title: 'event', completed: false },
-      { title: 'place', completed: false },
-      { title: 'image', completed: false },
-      { title: 'review', completed: false },
+      { title: 'event', icon: 'event', completed: false },
+      { title: 'place', icon: 'place', completed: false },
+      { title: 'image', icon: 'image', completed: false },
+      { title: 'review', icon: 'rate_review', completed: false },
     ]
 
     if (route.path.includes('activities')) {

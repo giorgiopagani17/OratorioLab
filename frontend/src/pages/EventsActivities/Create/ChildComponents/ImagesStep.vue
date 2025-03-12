@@ -163,7 +163,7 @@ onUnmounted(() => {
   flex-direction: row;
   align-items: center;
   gap: 7.5%;
-  padding: 1rem 1rem 2rem 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   justify-content: center;
   min-height: 440px;
 }
@@ -174,18 +174,16 @@ onUnmounted(() => {
   position: relative;
 }
 
-/* Style for the q-uploader to make it square */
 .square-uploader {
   width: 400px !important;
   height: 320px !important;
 }
 
-/* Style for the cropper container */
 .cropper-wrapper {
   width: 400px;
   height: 320px;
   border-radius: 8px;
-  overflow: hidden; /* This ensures the rounded corners are visible */
+  overflow: hidden;
 }
 
 .cropper {
@@ -203,7 +201,6 @@ onUnmounted(() => {
   border-radius: 12px;
 }
 
-/* Make sure the q-uploader internal layout fills the square */
 :deep(.q-uploader) {
   height: 100%;
 }
@@ -216,7 +213,6 @@ onUnmounted(() => {
   height: 100%;
 }
 
-/* Add rounded corners to the cropper image */
 :deep(.vue-advanced-cropper) {
   border-radius: 12px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="eventActivity" class="q-pa-sm q-pb-md">
+  <div v-if="eventActivity" class="q-pa-sm q-pb-lg">
     <EventActivityCard :section="props.section" :eventActivity="eventActivity" :isAdmin="true"/>
   </div>
   <div v-else class="q-pa-sm q-pb-md">

@@ -53,7 +53,7 @@
         <div id="map" class="map-container" v-if="selectedLocation"></div>
       </div>
 
-      <div class="col-12 col-md-4" v-if="selectedLocation">
+      <div class="col-12 col-md-4 space-bottom-responsive" v-if="selectedLocation">
         <div class="selected-location">
           <div class="text-subtitle1 text-weight-bold text-primary">{{ $t('titles.selectedLocation') }}</div>
           <div class="text-body2 q-mt-xs">{{ selectedAddress }}</div>
@@ -285,6 +285,10 @@ export default {
 @media (max-width: 767px) {
   .map-container {
     height: 250px;
+  }
+
+  .space-bottom-responsive {
+    margin-bottom: 10px;
   }
 
   .selected-location {

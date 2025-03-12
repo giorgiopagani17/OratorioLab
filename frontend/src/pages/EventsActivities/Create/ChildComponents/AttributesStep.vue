@@ -1,7 +1,7 @@
 <template>
-  <div class="flex">
-    <div class="small-containers">
-      <div>
+  <div class="row">
+    <div class="col-12 col-sm-6 small-containers">
+      <div :class="{ 'q-mt-sm': $q.screen.lt.sm }">
         <span class="text-h6 text-bold text-primary">{{ $t(`labels.${type}Name`) }}</span>
         <InputTextCustom
           :input-props="{
@@ -16,12 +16,12 @@
         />
       </div>
 
-      <div>
+      <div :class="{ 'q-mt-md': $q.screen.lt.sm }">
         <span class="text-h6 text-bold text-primary">{{ $t('labels.description') }}</span>
         <q-input type="textarea" rounded outlined v-model="description" :placeholder="$t('placeholders.insertText')"  @blur="() => description = (description?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
       </div>
 
-      <div>
+      <div :class="{ 'q-mt-md': $q.screen.lt.sm }">
         <span class="text-h6 text-bold text-primary">{{ $t('labels.note') }}</span>
         <InputTextCustom
           :input-props="{
@@ -37,8 +37,8 @@
       </div>
     </div>
 
-    <div class="small-containers border-primary-left">
-      <div>
+    <div class="col-12 col-sm-6 small-containers border-primary-left">
+      <div :class="{ 'q-mt-md': $q.screen.lt.sm }">
         <span class="text-h6 text-bold text-primary">{{ $t('labels.maxParticipants') }}</span>
         <InputNumberCustom
           :input-props="{
@@ -54,12 +54,12 @@
         />
       </div>
 
-      <div>
+      <div :class="{ 'q-mt-md': $q.screen.lt.sm }">
         <span class="text-h6 text-bold text-primary">{{ $t('labels.startDate') }}</span>
         <q-input type="datetime-local" class="q-mb-xs" rounded outlined v-model="startingDate" :rules="[val => !!val]" hide-bottom-space/>
       </div>
 
-      <div>
+      <div :class="{ 'q-mb-lg q-mt-md': $q.screen.lt.sm }">
         <span class="text-h6 text-bold text-primary">{{ $t('labels.endDate') }}</span>
         <q-input type="datetime-local" class="q-mb-xs" rounded outlined v-model="endingDate" :rules="[val => !!val, val => !startingDate || new Date(val) > new Date(startingDate)]" hide-bottom-space/>
       </div>
@@ -151,13 +151,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .small-containers {
-  flex-grow: 1;
-  display: flex;
-  padding: 1rem 2rem 2rem 2rem;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 445px;
-  width: 50% !important;
+  padding: 0rem 1rem 0rem 1rem;
 }
 
 .border-primary-left {
@@ -174,9 +168,20 @@ onUnmounted(() => {
   background-color: $border-color;
 }
 
-@media (max-width: 637px) {
+@media (max-width: 599px) {
   .border-primary-left::before {
     display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .small-containers {
+    flex-grow: 1;
+    display: flex;
+    padding: 1rem 2rem 2rem 2rem;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 445px;
   }
 }
 </style>
