@@ -11,7 +11,6 @@
           }"
           v-model="name"
           :placeholder="$t('placeholders.insertText')"
-          blur="trimText"
           :rules="[val => !!val]"
         />
       </div>
@@ -22,7 +21,7 @@
       </div>
 
       <div :class="{ 'q-mt-md': $q.screen.lt.sm }">
-        <span class="text-h6 text-bold text-primary">{{ $t('labels.note') }}</span>
+        <span class="text-h6 text-bold text-primary">{{ $t('labels.notes') }}</span>
         <InputTextCustom
           :input-props="{
             rounded: true,
@@ -31,7 +30,6 @@
           }"
           v-model="note"
           :placeholder="$t('placeholders.insertText')"
-          blur="trimText"
           :rules="[val => !!val]"
         />
       </div>

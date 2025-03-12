@@ -43,28 +43,7 @@
       </div>
     </div>
 
-    <q-dialog v-model="eventDialog">
-      <q-card style="min-width: 350px">
-        <q-card-section class="row items-center q-pb-sm">
-          <div class="text-h5 text-bold text-primary">{{ $t('titles.dayDetails') }}</div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-
-        <q-card-section style="max-height: 290px; overflow: auto">
-          <div v-for="event in selectedEvents" :key="event.id">
-            <div class="text-h6">{{ event.title }}</div>
-            <div class="text-subtitle2">{{ formatEventDateTime(event) }}</div>
-            <div class="text-subtitle3">Prezzo:
-              <span v-if="event.price > 0" class="text-secondary text-bold">{{ event.price }}€</span>
-              <span v-else class="text-secondary text-bold">{{ $t('texts.gratis') }}</span>
-            </div>
-            <div class="q-mt-sm">{{ event.description }}</div>
-            <q-separator v-if="!isLastEvent(event)" class="q-my-md" />
-          </div>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+    <InfoCalendarModal v-model="eventDialog" :rowData="selectedEvents" />
   </div>
 </template>
 
@@ -74,9 +53,11 @@ import { date } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import activities from '@/data/activities.json'
 import events from '@/data/events.json'
+import InfoCalendarModal from '@/components/Modals/components/InfoCalendarModal.vue';
 
 export default defineComponent({
   name: 'EventCalendar',
+  components: {InfoCalendarModal},
   props: {
     type: {
       type: String,
@@ -209,18 +190,6 @@ export default defineComponent({
       eventDialog.value = true
     }
 
-    const formatEventDateTime = (event) => {
-      const startDate = new Date(event.startDate)
-      const endDate = new Date(event.endDate)
-      const formatOptions = { day: 'numeric', month: 'long', year: 'numeric' }
-      const lang = locale.value === 'it' ? 'it-IT' : 'en-US'
-      return `${startDate.toLocaleDateString(lang, formatOptions)} - ${endDate.toLocaleDateString(lang, formatOptions)}`
-    }
-
-    const isLastEvent = (event) => {
-      return selectedEvents.value.indexOf(event) === selectedEvents.value.length - 1
-    }
-
     return {
       currentDate,
       daysOfWeek,
@@ -230,10 +199,8 @@ export default defineComponent({
       nextMonth,
       eventDialog,
       selectedEvents,
-      isLastEvent,
       showEventDetails,
       showAllEvents,
-      formatEventDateTime,
       text: props.type
     }
   }

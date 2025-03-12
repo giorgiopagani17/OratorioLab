@@ -31,22 +31,22 @@
                 <q-separator class="q-my-sm" />
 
                 <div class="row q-mb-sm">
-                  <div class="col-4 text-weight-bold text-secondary">Data:</div>
+                  <div class="col-4 text-weight-bold text-secondary">{{ $t('labels.date') }}:</div>
                   <div class="col-8">{{ formatDates(eventActivity.startDate, eventActivity.endDate) }}</div>
                 </div>
 
                 <div class="row q-mb-sm">
-                  <div class="col-4 text-weight-bold text-secondary">Ora:</div>
+                  <div class="col-4 text-weight-bold text-secondary">{{ $t('labels.time') }}:</div>
                   <div class="col-8">{{ formatHours(eventActivity.startDate) }}</div>
                 </div>
 
                 <div class="row q-mb-sm">
-                  <div class="col-4 text-weight-bold text-secondary">Luogo:</div>
+                  <div class="col-4 text-weight-bold text-secondary">{{ $t('labels.place') }}:</div>
                   <div class="col-8">Oratorio S. Maria</div>
                 </div>
 
                 <div class="row q-mb-sm">
-                  <div class="col-4 text-weight-bold text-secondary">Note:</div>
+                  <div class="col-4 text-weight-bold text-secondary">{{ $t('labels.notes') }}:</div>
                   <div class="col-8">{{ eventActivity.notes || 'Nessuna nota' }}</div>
                 </div>
               </q-card-section>
@@ -60,7 +60,7 @@
           <q-card-section class="bg-tertiary full-height column">
             <div class="col">
               <div class="text-h6 text-weight-bold text-secondary q-mb-md">
-                Informazioni
+                {{ $t('titles.info') }}
               </div>
 
               <div class="row q-mb-md items-center">
@@ -68,7 +68,7 @@
                   <q-icon name="group" color="secondary" size="sm" />
                 </div>
                 <div class="col q-ml-md flex items-center">
-                  <div class="text-weight-bold text-secondary">Organizzatore:</div>
+                  <div class="text-weight-bold text-secondary">{{ $t('labels.organizer') }}:</div>
                   <div class="q-ml-md">Chiesa di Bergamo</div>
                 </div>
               </div>
@@ -78,7 +78,7 @@
                   <q-icon name="phone" color="secondary" size="sm" />
                 </div>
                 <div class="col q-ml-md flex items-center">
-                  <div class="text-weight-bold text-secondary">Telefono:</div>
+                  <div class="text-weight-bold text-secondary">{{ $t('labels.telephone') }}:</div>
                   <div class="q-ml-md">3924444141</div>
                 </div>
               </div>
@@ -88,7 +88,7 @@
                   <q-icon name="euro" color="primary" size="sm" />
                 </div>
                 <div class="col q-ml-md flex items-center">
-                  <div class="text-weight-bold text-primary">Prezzo {{ props.section }}:</div>
+                  <div class="text-weight-bold text-primary">{{ $t(`labels.${type}Price`) }}:</div>
                   <div class="q-ml-md" style="font-size: 16px">{{ eventActivity.price }}€</div>
                 </div>
               </div>
@@ -101,7 +101,7 @@
                 @click="navigateTo('/subscriptions')"
                 icon="how_to_reg"
               >
-                Vedi Iscrizioni
+                {{ $t('buttons.viewSubscriptions') }}
               </q-btn>
             </div>
           </q-card-section>
@@ -113,7 +113,7 @@
           <q-card-section class="full-height">
             <div class="text-h6 text-weight-bold text-secondary q-mb-md flex items-center">
               <q-icon name="description" color="secondary" size="sm" class="q-mr-sm" />
-              Descrizione
+              {{ $t('labels.description') }}
             </div>
             <p class="text-body1 q-ma-none">{{ eventActivity.description }}</p>
           </q-card-section>
@@ -131,7 +131,6 @@
       class="q-mt-lg"
       @click="router.push(`/${props.section}/view`)"
       icon="arrow_back"
-      label="Torna alla lista"
     />
   </div>
 </template>
@@ -146,6 +145,7 @@ const props = defineProps<{
   isAdmin: boolean;
 }>();
 
+const type = props.section === 'events' ? 'event' : 'activity';
 const router = useRouter();
 const idEventActivity = props.id ?? 0;
 const formatDates = (startDate: string, endDate: string): string => {

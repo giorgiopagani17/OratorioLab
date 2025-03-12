@@ -39,30 +39,37 @@
         </div>
       </template>
 
-      <template v-slot:body-cell="slotProps">
-        <q-td
-          :props="slotProps"
-          :style="{
-            width: slotProps.col.width ? `${slotProps.col.width}px!important` : '150px',
-            maxWidth: slotProps.col.width ? `${slotProps.col.width}px!important` : '150px',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis'
-          }"
-        >
-          {{ slotProps.value }}
-        </q-td>
+      <template v-slot:body="props">
+        <q-tr :props="props" @click="showRowDetails(props.row)" class="cursor-pointer hover-highlight">
+          <q-td
+            v-for="col in props.cols"
+            :key="col.name"
+            :props="props"
+            :style="{
+              width: col.width ? `${col.width}px!important` : '150px',
+              maxWidth: col.width ? `${col.width}px!important` : '150px',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }"
+          >
+            {{ col.value }}
+          </q-td>
+        </q-tr>
       </template>
 
       <slot></slot>
     </q-table>
+
+    <InfoDataTableModal v-model="showModal" :row-data="selectedRow" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue';
+import {ref, watch} from 'vue';
 import { useDataTable } from '@/composables/useDataTable';
 import { QTableColumn } from 'quasar';
+import InfoDataTableModal from '@/components/Modals/components/InfoDataTableModal.vue';
 
 interface TableRow {
   [key: string]: unknown;
@@ -88,6 +95,14 @@ const {
   handlePaginationChange,
   setRows,
 } = useDataTable();
+
+const showModal = ref(false);
+const selectedRow = ref<TableRow | null>(null);
+
+const showRowDetails = (row: TableRow) => {
+  selectedRow.value = row;
+  showModal.value = true;
+};
 
 watch(() => props.rows, (newRows: TableRow[]) => {
   setRows(newRows);

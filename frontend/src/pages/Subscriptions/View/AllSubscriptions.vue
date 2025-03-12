@@ -63,6 +63,7 @@ import { QTableColumn } from 'quasar';
 import DataTable from '@/components/Tables/DataTable.vue';
 import subscriptionsData from '@/data/subscriptions.json';
 import { Button } from '@/interfaces/Button';
+import {useI18n} from 'vue-i18n';
 
 interface SubscriptionRow {
   id: number;
@@ -79,6 +80,7 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
+const { t } = useI18n();
 const search = ref<string>('');
 const buttons = ref([
   { title: 'major', icon: 'person', action: 'over18', active: false },
@@ -90,11 +92,11 @@ const allSubscriptions = ref(subscriptionsData.subscriptions);
 const subscriptions = ref(subscriptionsData.subscriptions);
 
 const columns = computed<QTableColumn<SubscriptionRow>[]>(() => [
-  { name: 'userName', label: 'User Name', field: 'userName', align: 'left', width: 200 },
+  { name: 'userName', label: t('labels.name'), field: 'userName', align: 'left', width: 200 },
   { name: 'email', label: 'Email', field: 'email', align: 'left', width: 250 },
-  { name: 'dateOfBirth', label: 'Date of Birth', field: 'dateOfBirth', align: 'left', width: 150 },
-  { name: 'gender', label: 'Gender', field: 'gender', align: 'left', width: 120 },
-  { name: 'status', label: 'Status', field: 'status', align: 'left', width: 100, format: val => getStatusDot(val) },
+  { name: 'dateOfBirth', label: t('labels.dateOfBirth'), field: 'dateOfBirth', align: 'left', width: 150 },
+  { name: 'gender', label: t('labels.gender'), field: 'gender', align: 'left', width: 120 },
+  { name: 'status', label: t('labels.status'), field: 'status', align: 'left', width: 100, format: val => getStatusDot(val) },
 ]);
 
 const getStatusDot = (status: string) => {

@@ -69,9 +69,13 @@
 
             <div :class="{ 'event-actions': $q.screen.gt.xs, 'event-actions-mobile': $q.screen.lt.sm }">
               <span class="text-secondary event-date">{{ formatDates(eventActivity.startDate, eventActivity.endDate) }}</span>
-              <span class="text-grey-8 event-price q-mb-md">Prezzo: {{ eventActivity.price }}€</span>
+              <span class="text-grey-8 event-price q-mb-md">
+                {{ $t('labels.price') }}:
+                <span v-if="eventActivity.price > 0">{{ eventActivity.price }}€</span>
+                <span v-else>Gratis</span>
+              </span>
               <q-btn color="primary" class="view-btn" @click="navigateToDetail(eventActivity.id)">
-                Visualizza
+                {{ $t('buttons.view') }}
               </q-btn>
             </div>
           </div>

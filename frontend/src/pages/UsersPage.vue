@@ -11,6 +11,7 @@
           <div class="col-12 margin-bottom-responsive">
             <q-input
               v-model="search"
+              clearable
               dense
               input-style="color: white;"
               :placeholder="$t('placeholders.search')"

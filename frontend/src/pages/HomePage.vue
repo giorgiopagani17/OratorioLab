@@ -95,9 +95,9 @@ const cards: Card[] = [
 
 const buttons: Button[] = [
   {
-    title: 'activities',
-    action: 'activities',
-    icon: 'local_activity'
+    title: 'people',
+    action: 'users',
+    icon: 'people'
   },
   {
     title: 'events',
@@ -105,14 +105,14 @@ const buttons: Button[] = [
     icon: 'event'
   },
   {
+    title: 'activities',
+    action: 'activities',
+    icon: 'local_activity'
+  },
+  {
     title: 'cash',
     action: 'cash',
     icon: 'payments'
-  },
-  {
-    title: 'people',
-    action: 'users',
-    icon: 'people'
   }
 ];
 
