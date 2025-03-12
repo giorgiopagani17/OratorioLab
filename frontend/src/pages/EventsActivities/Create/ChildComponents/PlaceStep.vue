@@ -1,7 +1,7 @@
 <template>
-  <div class="q-pa-md address-container">
-    <div class="flex items-center">
-      <div style="width: 80%">
+  <div class="q-pa-md address-container q-my-auto">
+    <div class="row q-col-gutter-md">
+      <div class="col-12 col-md-8">
         <q-input
           filled
           v-model="address"
@@ -32,7 +32,7 @@
         </q-list>
       </div>
 
-      <div class="q-pl-md" style="width: 20%">
+      <div class="col-12 col-md-4">
         <q-input
           filled
           v-model="civicNumber"
@@ -48,19 +48,23 @@
       </div>
     </div>
 
-    <div class="flex items-center justify-between q-mt-md">
-      <div id="map" style="height: 282px; width: 80%; border-radius: 12px" v-if="selectedLocation"></div>
+    <div class="row q-col-gutter-md q-mt-md q-pb-md">
+      <div class="col-12 col-md-8">
+        <div id="map" class="map-container" v-if="selectedLocation"></div>
+      </div>
 
-      <div class="selected-location q-mt-md q-pl-md" v-if="selectedLocation" style="width: 20%">
-        <div class="text-subtitle1 text-weight-bold text-primary">{{ $t('titles.selectedLocation') }}</div>
-        <div class="text-body2 q-mt-xs">{{ selectedAddress }}</div>
-        <div class="text-caption text-grey">
-          Lat: {{ selectedLocation.lat.toFixed(6) }} <br/>
-          Lon: {{ selectedLocation.lon.toFixed(6) }}
+      <div class="col-12 col-md-4" v-if="selectedLocation">
+        <div class="selected-location">
+          <div class="text-subtitle1 text-weight-bold text-primary">{{ $t('titles.selectedLocation') }}</div>
+          <div class="text-body2 q-mt-xs">{{ selectedAddress }}</div>
+          <div class="text-caption text-grey">
+            Lat: {{ selectedLocation.lat.toFixed(6) }} <br/>
+            Lon: {{ selectedLocation.lon.toFixed(6) }}
+          </div>
+
+          <div class="text-subtitle1 text-weight-bold text-primary q-mt-md">{{ $t('titles.civicNumber') }}</div>
+          <div class="text-body2 q-mt-xs">{{ civicNumber || 'Nessuno' }}</div>
         </div>
-
-        <div class="text-subtitle1 text-weight-bold text-primary q-mt-md">{{ $t('titles.civicNumber') }}</div>
-        <div class="text-body2 q-mt-xs">{{ civicNumber || 'Nessuno' }}</div>
       </div>
     </div>
   </div>
@@ -258,10 +262,33 @@ export default {
 .suggestions-list {
   position: absolute;
   z-index: 10000;
-  width: calc(80% - 2rem);
+  width: 100%;
   background: white;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   border-radius: 4px;
   margin-top: 4px;
+}
+
+.map-container {
+  height: 309px;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.selected-location {
+  height: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: rgba(240, 240, 240, 0.5);
+}
+
+@media (max-width: 767px) {
+  .map-container {
+    height: 250px;
+  }
+
+  .selected-location {
+    margin-top: 12px;
+  }
 }
 </style>

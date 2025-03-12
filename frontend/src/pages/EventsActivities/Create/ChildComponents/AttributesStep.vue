@@ -100,6 +100,7 @@ const validateInputs = () => {
 };
 
 watch([name, description, note, startingDate, endingDate, maxParticipants], () => {
+  console.log(startingDate.value);
   validateInputs();
 });
 
@@ -111,8 +112,8 @@ const saveToLocalStorage = () => {
     description: description.value.trim(),
     note: note.value.trim(),
     maxParticipants: parseFloat(maxParticipants.value.replace(/\./g, '').replace(',', '.')),
-    startingDate: startingDate.value,
-    endingDate: endingDate.value,
+    startDate: startingDate.value,
+    endDate: endingDate.value,
   };
 
   if (store.eventsActivities[currentIndex]) {
@@ -137,8 +138,8 @@ onMounted(() => {
     name.value = savedEventActivity.name;
     description.value = savedEventActivity.description;
     note.value = savedEventActivity.note;
-    startingDate.value = savedEventActivity.startingDate;
-    endingDate.value = savedEventActivity.endingDate;
+    startingDate.value = savedEventActivity.startDate;
+    endingDate.value = savedEventActivity.endDate;
     maxParticipants.value = savedEventActivity.maxParticipants.toLocaleString('it-IT');
   }
 });
@@ -155,7 +156,7 @@ onUnmounted(() => {
   padding: 1rem 2rem 2rem 2rem;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 400px;
+  min-height: 445px;
   width: 50% !important;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="containers">
+  <div class="containers q-my-auto">
     <div class="containers-wrapper">
       <!-- Upload container -->
       <div class="fixed-square-container">
@@ -156,7 +156,6 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .containers {
   width: 100%;
-  min-height: 400px;
 }
 
 .containers-wrapper {
@@ -164,9 +163,9 @@ onUnmounted(() => {
   flex-direction: row;
   align-items: center;
   gap: 7.5%;
-  padding: 1rem;
+  padding: 1rem 1rem 2rem 1rem;
   justify-content: center;
-  min-height: 400px;
+  min-height: 440px;
 }
 
 .fixed-square-container {
@@ -226,11 +225,11 @@ onUnmounted(() => {
   border-radius: 12px;
 }
 
-/* Mobile responsiveness */
 @media (max-width: 1270px) {
   .containers-wrapper {
     flex-direction: column;
     gap: 1rem;
+    margin-bottom: 1rem;
   }
 
   .fixed-square-container {

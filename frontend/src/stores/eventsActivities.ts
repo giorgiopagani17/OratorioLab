@@ -21,8 +21,8 @@ interface EventActivity {
   note: string;
   maxParticipants: number;
   place?: Coordinates[];
-  startingDate: string;
-  endingDate: string;
+  startDate: string;
+  endDate: string;
   image?: string;
   targets?: Target[];
 }

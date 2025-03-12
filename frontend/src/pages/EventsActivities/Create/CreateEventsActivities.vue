@@ -6,27 +6,20 @@
           <ProgressLine ref="progressLine"/>
         </div>
         <div class="q-pa-md container-body flex items-center justify-center">
-          <div v-if="$route.path.includes('events')" class="minimum-size-create-events">
+          <div class="minimum-size-create-events">
             <div v-if="currentStep === 0" class="minimum-size-create-events">
               <AttributesStep />
             </div>
             <div v-if="currentStep === 1" class="minimum-size-create-events">
-              <PlaceStep />
+              <PlaceStep v-if="isEvent"/>
+              <ImagesStep v-else/>
             </div>
             <div v-if="currentStep === 2" class="minimum-size-create-events">
-              <ImagesStep />
+              <ImagesStep v-if="isEvent"/>
+              <TargetPriceStep v-else/>
             </div>
-          </div>
-
-          <div v-if="$route.path.includes('activities')" class="minimum-size-create-events">
-            <div v-if="currentStep === 0" class="minimum-size-create-events">
-              <AttributesStep />
-            </div>
-            <div v-if="currentStep === 1" class="minimum-size-create-events">
-              <ImagesStep />
-            </div>
-            <div v-if="currentStep === 2" class="minimum-size-create-events">
-              <TargetPriceStep />
+            <div v-if="currentStep === 3" class="minimum-size-create-events">
+              <ReviewStep :section="props.section"/>
             </div>
           </div>
 
@@ -59,7 +52,6 @@
   </q-page>
 </template>
 
-//todo Modal Confirm Cancel Create
 <script setup lang="ts">
 import {computed, onMounted, onUnmounted, ref} from 'vue';
 import ProgressLine from './ChildComponents/ProgressLine.vue';
@@ -68,6 +60,11 @@ import AttributesStep from './ChildComponents/AttributesStep.vue';
 import PlaceStep from './ChildComponents/PlaceStep.vue';
 import TargetPriceStep from './ChildComponents/TargetPriceStep.vue';
 import {useRouter} from 'vue-router';
+import ReviewStep from '@/pages/EventsActivities/Create/ChildComponents/ReviewStep.vue';
+
+const props = defineProps<{
+  section: string;
+}>();
 
 defineOptions({
   name: 'HomePage'
@@ -78,6 +75,7 @@ interface ProgressLineInstance {
   prevStep: () => void;
 }
 
+const isEvent = computed(() => props.section === 'events');
 const currentStep = ref(0);
 const progressLine = ref<ProgressLineInstance | null>(null);
 const hasInputErrors = ref(true);

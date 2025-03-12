@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex full-height">
     <div class="input-target-container">
       <div class="flex justify-center text-center" style="width: 100%">
         <div class="flex items-center justify-center" style="width: 35%">
@@ -371,6 +371,35 @@ const saveToLocalStorage = () => {
 onMounted(() => {
   window.addEventListener('saveAttributesStep', saveToLocalStorage);
   validateInputs();
+
+  const currentIndex = parseInt(store.eventsActivitiesIndex);
+  const savedEventActivity = store.eventsActivities[currentIndex];
+
+  if (savedEventActivity?.targets && savedEventActivity.targets.length > 0) {
+    targetNumber.value = savedEventActivity.targets.length;
+
+    targets.value = savedEventActivity.targets.map((savedTarget: Target) => ({
+      name: savedTarget.name || '',
+      price: savedTarget.price || 0,
+      displayPrice: savedTarget.price ? savedTarget.price.toLocaleString('it-IT', {
+        minimumFractionDigits: String(savedTarget.price).includes('.') ?
+          String(savedTarget.price).split('.')[1].length : 0,
+        maximumFractionDigits: String(savedTarget.price).includes('.') ?
+          String(savedTarget.price).split('.')[1].length : 0
+      }).replace('.', ',') : '0,00',
+      startYear: savedTarget.startYear || new Date().getFullYear() - 1,
+      endYear: savedTarget.endYear || new Date().getFullYear(),
+      ageGroup: 'custom'
+    }));
+
+    const firstPrice = targets.value[0].price;
+    const allSamePrice = targets.value.every(target => target.price === firstPrice);
+
+    if (allSamePrice && firstPrice > 0) {
+      isPriceForAll.value = true;
+      commonPrice.value = targets.value[0].displayPrice;
+    }
+  }
 });
 
 onUnmounted(() => {
