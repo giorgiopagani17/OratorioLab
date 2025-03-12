@@ -34,6 +34,9 @@
     >
       <div class="drawer-container">
         <q-scroll-area class="col drawer-scroll">
+          <q-toolbar-title header class="text-bold text-secondary text-center q-my-md lt-md" style="font-size: 1.8em">
+            Oratori<span class="text-primary">360</span>
+          </q-toolbar-title>
           <q-list class="q-mt-sm">
             <EssentialLink
               v-for="link in linksList1"
@@ -44,7 +47,7 @@
             />
           </q-list>
 
-          <hr style="border: none; height: 2px; background-color: #004AAD;" />
+          <hr style="border: none; height: 2px; background-color: #E0E0E0;" />
 
           <q-list class="q-mt-sm">
             <EssentialLink
