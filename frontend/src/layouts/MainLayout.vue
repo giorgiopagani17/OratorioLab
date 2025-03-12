@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title header class="text-bold text-white" style="font-size: 1.7em">
+        <q-toolbar-title header class="text-bold text-white cursor-pointer" style="font-size: 1.7em" @click="router.push('/home')">
           Oratori<span class="text-primary">360</span>
         </q-toolbar-title>
 
@@ -34,9 +34,10 @@
     >
       <div class="drawer-container">
         <q-scroll-area class="col drawer-scroll">
-          <q-toolbar-title header class="text-bold text-secondary text-center q-my-md lt-md" style="font-size: 1.8em">
+          <q-toolbar-title header class="text-bold text-secondary text-center cursor-pointer q-my-md lt-md" style="font-size: 1.8em" @click="router.push('/home')">
             Oratori<span class="text-primary">360</span>
           </q-toolbar-title>
+
           <q-list class="q-mt-sm">
             <EssentialLink
               v-for="link in linksList1"
