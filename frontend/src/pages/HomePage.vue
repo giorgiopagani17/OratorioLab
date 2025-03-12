@@ -31,7 +31,7 @@
         </template>
 
         <q-card v-for="card in cards" :key="card.title" class="card">
-          <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+          <q-img :src="card.img" style="width: 100%; height: 225px;">
             <div class="absolute-bottom text-h6">
               {{ card.title }}
             </div>
@@ -59,8 +59,7 @@ defineOptions({
 interface Card {
   title: string;
   caption: string;
-  icon: string;
-  link: string;
+  img: string;
 }
 
 interface Button {
@@ -74,22 +73,19 @@ const router = useRouter();
 
 const cards: Card[] = [
   {
-    title: 'Docs1',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Soccer Training',
+    caption: 'Weekly soccer training sessions. Bring your own soccer shoes',
+    img: 'https://cloud.rtl.it/RTLFM/News/Article/1000x1000/calcio-continuano-le-grandi-firme-della-serie-a-mud06.jpg'
   },
   {
-    title: 'Docs2',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Christmas Concert',
+    caption: 'Annual Christmas concert and celebration. Rehearsals start two weeks before',
+    img: 'https://m.media-amazon.com/images/I/715Gimb12nL._AC_UF1000,1000_QL80_.jpg'
   },
   {
-    title: 'Docs3',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Group music lessons',
+    caption: 'Group music lessons. Instruments provided',
+    img: 'https://as1.ftcdn.net/v2/jpg/08/56/39/54/1000_F_856395497_Hhxp5fU8SKUrTqe1pZyAc3tHrOfDrQ2I.jpg'
   }
 ];
 

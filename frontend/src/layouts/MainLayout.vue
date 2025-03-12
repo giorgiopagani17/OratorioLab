@@ -143,7 +143,7 @@ const linksList1 = computed((): EssentialLinkProps[] => [
 const linksList2 = computed((): EssentialLinkProps[] => [
   {
     title: t('menu.finance'),
-    icon: 'attach_money',
+    icon: 'payments',
     link: '/finance'
   },
 ]);

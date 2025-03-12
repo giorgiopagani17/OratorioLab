@@ -1,6 +1,6 @@
 <template>
   <div v-if="eventActivity" class="q-pa-sm q-pb-lg">
-    <EventActivityCard :section="props.section" :eventActivity="eventActivity" :isAdmin="true"/>
+    <EventActivityCard :section="props.section" :eventActivity="eventActivity" :isAdmin="false"/>
   </div>
   <div v-else class="q-pa-sm q-pb-md">
     <p>No event activity found.</p>

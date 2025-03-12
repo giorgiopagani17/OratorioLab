@@ -68,8 +68,8 @@
                   <q-icon name="group" color="secondary" size="sm" />
                 </div>
                 <div class="col q-ml-md flex items-center">
-                  <div class="text-weight-bold text-secondary">{{ $t('labels.organizer') }}:</div>
-                  <div class="q-ml-md">Chiesa di Bergamo</div>
+                  <div class="text-weight-bold text-secondary q-mr-md">{{ $t('labels.organizer') }}:</div>
+                  <div>Chiesa di Bergamo</div>
                 </div>
               </div>
 
@@ -96,6 +96,7 @@
 
             <div class="col-auto q-mt-auto">
               <q-btn
+                v-if="isAdmin"
                 color="primary"
                 class="full-width"
                 @click="navigateTo('/subscriptions')"
