@@ -1,16 +1,14 @@
 <template>
   <div>
-    <!-- Header -->
     <div class="row items-center justify-between bg-secondary" style="border-radius: 12px 12px 0px 0px">
       <q-btn flat round color="white" icon="chevron_left" @click="previousMonth" />
-      <div class="text-h6 text-white">{{ currentMonthYear }}</div>
+      <div class="text-h6 text-white text-bold">{{ currentMonthYear }}</div>
       <q-btn flat round color="white" icon="chevron_right" @click="nextMonth" />
     </div>
 
-    <!-- Days of week -->
     <div class="row">
       <div v-for="day in daysOfWeek" :key="day"
-           class="col text-center q-pa-sm text-weight-medium bg-secondary text-white">
+           class="col text-center q-pa-sm text-bold bg-secondary text-white">
         {{ day }}
       </div>
     </div>

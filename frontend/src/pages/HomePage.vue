@@ -25,7 +25,7 @@
         </template>
       </HeaderSection>
 
-      <BodySection titleTranslate="titles.latestEvents">
+      <BodySection class="q-mt-lg">
         <template v-slot:leftHeader>
           {{ $t('titles.latestEvents')}}
         </template>

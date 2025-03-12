@@ -114,7 +114,7 @@ body {
 }
 
 .margin-bottom-responsive {
-  @media (max-width: $breakpoint-md-min) {
+  @media (max-width: $breakpoint-md-min - 1px) {
     margin-bottom: 1rem;
   }
 }

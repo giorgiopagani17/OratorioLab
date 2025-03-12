@@ -43,39 +43,40 @@
         </template>
       </HeaderSection>
 
-      <div class="q-mt-lg container-border">
-        <div class="bg-secondary text-bold text-white q-py-sm q-pl-md container-header">
-          {{ $t(`titles.${props.section}All`) }}
-        </div>
-        <div class="q-pa-lg container-body">
-          <div class="q-px-md" style="height: calc(100vh - 310px); overflow-y: auto;">
-            <div
-              v-for="(eventActivity, index) in eventsActivities"
-              :key="index"
-              class="flex justify-between container-event-activity"
-              :class="{ 'q-mt-md': index > 0 }"
-              style="width: 100%"
-            >
-              <div>
-                <q-img :src="eventActivity.image" style="width: 150px; height: 150px; border-bottom-left-radius: 9px; border-top-left-radius: 9px"/>
-              </div>
+      <BodySection class="q-mt-lg">
+        <template v-slot:leftHeader>
+          <div class="flex items-center">
+            <span class="q-ml-xs">
+              {{ $t(`menu.${props.section}`) }}
+            </span>
+          </div>
+        </template>
+        <div class="events-list">
+          <div
+            v-for="(eventActivity, index) in eventsActivities"
+            :key="index"
+            class="container-event-activity q-mb-md"
+            :class="{ 'flex-row': $q.screen.gt.xs, 'flex-column': $q.screen.lt.sm }"
+          >
+            <div :class="{ 'event-image-container': $q.screen.gt.xs, 'event-image-mobile': $q.screen.lt.sm }">
+              <q-img :src="eventActivity.image" class="event-image" />
+            </div>
 
-              <div style="width: 50%" class="flex column justify-center q-pl-md">
-                <span class="text-h5 text-bold text-secondary q-mb-sm">{{ eventActivity.name }}</span>
-                <span class="text-grey-7 description-text">{{ eventActivity.description }}</span>
-              </div>
+            <div :class="{ 'event-content': $q.screen.gt.xs, 'event-content-mobile': $q.screen.lt.sm }">
+              <span class="text-h5 text-bold text-secondary q-mb-sm event-title">{{ eventActivity.name }}</span>
+              <span class="text-grey-7 description-text">{{ eventActivity.description }}</span>
+            </div>
 
-              <div style="width: 24%" class="flex column justify-center items-end q-pr-md">
-                <span class="text-secondary text-right" style="font-size: 16px">{{ formatDates(eventActivity.startDate, eventActivity.endDate) }}</span>
-                <span class="text-grey-8 text-right description-text q-mb-lg" style="font-size: 16px">Prezzo: {{ eventActivity.price }}€</span>
-                <q-btn color="primary" style="width: 100px" @click="navigateToDetail(eventActivity.id)">
-                  Visualizza
-                </q-btn>
-              </div>
+            <div :class="{ 'event-actions': $q.screen.gt.xs, 'event-actions-mobile': $q.screen.lt.sm }">
+              <span class="text-secondary event-date">{{ formatDates(eventActivity.startDate, eventActivity.endDate) }}</span>
+              <span class="text-grey-8 event-price q-mb-md">Prezzo: {{ eventActivity.price }}€</span>
+              <q-btn color="primary" class="view-btn" @click="navigateToDetail(eventActivity.id)">
+                Visualizza
+              </q-btn>
             </div>
           </div>
         </div>
-      </div>
+      </BodySection>
     </div>
   </q-page>
 </template>
@@ -86,6 +87,7 @@ import { useRoute, useRouter } from 'vue-router';
 import activities from '@/data/activities.json'
 import events from '@/data/events.json'
 import HeaderSection from '@/components/Sections/HeaderSection.vue';
+import BodySection from '@/components/Sections/BodySection.vue';
 import ResponsiveButton from '@/components/Buttons/ResponsiveButton.vue';
 
 defineOptions({
@@ -222,5 +224,121 @@ const navigateToDetail = (id: number) => {
 .input-blue {
   border: none !important;
   border-radius: 100px;
+}
+
+.events-list {
+  overflow-y: auto;
+  max-height: 62.5vh;
+  padding: 0 12px;
+  width: 100%;
+}
+
+.container-event-activity {
+  width: 100%;
+  display: flex;
+  border-radius: 9px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.event-image-container {
+  width: 150px;
+  min-width: 150px;
+}
+
+.event-image-mobile {
+  width: 100%;
+  height: 200px;
+}
+
+.event-image {
+  width: 100%;
+  height: 100%;
+  min-height: 150px;
+  object-fit: cover;
+}
+
+.event-content {
+  flex: 1;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.event-content-mobile {
+  padding: 16px;
+}
+
+.event-actions {
+  width: 200px;
+  min-width: 180px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.event-actions-mobile {
+  padding: 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-title {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  @media (max-width: 599px) {
+    font-size: 1.25rem;
+  }
+}
+
+.event-date {
+  font-size: 16px;
+  text-align: right;
+  @media (max-width: 599px) {
+    text-align: left;
+    margin-top: 8px;
+  }
+}
+
+.event-price {
+  font-size: 16px;
+  text-align: right;
+  @media (max-width: 599px) {
+    text-align: left;
+    margin-bottom: 16px !important;
+  }
+}
+
+.view-btn {
+  width: 100px;
+  @media (max-width: 599px) {
+    align-self: flex-start;
+    width: 100%;
+  }
+}
+
+.description-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 599px) {
+  .q-pa-lg-xl {
+    padding: 16px;
+  }
 }
 </style>
