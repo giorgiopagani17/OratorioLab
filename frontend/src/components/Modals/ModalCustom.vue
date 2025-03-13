@@ -29,7 +29,7 @@
         <q-separator v-if="showHeaderSeparator" />
       </div>
 
-      <q-card-section class="q-py-none q-mt-sm modal-content" :class="{ 'q-pt-md': !showHeader || !showHeaderSeparator }">
+      <q-card-section class="q-py-none q-mt-sm flex-grow" :class="{ 'q-pt-md': !showHeader || !showHeaderSeparator }">
         <slot></slot>
       </q-card-section>
 
@@ -127,19 +127,24 @@ const closeModal = () => {
 const onHide = () => {
   emit('close');
 };
+
 </script>
 
 <style lang="scss" scoped>
 .modal-custom {
   border-radius: 12px;
+  display: flex;
+  flex-direction: column;
 
   .modal-header {
     padding-bottom: 8px;
   }
 
-  .modal-content {
-    max-height: 70vh;
-    overflow-y: auto;
+  .flex-grow {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

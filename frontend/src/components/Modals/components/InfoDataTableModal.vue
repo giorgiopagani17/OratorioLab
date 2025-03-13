@@ -5,135 +5,170 @@
     :show-header="true"
     :title="$t('titles.info')"
     titleColor="primary"
-    width="600px"
+    :fullHeight="true"
+    :fullWidth="true"
   >
     <div class="info-modal-content">
-      <div v-for="(value, key) in filteredRowData" :key="key" class="info-field">
-        <div class="text-subtitle1 text-bold q-mb-xs text-secondary">{{ $t(`labels.${key}`) }}</div>
-        <div v-if="isDateField(key)" class="field-value date-field">
-          {{ formatDate(value) }}
+      <div class="info-modal-main q-mt-sm row justify-center q-gutter-lg">
+        <div class="col-12 col-md-3">
+          <div class="bg-grey-3 flex items-center justify-center" style="width: 125px; height: 125px; border-radius: 50%">
+            <q-icon name="person" color="white" size="80px" />
+          </div>
+          <div class="q-mt-sm text-bold text-truncate text-h6 text-secondary">
+            {{ rowData?.name || 'example@gmail.com' }}
+          </div>
+          <div class="text-grey-7 q-mt-xs">{{ rowData?.email || 'example@gmail.com' }}</div>
+
+          <div class="q-mt-lg">
+            <div
+              v-for="option in options"
+              :key="option.id"
+              :class="[
+              'text-h6',
+              'q-mt-sm',
+              'cursor-pointer',
+              { 'text-primary text-bold': option.active, 'text-grey-7': !option.active }
+            ]"
+              @click="setActive(option)"
+            >
+              {{ option.title }}
+            </div>
+          </div>
         </div>
-        <div v-else-if="isPriceField(key)" class="field-value price-field">
-          <q-chip color="secondary" text-color="white" size="md">
-            {{ formatPrice(value) }}
-          </q-chip>
+        <div class="col-12 col-md-6">
+          <div class="text-h5 text-bold text-primary">{{ activeOption.title }}</div>
+          <div class="text-grey-7 q-mt-md">{{ activeOption.description }}</div>
+          <div class="q-mt-lg">
+            <div :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm' : '']">
+              <div
+                v-for="item in filteredData"
+                :key="item.title"
+                :class="[
+                activeOption.id === 1 ? 'col-12 col-md-6' : 'q-mb-md'
+              ]"
+              >
+                <q-card class="field-container">
+                  <q-card-section>
+                    <div class="text-subtitle1 text-bold q-mb-xs text-secondary flex justify-between">
+                      {{ item.title }}
+                      <q-icon :name="item.icon" color="secondary" size="sm"/>
+                    </div>
+                    <div class="field-value">{{ convertToDisplayValue(rowData?.[item.title]) }}</div>
+                  </q-card-section>
+                </q-card>
+              </div>
+            </div>
+          </div>
         </div>
-        <div v-else-if="isImageField(key)" class="field-value image-field">
-          <q-img
-            :src="String(value)"
-            height="120px"
-            width="120px"
-            fit="cover"
-            class="rounded-borders"
-          />
-        </div>
-        <div v-else-if="isTextField(key) && String(value).length > 100" class="field-value text-field">
-          <q-card flat bordered class="bg-grey-1">
-            <q-card-section>{{ String(value) }}</q-card-section>
-          </q-card>
-        </div>
-        <div v-else class="field-value standard-field">
-          {{ convertToDisplayValue(value) }}
-        </div>
-        <q-separator spaced />
+      </div>
+      <div class="privacy-notice">
+        <q-icon name="security" color="secondary" size="md" />
+        <div class="text-subtitle1 text-bold q-mt-xs">Trattamento dei Dati Sensibili</div>
+        <p class="text-grey-7 q-mt-sm" style="width: 90%; margin: 0 auto;">
+          Oratori360 tratta i dati sensibili in conformità con il Regolamento UE 2016/679 (GDPR).
+          Adottiamo misure tecniche e organizzative adeguate per proteggere i dati personali da accessi
+          non autorizzati, perdita o modifica. I dati vengono conservati solo per il tempo necessario alle
+          finalità per cui sono stati raccolti e l'utente può esercitare i propri diritti contattando il
+          nostro responsabile della protezione dei dati.
+        </p>
       </div>
     </div>
   </ModalCustom>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import ModalCustom from '@/components/Modals/ModalCustom.vue';
-import { formatDistanceToNow } from 'date-fns';
-import { enUS, it } from 'date-fns/locale';
-import { useI18n } from 'vue-i18n';
 
-const { locale } = useI18n();
+interface OptionItem {
+  id: number;
+  title: string;
+  description: string;
+  icon: string;
+  active: boolean;
+}
+
+interface DataItem {
+  title: string;
+  optionId: number;
+  icon: string;
+}
 
 const props = defineProps<{
   modelValue: boolean;
   rowData: Record<string, unknown> | null;
 }>();
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+}>();
 
 const isOpen = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value)
 });
 
-const filteredRowData = computed(() => {
-  if (!props.rowData) return {};
+const options = ref<OptionItem[]>([
+  {
+    id: 1,
+    title: 'Personal Information',
+    description: 'This section contains all the personal user information, including email, username, and other relevant details. It is essential for identifying and contacting the user.',
+    icon: 'person',
+    active: true
+  },
+  {
+    id: 2,
+    title: 'Domicile',
+    description: 'Here you can find the user\'s domicile information, including their current address and any previous addresses. This is important for verifying the user\'s residence and for any necessary correspondence.',
+    icon: 'home',
+    active: false
+  },
+  {
+    id: 3,
+    title: 'Emergency Contact',
+    description: 'In this section, you can find the emergency contact information. This includes the names and phone numbers of people to contact in case of an emergency, ensuring quick and effective communication.',
+    icon: 'contact_phone',
+    active: false
+  },
+  {
+    id: 4,
+    title: 'Illness',
+    description: 'This section provides detailed information about any illnesses the user may have. It includes medical history, current conditions, and any relevant treatments or medications, ensuring proper care and attention.',
+    icon: 'medical_services',
+    active: false
+  },
+]);
 
-  // Filter out any keys that shouldn't be displayed
-  const result: Record<string, unknown> = {};
-  Object.entries(props.rowData).forEach(([key, value]) => {
-    if (key !== 'id' && key !== '__v') {
-      result[key] = value;
-    }
-  });
+const data = ref<DataItem[]>([
+  { title: 'Name', optionId: 1, icon: 'person' },
+  { title: 'Email', optionId: 1, icon: 'email' },
+  { title: 'CF', optionId: 1, icon: 'badge' },
+  { title: 'Birthday', optionId: 1, icon: 'cake' },
+  { title: 'Gender', optionId: 1, icon: 'wc' },
+  { title: 'CreatedAt', optionId: 1, icon: 'event' },
+  { title: 'Address', optionId: 2, icon: 'home' },
+  { title: 'Country', optionId: 2, icon: 'flag' },
+  { title: 'Nationality', optionId: 2, icon: 'public' },
+  { title: 'Mother', optionId: 3, icon: 'woman' },
+  { title: 'Father', optionId: 3, icon: 'man' },
+  { title: 'Tutor', optionId: 3, icon: 'support_agent' },
+  { title: 'Illness', optionId: 4, icon: 'medical_services' },
+  { title: 'Allergies', optionId: 4, icon: 'health_and_safety' },
+]);
 
-  return result;
+const activeOption = computed<OptionItem>(() => {
+  return options.value.find(option => option.active) ||
+    { id: 0, title: '', description: '', icon: '', active: false };
 });
 
-const isDateField = (key: string): boolean => {
-  return key.toLowerCase().includes('date') || key.toLowerCase().includes('time');
-};
+const filteredData = computed<DataItem[]>(() => {
+  return data.value.filter(item => item.optionId === activeOption.value.id);
+});
 
-const isPriceField = (key: string): boolean => {
-  return key.toLowerCase().includes('price') || key.toLowerCase().includes('cost');
-};
-
-const isImageField = (key: string): boolean => {
-  return key.toLowerCase().includes('image') ||
-    key.toLowerCase().includes('photo') ||
-    (typeof props.rowData?.[key] === 'string' &&
-      Boolean(String(props.rowData[key]).match(/\.(jpeg|jpg|gif|png)$/i)));
-};
-
-const isTextField = (key: string): boolean => {
-  return key.toLowerCase().includes('description') || key.toLowerCase().includes('notes');
-};
-
-const formatDate = (value: unknown): string => {
-  try {
-    if (value && typeof value === 'string') {
-      const date = new Date(value);
-      const localeObj = locale.value === 'it' ? it : enUS;
-
-      const formattedDate = new Intl.DateTimeFormat(locale.value === 'it' ? 'it-IT' : 'en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      }).format(date);
-
-      const relativeTime = formatDistanceToNow(date, { addSuffix: true, locale: localeObj });
-
-      return `${formattedDate} (${relativeTime})`;
-    }
-    return String(value);
-  } catch (e) {
-    return String(value);
-  }
-};
-
-const formatPrice = (value: unknown): string => {
-  try {
-    if (value === 0 || value === '0') return 'Free';
-
-    const price = Number(value);
-    if (!isNaN(price)) {
-      return new Intl.NumberFormat(locale.value === 'it' ? 'it-IT' : 'en-US', {
-        style: 'currency',
-        currency: 'EUR'
-      }).format(price);
-    }
-    return String(value);
-  } catch (e) {
-    return String(value);
-  }
+const setActive = (selectedOption: OptionItem): void => {
+  options.value.forEach(option => {
+    option.active = option === selectedOption;
+  });
 };
 
 const convertToDisplayValue = (value: unknown): string => {
@@ -158,83 +193,27 @@ const convertToDisplayValue = (value: unknown): string => {
 </script>
 
 <style scoped>
+.field-container {
+  border-radius: 12px;
+  background-color: white;
+}
+
 .info-modal-content {
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-.field-value {
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.date-field {
-  color: #555;
-  font-style: italic;
-}
-
-.price-field {
-  font-weight: bold;
-}
-
-.text-field {
-  max-height: 200px;
-  overflow-y: auto;
-  line-height: 1.6;
-}
-</style>
-
-<style scoped>
-.info-modal-content {
-  max-height: 70vh;
-  overflow-y: auto;
-  padding: 0px 6px;
-}
-
-.info-field {
-  transition: all 0.2s ease;
-  border-radius: 8px;
-  padding: 12px;
-}
-
-.info-field:hover {
-  background-color: rgba(0, 0, 0, 0.03);
-}
-
-.field-value {
-  font-size: 16px;
-  line-height: 1.5;
-  margin-top: 4px;
-}
-
-.date-field {
-  color: black;
-  font-style: italic;
-}
-
-.price-field {
-  font-weight: bold;
-}
-
-.text-field {
-  max-height: 200px;
-  overflow-y: auto;
-  line-height: 1.6;
-  border-left: 3px solid var(--q-secondary);
-  padding-left: 12px;
-}
-
-.image-field {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  height: 100%;
 }
 
-.image-field .q-img {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+.info-modal-main {
+  flex: 1;
+  overflow-y: auto;
 }
 
-.image-field .q-img:hover {
-  transform: scale(1.05);
+.privacy-notice {
+  margin-top: auto;
+  text-align: center;
+  background-color: white;
+  border-top: 1px solid #e0e0e0;
+  padding: 24px 0px 16px 0px;
 }
 </style>
