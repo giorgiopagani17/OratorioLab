@@ -39,7 +39,26 @@
           <div class="text-h5 text-bold text-primary">{{ activeOption.title }}</div>
           <div class="text-grey-7 q-mt-md">{{ activeOption.description }}</div>
           <div class="q-mt-lg">
-            <div :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm' : '']">
+            <div v-if="selectedField" class="q-mb-md">
+              <q-card class="field-container expanded-field">
+                <q-card-section>
+                  <div class="text-subtitle1 text-bold q-mb-xs text-secondary flex justify-between">
+                    {{ selectedField.title }}
+                      <q-icon :name="selectedField.icon" color="secondary" size="sm" class="q-ml-xs" />
+                  </div>
+                  <q-input
+                    v-model="editValue"
+                    @keyup.enter="saveEdit"
+                    style="font-size: 17.5px"
+                  />
+                  <div class="flex justify-between q-mt-md">
+                    <q-btn color="grey" label="Exit" @click="cancelEdit" />
+                    <q-btn color="primary" label="Save" @click="saveEdit" />
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div v-else :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm' : '']">
               <div
                 v-for="item in filteredData"
                 :key="item.title"
@@ -47,7 +66,7 @@
                 activeOption.id === 1 ? 'col-12 col-md-6' : 'q-mb-md'
               ]"
               >
-                <q-card class="field-container">
+                <q-card class="field-container cursor-pointer" @click="selectField(item)">
                   <q-card-section>
                     <div class="text-subtitle1 text-bold q-mb-xs text-secondary flex justify-between">
                       {{ item.title }}
@@ -107,6 +126,9 @@ const isOpen = computed({
   get: () => props.modelValue,
   set: (value) => emit('update:modelValue', value)
 });
+
+const selectedField = ref<DataItem | null>(null);
+const editValue = ref<string>('');
 
 const options = ref<OptionItem[]>([
   {
@@ -169,6 +191,31 @@ const setActive = (selectedOption: OptionItem): void => {
   options.value.forEach(option => {
     option.active = option === selectedOption;
   });
+  // Close any editing field when changing tabs
+  selectedField.value = null;
+};
+
+const selectField = (item: DataItem): void => {
+  selectedField.value = item;
+  const currentValue = props.rowData?.[item.title];
+  editValue.value = currentValue !== null && currentValue !== undefined ? String(currentValue) : '';
+};
+
+const cancelEdit = (): void => {
+  selectedField.value = null;
+  editValue.value = '';
+};
+
+const saveEdit = (): void => {
+  if (selectedField.value && props.rowData) {
+    // In a real application, you would likely emit an event here to update the actual data
+    // For demonstration, we'll just log the change
+    console.log(`Updating ${selectedField.value.title} from ${props.rowData[selectedField.value.title]} to ${editValue.value}`);
+
+    // Here you would typically call an API or dispatch an action to update the data
+    // For now, we'll just close the edit mode
+    selectedField.value = null;
+  }
 };
 
 const convertToDisplayValue = (value: unknown): string => {
@@ -196,6 +243,10 @@ const convertToDisplayValue = (value: unknown): string => {
 .field-container {
   border-radius: 12px;
   background-color: white;
+}
+
+.expanded-field {
+  width: 100%;
 }
 
 .info-modal-content {

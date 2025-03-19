@@ -171,7 +171,6 @@ const toggleLeftDrawer = () => {
   detailsStore.setLeftDrawerOpen(leftDrawerOpen.value.toString());
 };
 
-
 const isActiveLink = (link?: string) => {
   return link ? route.path.includes(link) : false;
 };
