@@ -61,7 +61,7 @@
       <slot></slot>
     </q-table>
 
-    <InfoDataTableModal v-model="showModal" :row-data="selectedRow" />
+    <InfoDataTableModal v-model="showModal" :row-data="selectedRow" :isRegistration="false"/>
   </div>
 </template>
 

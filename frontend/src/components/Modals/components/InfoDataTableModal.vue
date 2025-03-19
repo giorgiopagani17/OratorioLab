@@ -38,13 +38,39 @@
         <div class="col-12 col-md-6">
           <div class="text-h5 text-bold text-primary">{{ activeOption.title }}</div>
           <div class="text-grey-7 q-mt-md">{{ activeOption.description }}</div>
-          <div class="q-mt-lg">
+
+          <div v-if="isRegistration" class="q-mt-lg q-pt-sm">
+            <div :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm' : '']">
+              <div
+                v-for="item in filteredData"
+                :key="item.title"
+                :class="[
+                activeOption.id === 1 ? 'col-12 col-md-6' : 'q-mb-md'
+              ]"
+              >
+                <div>
+                  <div class="text-subtitle1 text-bold text-secondary flex justify-between">
+                    {{ item.title }}
+                    <q-icon :name="item.icon" color="secondary" size="sm"/>
+                  </div>
+                  <q-input
+                    v-model="formData[item.title]"
+                    outlined
+                    dense
+                    class="q-mt-xs"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div v-else class="q-mt-lg">
             <div v-if="selectedField" class="q-mb-md">
-              <q-card class="field-container expanded-field">
+              <q-card class="field-container">
                 <q-card-section>
                   <div class="text-subtitle1 text-bold q-mb-xs text-secondary flex justify-between">
                     {{ selectedField.title }}
-                      <q-icon :name="selectedField.icon" color="secondary" size="sm" class="q-ml-xs" />
+                    <q-icon :name="selectedField.icon" color="secondary" size="sm" class="q-ml-xs" />
                   </div>
                   <q-input
                     v-model="editValue"
@@ -78,6 +104,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
       <div class="privacy-notice">
@@ -96,7 +123,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, reactive } from 'vue';
 import ModalCustom from '@/components/Modals/ModalCustom.vue';
 
 interface OptionItem {
@@ -115,11 +142,13 @@ interface DataItem {
 
 const props = defineProps<{
   modelValue: boolean;
-  rowData: Record<string, unknown> | null;
+  rowData?: Record<string, unknown> | null;
+  isRegistration?: boolean;
 }>();
 
 const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
+  'update:modelValue': [value: boolean];
+  'save': [data: Record<string, unknown>];
 }>();
 
 const isOpen = computed({
@@ -129,7 +158,7 @@ const isOpen = computed({
 
 const selectedField = ref<DataItem | null>(null);
 const editValue = ref<string>('');
-
+const formData = reactive<Record<string, string | number | null>>({});
 const options = ref<OptionItem[]>([
   {
     id: 1,
@@ -178,6 +207,17 @@ const data = ref<DataItem[]>([
   { title: 'Allergies', optionId: 4, icon: 'health_and_safety' },
 ]);
 
+if (props.rowData) {
+  // Convert all rowData values to appropriate types for inputs
+  Object.entries(props.rowData).forEach(([key, value]) => {
+    if (value !== null && value !== undefined) {
+      formData[key] = typeof value === 'object' ? JSON.stringify(value) : String(value);
+    } else {
+      formData[key] = '';
+    }
+  });
+}
+
 const activeOption = computed<OptionItem>(() => {
   return options.value.find(option => option.active) ||
     { id: 0, title: '', description: '', icon: '', active: false };
@@ -209,14 +249,26 @@ const cancelEdit = (): void => {
 const saveEdit = (): void => {
   if (selectedField.value && props.rowData) {
     // In a real application, you would likely emit an event here to update the actual data
-    // For demonstration, we'll just log the change
     console.log(`Updating ${selectedField.value.title} from ${props.rowData[selectedField.value.title]} to ${editValue.value}`);
+
+    // Save the change to the formData object
+    formData[selectedField.value.title] = editValue.value;
 
     // Here you would typically call an API or dispatch an action to update the data
     // For now, we'll just close the edit mode
     selectedField.value = null;
+
+    // If in registration mode, emit the save event
+    if (props.isRegistration) {
+      emit('save', formData);
+    }
   }
 };
+
+
+//const saveAllFormData = () => {
+  //emit('save', formData);
+//};
 
 const convertToDisplayValue = (value: unknown): string => {
   if (value === null || value === undefined) {
@@ -244,11 +296,6 @@ const convertToDisplayValue = (value: unknown): string => {
   border-radius: 12px;
   background-color: white;
 }
-
-.expanded-field {
-  width: 100%;
-}
-
 .info-modal-content {
   display: flex;
   flex-direction: column;

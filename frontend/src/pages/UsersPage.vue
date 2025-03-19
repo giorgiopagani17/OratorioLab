@@ -34,6 +34,15 @@
               @click="toggleFilter(button)"
             />
           </div>
+          <div class="col-3 q-px-sm">
+            <ResponsiveButton
+              :text="$t('buttons.create')"
+              icon="add"
+              color="secondary"
+              :active="false"
+              @click="showModal = true"
+            />
+          </div>
         </template>
       </HeaderSection>
 
@@ -47,6 +56,8 @@
         @request-data="fetchData"
       />
     </div>
+
+    <InfoDataTableModal v-model="showModal" :isRegistration="true"/>
   </q-page>
 </template>
 
@@ -58,6 +69,7 @@ import { useI18n } from 'vue-i18n';
 import HeaderSection from '@/components/Sections/HeaderSection.vue';
 import ResponsiveButton from '@/components/Buttons/ResponsiveButton.vue';
 import DataTable from '@/components/Tables/DataTable.vue';
+import InfoDataTableModal from '@/components/Modals/components/InfoDataTableModal.vue';
 
 defineOptions({
   name: 'UserPage'
@@ -89,6 +101,7 @@ const allUsers = ref<UserRow[]>([]);
 const rows = ref<UserRow[]>([]);
 const { t } = useI18n();
 const loading = ref<boolean>(false);
+const showModal = ref<boolean>(false);
 
 const columns = computed<QTableColumn<UserRow>[]>(() => [
   { name: 'name', label: t('labels.name'), align: 'left', field: 'name', sortable: false, width: 200 },
@@ -101,8 +114,7 @@ const columns = computed<QTableColumn<UserRow>[]>(() => [
 const buttons = ref<Button[]>([
   { title: 'major', icon:'person', action: 'over18', active: false },
   { title: 'minor', icon:'child_care', action: 'under18', active: false },
-  { title: 'male', icon:'male', action: 'male', active: false },
-  { title: 'female', icon:'female', action: 'female', active: false }
+  { title: 'male', icon:'male', action: 'male', active: false }
 ]);
 
 const pagination = ref<QPagination>({
@@ -147,9 +159,6 @@ const applyFilters = () => {
         break;
       case 'male':
         filteredUsers = filteredUsers.filter(user => user.gender === 'Male');
-        break;
-      case 'female':
-        filteredUsers = filteredUsers.filter(user => user.gender === 'Female');
         break;
     }
   }
