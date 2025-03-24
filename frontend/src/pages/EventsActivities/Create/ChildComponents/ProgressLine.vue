@@ -68,16 +68,17 @@ export default defineComponent({
 
     const activitySteps = [
       { title: 'activity', icon: 'event', completed: false },
+      { title: 'subActivity', icon: 'auto_awesome_motion', completed: false },
       { title: 'image', icon: 'image', completed: false },
       { title: 'targetPrice', icon: 'attach_money', completed: false },
-      { title: 'review', icon: 'rate_review', completed: false },
+      { title: 'review', icon: 'art_track', completed: false },
     ]
 
     const eventSteps = [
       { title: 'event', icon: 'event', completed: false },
       { title: 'place', icon: 'place', completed: false },
       { title: 'image', icon: 'image', completed: false },
-      { title: 'review', icon: 'rate_review', completed: false },
+      { title: 'review', icon: 'art_track', completed: false },
     ]
 
     if (route.path.includes('activities')) {
@@ -89,7 +90,11 @@ export default defineComponent({
     const progressWidth = ref(0)
 
     const updateProgressWidth = () => {
-      progressWidth.value = ((currentStep.value + 0.5) / 4) * 100
+      if (route.path.includes('activities')) {
+        progressWidth.value = ((currentStep.value + 0.5) / 5) * 100
+      } else {
+        progressWidth.value = ((currentStep.value + 0.5) / 4) * 100
+      }
     }
 
     const nextStep = () => {
@@ -113,7 +118,11 @@ export default defineComponent({
     }
 
     const middleStep = () => {
-      progressWidth.value += 12.5
+      if (route.path.includes('activities')) {
+        progressWidth.value += 10
+      } else {
+        progressWidth.value += 12.5
+      }
     }
 
     onMounted(() => {

@@ -46,6 +46,7 @@ export default {
   steps: {
     event: 'Evento',
     activity: 'Attività',
+    subActivity: 'Sotto-Attività',
     place: 'Spazio',
     image: 'Immagine',
     targetPrice: 'Target e Prezzo',

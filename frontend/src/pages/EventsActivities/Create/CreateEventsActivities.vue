@@ -12,14 +12,17 @@
             </div>
             <div v-if="currentStep === 1" class="minimum-size-create-events">
               <PlaceStep v-if="isEvent"/>
-              <ImagesStep v-else/>
+              <SubActivitiesStep v-else/>
             </div>
             <div v-if="currentStep === 2" class="minimum-size-create-events">
-              <ImagesStep v-if="isEvent"/>
-              <TargetPriceStep v-else/>
+              <ImagesStep/>
             </div>
             <div v-if="currentStep === 3" class="minimum-size-create-events">
-              <ReviewStep :section="props.section"/>
+              <ReviewStep v-if="isEvent" :section="props.section"/>
+              <TargetPriceStep v-else/>
+            </div>
+            <div v-if="currentStep === 4" class="minimum-size-create-events">
+              <ReviewStep v-if="!isEvent" :section="props.section"/>
             </div>
           </div>
 
@@ -35,6 +38,16 @@
             </q-btn>
 
             <q-btn
+              v-if="(isEvent && currentStep === 3) || (!isEvent && currentStep === 4)"
+              color="secondary"
+              :label="$t('buttons.create')"
+              :disable="isNextButtonDisabled"
+              icon-right="check"
+              @click="emitNextStep"
+            />
+
+            <q-btn
+              v-else
               color="primary"
               :label="$t('buttons.next')"
               :disable="isNextButtonDisabled"
@@ -55,6 +68,7 @@
 <script setup lang="ts">
 import {computed, onMounted, onUnmounted, ref} from 'vue';
 import ProgressLine from './ChildComponents/ProgressLine.vue';
+import SubActivitiesStep from './ChildComponents/SubActivitiesStep.vue';
 import ImagesStep from './ChildComponents/ImagesStep.vue';
 import AttributesStep from './ChildComponents/AttributesStep.vue';
 import PlaceStep from './ChildComponents/PlaceStep.vue';
