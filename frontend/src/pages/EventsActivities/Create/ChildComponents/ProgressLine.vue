@@ -68,7 +68,7 @@ export default defineComponent({
 
     const activitySteps = [
       { title: 'activity', icon: 'event', completed: false },
-      { title: 'subActivity', icon: 'auto_awesome_motion', completed: false },
+      { title: 'period', icon: 'date_range', completed: false },
       { title: 'image', icon: 'image', completed: false },
       { title: 'targetPrice', icon: 'attach_money', completed: false },
       { title: 'review', icon: 'art_track', completed: false },

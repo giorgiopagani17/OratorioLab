@@ -8,11 +8,11 @@
         <div class="q-pa-md container-body flex items-center justify-center">
           <div class="minimum-size-create-events">
             <div v-if="currentStep === 0" class="minimum-size-create-events">
-              <AttributesStep />
+              <AttributesStep :isEvent="isEvent" />
             </div>
             <div v-if="currentStep === 1" class="minimum-size-create-events">
               <PlaceStep v-if="isEvent"/>
-              <SubActivitiesStep v-else/>
+              <PeriodStep v-else/>
             </div>
             <div v-if="currentStep === 2" class="minimum-size-create-events">
               <ImagesStep/>
@@ -68,7 +68,7 @@
 <script setup lang="ts">
 import {computed, onMounted, onUnmounted, ref} from 'vue';
 import ProgressLine from './ChildComponents/ProgressLine.vue';
-import SubActivitiesStep from './ChildComponents/SubActivitiesStep.vue';
+import PeriodStep from './ChildComponents/PeriodStep.vue';
 import ImagesStep from './ChildComponents/ImagesStep.vue';
 import AttributesStep from './ChildComponents/AttributesStep.vue';
 import PlaceStep from './ChildComponents/PlaceStep.vue';

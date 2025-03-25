@@ -49,6 +49,17 @@
                   <div class="col-4 text-weight-bold text-secondary">{{ $t('labels.notes') }}:</div>
                   <div class="col-8">{{ eventActivity.notes || 'Nessuna nota' }}</div>
                 </div>
+
+                <div v-if="eventActivity.isReview" class="row q-mb-sm">
+                  <div class="col-4 text-weight-bold text-secondary">{{ $t('labels.review') }}:</div>
+                  <div class="col-8 overflow-auto" style="max-height: 63px;">
+                    <ul class="q-pa-none q-ma-none" style="list-style-type: disc; padding-left: 1.5rem;">
+                      <li v-for="(activityReview, index) in eventActivity.activitiesReview" :key="index" class="q-mb-xs text-primary">
+                        <span class="text-black">{{ activityReview.name }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </q-card-section>
             </q-card>
           </div>

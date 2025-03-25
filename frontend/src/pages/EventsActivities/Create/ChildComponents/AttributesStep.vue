@@ -1,8 +1,8 @@
 <template>
-  <div class="row">
-    <div class="col-12 col-sm-6 small-containers">
-      <div :class="{ 'q-mt-sm': $q.screen.lt.sm }">
-        <span class="text-h6 text-bold text-primary">{{ $t(`labels.${type}Name`) }}</span>
+  <div class="attributes-grid">
+    <div class="attributes-column">
+      <div class="input-section">
+        <span class="section-title">{{ $t(`labels.${type}Name`) }}</span>
         <InputTextCustom
           :input-props="{
             rounded: true,
@@ -15,65 +15,134 @@
         />
       </div>
 
-      <div :class="{ 'q-mt-md': $q.screen.lt.sm }">
-        <span class="text-h6 text-bold text-primary">{{ $t('labels.description') }}</span>
-        <q-input type="textarea" rounded outlined v-model="description" :placeholder="$t('placeholders.insertText')"  @blur="() => description = (description?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
-      </div>
-
-      <div :class="{ 'q-mt-md': $q.screen.lt.sm }">
-        <span class="text-h6 text-bold text-primary">{{ $t('labels.notes') }}</span>
+      <div class="input-section">
+        <span class="section-title">{{ $t('labels.notes') }}</span>
         <InputTextCustom
           :input-props="{
-            rounded: true,
-            outlined: true,
-            hideBottomSpace: true,
-          }"
+              rounded: true,
+              outlined: true,
+              hideBottomSpace: true,
+            }"
           v-model="note"
           :placeholder="$t('placeholders.insertText')"
           :rules="[val => !!val]"
         />
       </div>
+
+      <template v-if="isEvent">
+        <div class="input-section">
+          <span class="section-title">{{ $t('labels.description') }}</span>
+          <q-input
+            type="textarea"
+            rounded
+            outlined
+            v-model="description"
+            :placeholder="$t('placeholders.insertText')"
+            @blur="() => description = (description?.toString() || '').trim()"
+            :rules="[val => !!val]"
+            hide-bottom-space
+          />
+        </div>
+      </template>
+
+      <template v-else>
+        <div class="input-section">
+          <span class="section-title">{{ $t('labels.maxParticipants') }}</span>
+          <InputNumberCustom
+            :input-props="{
+              rounded: true,
+              outlined: true,
+              hideBottomSpace: true,
+            }"
+            :maxLength="6"
+            v-model="maxParticipants"
+            :placeholder="$t('placeholders.insertNumber')"
+            update="formatNumberNoDecimals"
+            :rules="[(val: string) => parseFloat(val.replace(/\./g, '').replace(',', '.')) > 0]"
+          />
+        </div>
+      </template>
     </div>
 
-    <div class="col-12 col-sm-6 small-containers border-primary-left">
-      <div :class="{ 'q-mt-md': $q.screen.lt.sm }">
-        <span class="text-h6 text-bold text-primary">{{ $t('labels.maxParticipants') }}</span>
-        <InputNumberCustom
-          :input-props="{
-            rounded: true,
-            outlined: true,
-            hideBottomSpace: true,
-          }"
-          :maxLength="6"
-          v-model="maxParticipants"
-          :placeholder="$t('placeholders.insertNumber')"
-          update="formatNumberNoDecimals"
-          :rules="[(val: string) => parseFloat(val.replace(/\./g, '').replace(',', '.')) > 0]"
-        />
-      </div>
+    <div class="attributes-column with-divider">
+      <template v-if="isEvent">
+        <div class="input-section">
+          <span class="section-title">{{ $t('labels.maxParticipants') }}</span>
+          <InputNumberCustom
+            :input-props="{
+              rounded: true,
+              outlined: true,
+              hideBottomSpace: true,
+            }"
+            :maxLength="6"
+            v-model="maxParticipants"
+            :placeholder="$t('placeholders.insertNumber')"
+            update="formatNumberNoDecimals"
+            :rules="[(val: string) => parseFloat(val.replace(/\./g, '').replace(',', '.')) > 0]"
+          />
+        </div>
 
-      <div :class="{ 'q-mt-md': $q.screen.lt.sm }">
-        <span class="text-h6 text-bold text-primary">{{ $t('labels.startDate') }}</span>
-        <q-input type="datetime-local" class="q-mb-xs" rounded outlined v-model="startingDate" :rules="[val => !!val]" hide-bottom-space/>
-      </div>
+        <div class="input-section">
+          <span class="section-title">{{ $t('labels.startDate') }}</span>
+          <q-input
+            type="datetime-local"
+            class="q-mb-xs"
+            rounded
+            outlined
+            v-model="startingDate"
+            :rules="[val => !!val]"
+            hide-bottom-space
+          />
+        </div>
 
-      <div :class="{ 'q-mb-lg q-mt-md': $q.screen.lt.sm }">
-        <span class="text-h6 text-bold text-primary">{{ $t('labels.endDate') }}</span>
-        <q-input type="datetime-local" class="q-mb-xs" rounded outlined v-model="endingDate" :rules="[val => !!val, val => !startingDate || new Date(val) > new Date(startingDate)]" hide-bottom-space/>
-      </div>
+        <div class="input-section">
+          <span class="section-title">{{ $t('labels.endDate') }}</span>
+          <q-input
+            type="datetime-local"
+            class="q-mb-xs"
+            rounded
+            outlined
+            v-model="endingDate"
+            :rules="[val => !!val, val => !startingDate || new Date(val) > new Date(startingDate)]"
+            hide-bottom-space
+          />
+        </div>
+      </template>
+      <template v-else>
+        <div class="input-section textarea-container">
+          <span class="section-title">{{ $t('labels.description') }}</span>
+          <q-input
+            type="textarea"
+            rounded
+            outlined
+            v-model="description"
+            :placeholder="$t('placeholders.insertText')"
+            @blur="() => description = (description?.toString() || '').trim()"
+            :rules="[val => !!val]"
+            hide-bottom-space
+            class="description-textarea"
+          />
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref, watch} from 'vue';
+import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import { useEventsActivitiesStore } from '@/stores/eventsActivities';
-import { useRoute } from 'vue-router';
 import InputTextCustom from '@/components/Inputs/InputText.vue';
 import InputNumberCustom from '@/components/Inputs/InputNumber.vue';
 
-const route = useRoute();
-const type = ref(route.path.includes('activities') ? 'activity' : 'event');
+const props = defineProps({
+  isEvent: {
+    type: Boolean,
+    default: false
+  }
+});
+
+const type = computed(() => props.isEvent ? 'event' : 'activity');
+const isEvent = computed(() => props.isEvent);
 const name = ref('');
 const description = ref('');
 const note = ref('');
@@ -83,14 +152,19 @@ const maxParticipants = ref('');
 const store = useEventsActivitiesStore();
 
 const validateInputs = () => {
-  const hasErrors = !name.value.trim() ||
+  let hasErrors = !name.value.trim() ||
     !description.value.trim() ||
     !note.value.trim() ||
-    !startingDate.value ||
-    !endingDate.value ||
-    new Date(endingDate.value) <= new Date(startingDate.value) ||
     !maxParticipants.value ||
     parseFloat(maxParticipants.value.replace(/\./g, '').replace(',', '.')) <= 0;
+
+  // Only validate dates for events
+  if (isEvent.value) {
+    hasErrors = hasErrors ||
+      !startingDate.value ||
+      !endingDate.value ||
+      new Date(endingDate.value) <= new Date(startingDate.value);
+  }
 
   window.dispatchEvent(new CustomEvent('inputErrors', {
     detail: { hasErrors }
@@ -98,7 +172,6 @@ const validateInputs = () => {
 };
 
 watch([name, description, note, startingDate, endingDate, maxParticipants], () => {
-  console.log(startingDate.value);
   validateInputs();
 });
 
@@ -148,38 +221,80 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.small-containers {
-  padding: 0rem 1rem 0rem 1rem;
+.attributes-grid {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.border-primary-left {
-  position: relative;
-}
+.attributes-column {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
 
-.border-primary-left::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 5%;
-  height: 90%;
-  width: 2px;
-  background-color: $border-color;
-}
-
-@media (max-width: 599px) {
-  .border-primary-left::before {
-    display: none;
+  @media (min-width: 600px) {
+    flex: 1 1 50%;
+    min-height: 445px;
+    padding: 1rem 2rem 2rem;
   }
 }
 
-@media (min-width: 600px) {
-  .small-containers {
+.input-section {
+  margin-bottom: 1rem;
+
+  @media (min-width: 600px) {
+    margin-bottom: 0;
+  }
+}
+
+.section-title {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--q-primary);
+}
+
+.description-textarea {
+  height: 100%;
+
+  :deep(.q-field__control) {
+    height: 100%;
+  }
+
+  :deep(.q-field__native) {
+    min-height: 300px;
+    resize: none;
+
+    @media (min-width: 600px) {
+      min-height: 340px;
+    }
+  }
+}
+
+.textarea-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+
+  .description-textarea {
     flex-grow: 1;
-    display: flex;
-    padding: 1rem 2rem 2rem 2rem;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 445px;
+  }
+}
+
+.with-divider {
+  position: relative;
+
+  @media (min-width: 600px) {
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5%;
+      height: 90%;
+      width: 2px;
+      background-color: $border-color;
+    }
   }
 }
 </style>

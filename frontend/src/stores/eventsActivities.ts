@@ -14,6 +14,12 @@ interface Target {
   endYear: number;
 }
 
+interface ActivityReview {
+  name: string;
+  startDate: string;
+  endDate: string;
+}
+
 interface EventActivity {
   type: string;
   name: string;
@@ -25,6 +31,8 @@ interface EventActivity {
   endDate: string;
   image?: string;
   targets?: Target[];
+  isReview?: boolean;
+  activitiesReview?: ActivityReview[];
 }
 
 export const useEventsActivitiesStore = defineStore('eventsActivities', {
@@ -41,7 +49,8 @@ export const useEventsActivitiesStore = defineStore('eventsActivities', {
         ...eventActivity,
         place: [],
         image: '',
-        targets: []
+        targets: [],
+        activitiesReview: [],
       };
       this.eventsActivities.push(newEventActivity);
       localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
@@ -61,6 +70,49 @@ export const useEventsActivitiesStore = defineStore('eventsActivities', {
     addTargets(index: number, targets: Target[]) {
       if (this.eventsActivities[index]) {
         this.eventsActivities[index].targets = targets;
+        localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
+      }
+    },
+    addPeriod(index: number, date: {
+      startDate: string;
+      endDate: string;
+    }) {
+      console.log(date)
+      if (this.eventsActivities[index]) {
+        this.eventsActivities[index] = {
+          ...this.eventsActivities[index],
+          startDate: date.startDate,
+          endDate: date.endDate,
+        };
+        localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
+      }
+    },
+    addActivityReview(index: number, activitiesReviewData: ActivityReview[]){
+      if (this.eventsActivities[index] && activitiesReviewData.length > 0) {
+        this.eventsActivities[index].activitiesReview = activitiesReviewData;
+        this.eventsActivities[index].isReview = true;
+
+        // Find the earliest start date and latest end date
+        let earliestStartDate = new Date(activitiesReviewData[0].startDate);
+        let latestEndDate = new Date(activitiesReviewData[0].endDate);
+
+        for (const activity of activitiesReviewData) {
+          const startDate = new Date(activity.startDate);
+          const endDate = new Date(activity.endDate);
+
+          if (startDate < earliestStartDate) {
+            earliestStartDate = startDate;
+          }
+
+          if (endDate > latestEndDate) {
+            latestEndDate = endDate;
+          }
+        }
+
+        // Set the event start and end dates
+        this.eventsActivities[index].startDate = earliestStartDate.toISOString().slice(0, 19);
+        this.eventsActivities[index].endDate = latestEndDate.toISOString().slice(0, 19);
+
         localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
       }
     },

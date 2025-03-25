@@ -5,6 +5,12 @@ export interface Target {
   endYear: number;
 }
 
+interface ActivityReview {
+  name: string;
+  startDate: string;
+  endDate: string;
+}
+
 export interface EventActivity {
   id: number;
   name: string;
@@ -15,4 +21,6 @@ export interface EventActivity {
   image: string;
   price?: number;
   targets?: Target[];
+  isReview?: boolean;
+  activitiesReview?: ActivityReview[];
 }

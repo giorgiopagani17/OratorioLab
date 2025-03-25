@@ -42,11 +42,13 @@ export default {
   types: {
     activities: 'Attività',
     events: 'Eventi',
+    activity: 'Attività',
+    event: 'Evento'
   },
   steps: {
     event: 'Evento',
     activity: 'Attività',
-    subActivity: 'Sotto-Attività',
+    period: 'Periodo',
     place: 'Spazio',
     image: 'Immagine',
     targetPrice: 'Target e Prezzo',
@@ -84,12 +86,19 @@ export default {
     telephone: 'Telefono',
     organizer: 'Organizzatore',
     status: 'Stato',
+    review: 'Rassegna',
+    activityPeriod: 'Periodo Attività',
+    enableBaseActivity: 'Attività Base',
+    enableActivityReview: 'Rassegna Attività',
+    activityReview: 'Periodo Rassegna Attività',
+    numberOfActivities: 'Numero di Attività',
   },
   placeholders: {
     commonPrice: 'Prezzo comune',
     search: 'Cerca...',
     insertText: 'Inserisci testo qui',
     insertNumber: 'Inserisci numero qui',
+    activityName: 'Nome Attività',
   },
   tooltips: {
     deleteTarget: 'Elimina Target',
