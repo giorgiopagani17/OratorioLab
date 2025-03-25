@@ -61,7 +61,7 @@
       <slot></slot>
     </q-table>
 
-    <InfoDataTableModal v-model="showModal" :row-data="selectedRow" :isRegistration="false"/>
+    <UserModal v-if="props.modalUserInfo" v-model="showModal" :row-data="selectedRow" :isRegistration="false"/>
   </div>
 </template>
 
@@ -69,7 +69,7 @@
 import {ref, watch} from 'vue';
 import { useDataTable } from '@/composables/useDataTable';
 import { QTableColumn } from 'quasar';
-import InfoDataTableModal from '@/components/Modals/components/InfoDataTableModal.vue';
+import UserModal from '@/components/Modals/components/UserModal.vue';
 
 interface TableRow {
   [key: string]: unknown;
@@ -83,6 +83,7 @@ const props = withDefaults(defineProps<{
   rowsPerPageLabel?: string;
   noDataMessage?: string;
   loading?: boolean;
+  modalUserInfo?: boolean;
 }>(), {
   rowsPerPageOptions: () => [15, 30, 50],
   rowsPerPageLabel: 'labels.recordsPerPage',

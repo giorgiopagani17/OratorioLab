@@ -1,7 +1,7 @@
 <template>
   <ModalCustom
     v-model="isOpen"
-    :persistent="false"
+    :persistent="true"
     :show-header="true"
     :title="$t('titles.info')"
     titleColor="primary"
@@ -9,44 +9,55 @@
     :fullWidth="true"
   >
     <div class="info-modal-content">
-      <div class="info-modal-main q-mt-sm row justify-center q-gutter-lg">
+      <div class="info-modal-main q-mt-sm q-mb-lg row justify-center q-gutter-lg">
         <div class="col-12 col-md-3">
-          <div class="bg-grey-3 flex items-center justify-center" style="width: 125px; height: 125px; border-radius: 50%">
-            <q-icon name="person" color="white" size="80px" />
-          </div>
-          <div class="q-mt-sm text-bold text-truncate text-h6 text-secondary">
-            {{ rowData?.name || 'example@gmail.com' }}
-          </div>
-          <div class="text-grey-7 q-mt-xs">{{ rowData?.email || 'example@gmail.com' }}</div>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-12" :class="{ 'flex flex-col items-center justify-center': $q.screen.lt.md }">
+              <div class="bg-grey-3 flex items-center justify-center" style="width: 125px; height: 125px; border-radius: 50%">
+                <q-icon name="person" color="white" size="80px" />
+              </div>
+              <div class="q-mt-sm text-bold text-truncate text-h6 text-secondary" :class="{ 'text-center': $q.screen.lt.md }">
+                {{ rowData?.name || 'example@gmail.com' }}
+              </div>
+              <div class="text-grey-7 q-mt-xs full-width" :class="{ 'text-center': $q.screen.lt.md }">{{ rowData?.email || 'example@gmail.com' }}</div>
+            </div>
 
-          <div class="q-mt-lg">
-            <div
-              v-for="option in options"
-              :key="option.id"
-              :class="[
-              'text-h6',
-              'q-mt-sm',
-              'cursor-pointer',
-              { 'text-primary text-bold': option.active, 'text-grey-7': !option.active }
-            ]"
-              @click="setActive(option)"
-            >
-              {{ option.title }}
+            <div class="col-12 col-sm-6 col-md-12 flex flex-col items-center" :class="{ 'q-mt-lg': $q.screen.gt.sm, 'q-mt-md': $q.screen.lt.sm }">
+              <div
+                v-for="option in options"
+                :key="option.id"
+                :class="[
+                  'text-h6',
+                  'q-mt-sm',
+                  'full-width',
+                  { 'text-center': $q.screen.lt.sm },
+                  { 'cursor-pointer': !isRegistration },
+                  { 'text-primary text-bold': option.active, 'text-grey-7': !option.active }
+                ]"
+                @click="() => { if (!isRegistration) setActive(option); }"
+              >
+                {{ option.title }}
+              </div>
             </div>
           </div>
         </div>
+
+        <q-separator class="q-my-xs" />
+
         <div class="col-12 col-md-6">
           <div class="text-h5 text-bold text-primary">{{ activeOption.title }}</div>
           <div class="text-grey-7 q-mt-md">{{ activeOption.description }}</div>
 
           <div v-if="isRegistration" class="q-mt-lg q-pt-sm">
-            <div :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm' : '']">
+            <div :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-md q-mb-md' : '']" style="height: 265px;">
               <div
-                v-for="item in filteredData"
+                v-for="(item, index) in filteredData"
                 :key="item.title"
                 :class="[
-                activeOption.id === 1 ? 'col-12 col-md-6' : 'q-mb-md'
-              ]"
+                  activeOption.id === 1
+                    ? 'col-12 col-md-6'
+                    : (index !== filteredData.length - 1 ? 'q-mb-md' : '')
+                ]"
               >
                 <div>
                   <div class="text-subtitle1 text-bold text-secondary flex justify-between">
@@ -61,6 +72,29 @@
                   />
                 </div>
               </div>
+            </div>
+
+            <div class="row justify-between">
+              <q-btn
+                icon="arrow_back"
+                color="grey"
+                :label="$t('buttons.back')"
+                @click="moveToPreviousOption"
+                :disable="activeOption.id === 1"
+                :class="{'invisible': activeOption.id === 1}"
+              />
+
+              <q-btn
+                :icon-right="activeOption.id === options.length ? 'check' : 'arrow_forward'"
+                :color="activeOption.id === options.length ? 'secondary' : 'primary'"
+                :label="activeOption.id === options.length ? $t('buttons.create') : $t('buttons.next')"
+                @click="moveToNextOption"
+                :disable="isNextButtonDisabled"
+              >
+                <q-tooltip v-if="isNextButtonDisabled" anchor="top middle" self="bottom middle" :offset="[5, 5]">
+                  {{ $t('tooltips.fillAllFields') }}
+                </q-tooltip>
+              </q-btn>
             </div>
           </div>
 
@@ -123,7 +157,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, reactive } from 'vue';
+import {computed, ref, reactive, watch} from 'vue';
 import ModalCustom from '@/components/Modals/ModalCustom.vue';
 
 interface OptionItem {
@@ -207,8 +241,18 @@ const data = ref<DataItem[]>([
   { title: 'Allergies', optionId: 4, icon: 'health_and_safety' },
 ]);
 
+const isNextButtonDisabled = computed(() => {
+  if (!props.isRegistration) return false;
+
+  const currentOptionFields = filteredData.value.map(item => item.title);
+
+  return currentOptionFields.some(fieldName => {
+    const value = formData[fieldName];
+    return value === undefined || value === null || value === '';
+  });
+});
+
 if (props.rowData) {
-  // Convert all rowData values to appropriate types for inputs
   Object.entries(props.rowData).forEach(([key, value]) => {
     if (value !== null && value !== undefined) {
       formData[key] = typeof value === 'object' ? JSON.stringify(value) : String(value);
@@ -233,6 +277,31 @@ const setActive = (selectedOption: OptionItem): void => {
   });
   // Close any editing field when changing tabs
   selectedField.value = null;
+};
+
+const moveToPreviousOption = () => {
+  const currentIndex = options.value.findIndex(option => option.active);
+
+  if (currentIndex > 0) {
+    options.value.forEach(option => {
+      option.active = false;
+    });
+    options.value[currentIndex - 1].active = true;
+  } else {
+    saveEdit();
+  }
+};
+
+const moveToNextOption = () => {
+  const currentIndex = options.value.findIndex(option => option.active);
+  if (currentIndex < options.value.length - 1) {
+    options.value.forEach(option => {
+      option.active = false;
+    });
+    options.value[currentIndex + 1].active = true;
+  } else {
+    saveEdit();
+  }
 };
 
 const selectField = (item: DataItem): void => {
@@ -265,11 +334,6 @@ const saveEdit = (): void => {
   }
 };
 
-
-//const saveAllFormData = () => {
-  //emit('save', formData);
-//};
-
 const convertToDisplayValue = (value: unknown): string => {
   if (value === null || value === undefined) {
     return '-';
@@ -289,6 +353,16 @@ const convertToDisplayValue = (value: unknown): string => {
 
   return String(value);
 };
+
+watch(() => isOpen.value, (newValue) => {
+  if (newValue) {
+    options.value.forEach((option, index) => {
+      option.active = index === 0;
+    });
+    selectedField.value = null;
+    editValue.value = '';
+  }
+}, { immediate: true });
 </script>
 
 <style scoped>

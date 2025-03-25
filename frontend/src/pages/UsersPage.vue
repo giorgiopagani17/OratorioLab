@@ -52,12 +52,13 @@
         row-key="name"
         :pagination="pagination"
         :loading="loading"
+        :modalUserInfo="true"
         @update:pagination="onPaginationChange"
         @request-data="fetchData"
       />
     </div>
 
-    <InfoDataTableModal v-model="showModal" :isRegistration="true"/>
+    <UserModal v-model="showModal" :isRegistration="true"/>
   </q-page>
 </template>
 
@@ -69,7 +70,7 @@ import { useI18n } from 'vue-i18n';
 import HeaderSection from '@/components/Sections/HeaderSection.vue';
 import ResponsiveButton from '@/components/Buttons/ResponsiveButton.vue';
 import DataTable from '@/components/Tables/DataTable.vue';
-import InfoDataTableModal from '@/components/Modals/components/InfoDataTableModal.vue';
+import UserModal from '@/components/Modals/components/UserModal.vue';
 
 defineOptions({
   name: 'UserPage'
