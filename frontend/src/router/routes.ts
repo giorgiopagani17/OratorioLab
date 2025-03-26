@@ -33,7 +33,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:section(activities|events)',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: 'view', component: () => import('@/pages/EventsActivities/View/AllEventsActivities.vue'), props: (route) => ({ type: route.query.type, section: route.params.section }) }]
+    children: [{ path: 'view', component: () => import('@/pages/EventsActivities/View/AllEventsActivities.vue'), props: (route) => ({ type: route.query.type, section: route.params.section, isDraft: false }) }]
   },
   {
     path: '/:section(activities|events)',
@@ -62,6 +62,25 @@ const routes: RouteRecordRaw[] = [
         })
       }
     ]
+  },
+  {
+    path: '/:section(activities|events)',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: 'drafts',
+        component: () => import('@/pages/EventsActivities/View/AllEventsActivities.vue'),
+        props: (route) => ({
+          section: route.params.section,
+          isDraft: true
+        })
+      }
+    ]
+  },
+  {
+    path: '/settings',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/Settings/SettingsPage.vue') }],
   },
   {
     path: '/:catchAll(.*)*',

@@ -61,9 +61,9 @@ const buttons = computed<Button[]>(() => [
     icon: 'visibility'
   },
   {
-    title: type.value === 'events' ? 'spaceCreate' : 'groupsCreate',
-    action: type.value === 'events' ? '/space' : '/groups',
-    icon: type.value === 'events' ? 'room' : 'group'
+    title: 'drafts',
+    action: '/drafts',
+    icon: 'inventory'
   },
   {
     title: 'financialBalance',

@@ -18,7 +18,7 @@
           </div>
         </template>
         <div v-if="eventActivity" class="q-pa-sm full-width">
-          <EventActivityCard :id="props.id" :section="props.section" :eventActivity="eventActivity" :isAdmin="true"/>
+          <EventActivityReviewCard :id="props.id" :section="props.section" :eventActivity="eventActivity" :isAdmin="true"/>
         </div>
         <div v-else class="q-pa-sm full-width">
           <p>No event activity found.</p>
@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import BodySection from '@/components/Sections/BodySection.vue';
-import EventActivityCard from '@/components/Card/EventActivityCard.vue';
+import EventActivityReviewCard from '@/components/Card/EventActivityReviewCard.vue';
 import activities from '@/data/activities.json';
 import events from '@/data/events.json';
 import { computed } from 'vue';

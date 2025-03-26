@@ -13,7 +13,8 @@
                 <div class="absolute-bottom text-subtitle2 bg-secondary-7 text-white q-pa-xs">
                   <div class="row items-center">
                     <q-icon name="event" size="xs" class="q-mr-xs" />
-                    {{ formatDates(eventActivity.startDate, eventActivity.endDate) }}
+                    {{ eventActivity.startDate && eventActivity.endDate ?
+                    formatDates(eventActivity.startDate, eventActivity.endDate) : 'No date' }}
                   </div>
                 </div>
               </q-img>
@@ -100,7 +101,8 @@
                 </div>
                 <div class="col q-ml-md flex items-center">
                   <div class="text-weight-bold text-primary">{{ $t(`labels.${type}Price`) }}:</div>
-                  <div class="q-ml-md" style="font-size: 16px">{{ eventActivity.price }}€</div>
+                  <div v-if="eventActivity.price && eventActivity.price > 0" class="q-ml-md" style="font-size: 16px">{{ eventActivity.price }}€</div>
+                  <div v-else class="q-ml-md" style="font-size: 16px">{{ $t('texts.gratis') }}</div>
                 </div>
               </div>
             </div>
@@ -160,7 +162,10 @@ const props = defineProps<{
 const type = props.section === 'events' ? 'event' : 'activity';
 const router = useRouter();
 const idEventActivity = props.id ?? 0;
-const formatDates = (startDate: string, endDate: string): string => {
+
+const formatDates = (startDate?: string, endDate?: string): string => {
+  if (!startDate || !endDate) return 'No date';
+
   const start = new Date(startDate);
   const formattedStart = start.toLocaleDateString('it-IT', {
     day: '2-digit',
@@ -182,8 +187,14 @@ const formatDates = (startDate: string, endDate: string): string => {
   return `${formattedStart} - ${formattedEnd}`;
 };
 
-const formatHours = (dateString: string): string => {
-  return dateString.split('T')[1].substring(0, 5);
+const formatHours = (date?: string): string => {
+  if (!date) return 'No time';
+
+  const dateObj = new Date(date);
+  return dateObj.toLocaleTimeString('it-IT', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 };
 
 const navigateTo = (path: string) => {

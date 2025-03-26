@@ -44,13 +44,20 @@ export const useEventsActivitiesStore = defineStore('eventsActivities', {
     };
   },
   actions: {
-    addEventActivity(eventActivity: Omit<EventActivity, 'image' | 'targets'>) {
+    addEventActivity(eventActivity: Partial<EventActivity>) {
       const newEventActivity: EventActivity = {
-        ...eventActivity,
-        place: [],
-        image: '',
-        targets: [],
-        activitiesReview: [],
+        type: eventActivity.type || '',
+        name: eventActivity.name || '',
+        description: eventActivity.description || '',
+        note: eventActivity.note || '',
+        maxParticipants: eventActivity.maxParticipants || 0,
+        startDate: eventActivity.startDate || '',
+        endDate: eventActivity.endDate || '',
+        place: eventActivity.place || [],
+        image: eventActivity.image || '',
+        targets: eventActivity.targets || [],
+        activitiesReview: eventActivity.activitiesReview || [],
+        isReview: eventActivity.isReview || false
       };
       this.eventsActivities.push(newEventActivity);
       localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));

@@ -12,13 +12,13 @@ interface ActivityReview {
 }
 
 export interface EventActivity {
-  id: number;
-  name: string;
-  description: string;
-  notes: string;
-  startDate: string;
-  endDate: string;
-  image: string;
+  id?: number;
+  name?: string;
+  description?: string;
+  notes?: string;
+  startDate?: string;
+  endDate?: string;
+  image?: string;
   price?: number;
   targets?: Target[];
   isReview?: boolean;

@@ -1,6 +1,6 @@
 <template>
   <div v-if="eventActivity" class="q-pa-sm q-pb-lg">
-    <EventActivityCard :section="props.section" :eventActivity="eventActivity" :isAdmin="false"/>
+    <EventActivityReviewCard :section="props.section" :eventActivity="eventActivity" :isAdmin="false"/>
   </div>
   <div v-else class="q-pa-sm q-pb-md">
     <p>No event activity found.</p>
@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { EventActivity } from '@/interfaces/EventActivity';
-import EventActivityCard from '@/components/Card/EventActivityCard.vue';
+import EventActivityReviewCard from '@/components/Card/EventActivityReviewCard.vue';
 import { useEventsActivitiesStore } from '@/stores/eventsActivities';
 
 const props = defineProps<{
