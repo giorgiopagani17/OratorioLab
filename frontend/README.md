@@ -1,6 +1,6 @@
-# OratoriXD (oratorixd)
+# OratorioLAB (oratoriolab)
 
-OratoriXD Front-End
+OratorioLAB Front-End
 
 ## Install the dependencies
 ```bash

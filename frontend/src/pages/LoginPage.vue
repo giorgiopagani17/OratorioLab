@@ -5,7 +5,7 @@
         Login
       </div>
       <div class="text-center q-pa-md container-body">
-        <p class="text-secondary text-bold text-25 q-pa-sm">ORATORI<span class="text-primary">360</span></p>
+        <p class="text-secondary text-bold text-25 q-pa-sm">ORATORIO<span class="text-primary">LAB</span></p>
         <q-input rounded outlined v-model="username" color="secondary" label="Username" />
         <q-input rounded outlined v-model="password" color="secondary" label="Password" type="password" class="q-mt-md"/>
         <q-btn color="primary" label="Login" class="q-mt-lg" style="width: 15vh" @click="handleLogin"/>

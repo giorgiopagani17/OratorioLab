@@ -1,7 +1,7 @@
 <template>
   <div class="loading-container">
     <q-spinner size="50px" color="primary" />
-    <p class="text-white text-bold text-25">Oratori<span class="text-primary">360</span></p>
+    <p class="text-white text-bold text-25">Oratorio<span class="text-primary">LAB</span></p>
   </div>
 </template>
 
