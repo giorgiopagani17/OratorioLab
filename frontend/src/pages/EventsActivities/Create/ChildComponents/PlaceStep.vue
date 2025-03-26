@@ -5,7 +5,7 @@
         <q-input
           filled
           v-model="address"
-          :label="$t('labels.address')"
+          :label="$t('labels.insertAddress')"
           @update:model-value="onInput"
           color="secondary"
           clearable

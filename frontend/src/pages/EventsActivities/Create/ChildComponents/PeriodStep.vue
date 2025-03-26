@@ -8,7 +8,11 @@
             <p class="text-h5 text-bold text-primary q-mb-none">{{ $t('labels.activityPeriod') }}</p>
           </div>
           <div class="col-12 col-sm-4 flex justify-end">
-            <q-toggle v-model="hasBaseActivity" color="primary" :label="$t('labels.enableBaseActivity')" />
+            <q-toggle v-model="hasBaseActivity" color="primary" :label="$t('labels.enableBaseActivity')">
+              <q-tooltip v-if="activitiesReviewNumber === 1" anchor="top left" self="bottom middle" :offset="[5, 5]">
+                {{ $t('tooltips.baseActivityMode') }}
+              </q-tooltip>
+            </q-toggle>
           </div>
         </div>
         <div v-if="hasBaseActivity" class="row q-col-gutter-md q-pt-sm">
@@ -45,7 +49,11 @@
             <p class="text-h5 text-bold text-primary q-mb-none">{{ $t('labels.activityReview') }}</p>
           </div>
           <div class="col-12 col-sm-4 flex justify-end">
-            <q-toggle v-model="hasSubActivities" color="primary" :label="$t('labels.enableActivityReview')" />
+            <q-toggle v-model="hasSubActivities" color="primary" :label="$t('labels.enableActivityReview')">
+              <q-tooltip v-if="activitiesReviewNumber === 1" anchor="top left" self="bottom middle" :offset="[5, 5]">
+                {{ $t('tooltips.activitiesReviewMode') }}
+              </q-tooltip>
+            </q-toggle>
           </div>
         </div>
       </div>
@@ -59,7 +67,14 @@
               size="30px"
               :class="['text-secondary', activitiesReviewNumber === 1 ? 'text-grey-5' : 'cursor-pointer']"
               @click="activitiesReviewNumber > 1 && removeActivityReview()"
-            />
+            >
+              <q-tooltip v-if="activitiesReviewNumber === 1" anchor="top middle" self="bottom middle" :offset="[5, 5]">
+                {{ $t('tooltips.activityRequired') }}
+              </q-tooltip>
+              <q-tooltip v-else anchor="top middle" self="bottom middle" :offset="[5, 5]">
+                {{ $t('tooltips.deleteActivity') }}
+              </q-tooltip>
+            </q-icon>
             <span class="q-mx-md text-secondary text-bold" style="font-size: 22px; width: 30px">{{ activitiesReviewNumber }}</span>
             <q-icon
               name="control_point"
@@ -68,10 +83,10 @@
               @click="!isActivityReview10 && addActivityReview()"
             >
               <q-tooltip v-if="isActivityReview10" class="bg-negative" anchor="top middle" self="bottom middle" :offset="[5, 5]">
-                {{ $t('tooltips.maxTarget') }}
+                {{ $t('tooltips.maxActivity') }}
               </q-tooltip>
               <q-tooltip v-else anchor="top middle" self="bottom middle" :offset="[5, 5]">
-                {{ $t('tooltips.addTarget') }}
+                {{ $t('tooltips.addActivity') }}
               </q-tooltip>
             </q-icon>
           </div>
@@ -91,8 +106,11 @@
                 @click="removeActivityReviewAt(index)"
                 :disabled="activitiesReview.length <= 1"
               >
-                <q-tooltip anchor="top middle" self="bottom middle" :offset="[5, 5]">
-                  {{ $t('tooltips.deleteTarget') }}
+                <q-tooltip v-if="activitiesReviewNumber === 1" anchor="top middle" self="bottom middle" :offset="[5, 5]">
+                  {{ $t('tooltips.activityRequired') }}
+                </q-tooltip>
+                <q-tooltip v-else anchor="top middle" self="bottom middle" :offset="[5, 5]">
+                  {{ $t('tooltips.deleteActivity') }}
                 </q-tooltip>
               </q-btn>
             </div>

@@ -36,7 +36,7 @@
                 ]"
                 @click="() => { if (!isRegistration) setActive(option); }"
               >
-                {{ option.title }}
+                {{ $t(`userOptions.${option.title}`) }}
               </div>
             </div>
           </div>
@@ -44,8 +44,8 @@
 
 
         <div class="col-12 col-md-6 q-mb-lg" :class="{ 'q-mt-lg': $q.screen.lt.md, 'q-ml-md': $q.screen.gt.sm }">
-          <div class="text-h5 text-bold text-primary text-truncate">{{ activeOption.title }}</div>
-          <div class="text-grey-7 q-mt-md">{{ activeOption.description }}</div>
+          <div class="text-h5 text-bold text-primary text-truncate">{{ $t(`userOptions.${activeOption.title}`) }}</div>
+          <div class="text-grey-7 q-mt-md">{{ $t(`userOptionsDescriptions.${activeOption.title}Description`) }}</div>
 
           <div v-if="isRegistration" class="q-mt-lg">
             <div
@@ -67,7 +67,7 @@
               >
                 <div>
                   <div class="text-subtitle1 text-bold text-secondary flex justify-between">
-                    {{ item.title }}
+                    {{ $t(`labels.${item.title}`) }}
                     <q-icon :name="item.icon" color="secondary" size="sm"/>
                   </div>
                   <q-input
@@ -135,10 +135,10 @@
                 <q-card class="field-container cursor-pointer" @click="selectField(item)">
                   <q-card-section>
                     <div class="text-subtitle1 text-bold q-mb-xs text-secondary flex justify-between">
-                      {{ item.title }}
+                      {{ $t(`labels.${item.title}`) }}
                       <q-icon :name="item.icon" color="secondary" size="sm"/>
                     </div>
-                    <div class="field-value text-break">{{ convertToDisplayValue(rowData?.[item.title]) }}</div>
+                    <div class="field-value text-break text-truncate">{{ convertToDisplayValue(rowData?.[item.title]) }}</div>
                   </q-card-section>
                 </q-card>
               </div>
@@ -147,13 +147,11 @@
         </div>
         <div class="privacy-notice full-width">
           <q-icon name="security" color="secondary" size="md" />
-          <div class="text-subtitle1 text-bold q-mt-xs">Trattamento dei Dati Sensibili</div>
+          <div class="text-subtitle1 text-bold q-mt-xs">
+            {{ $t('messages.sensitiveDataProcessing') }}
+          </div>
           <p class="text-grey-7 q-mt-sm" style="width: 95%; max-width: 950px; margin: 0 auto;">
-            OratorioLab tratta i dati sensibili in conformità con il Regolamento UE 2016/679 (GDPR).
-            Adottiamo misure tecniche e organizzative adeguate per proteggere i dati personali da accessi
-            non autorizzati, perdita o modifica. I dati vengono conservati solo per il tempo necessario alle
-            finalità per cui sono stati raccolti e l'utente può esercitare i propri diritti contattando il
-            nostro responsabile della protezione dei dati.
+            {{ $t('messages.sensitiveDataProcessingDescription') }}
           </p>
         </div>
       </div>
@@ -201,28 +199,28 @@ const formData = reactive<Record<string, string | number | null>>({});
 const options = ref<OptionItem[]>([
   {
     id: 1,
-    title: 'Personal Information',
+    title: 'personalInfo',
     description: 'This section contains all the personal user information, including email, username, and other relevant details. It is essential for identifying and contacting the user.',
     icon: 'person',
     active: true
   },
   {
     id: 2,
-    title: 'Domicile',
+    title: 'domicile',
     description: 'Here you can find the user\'s domicile information, including their current address and any previous addresses. This is important for verifying the user\'s residence and for any necessary correspondence.',
     icon: 'home',
     active: false
   },
   {
     id: 3,
-    title: 'Emergency Contact',
+    title: 'emergencyContact',
     description: 'In this section, you can find the emergency contact information. This includes the names and phone numbers of people to contact in case of an emergency, ensuring quick and effective communication.',
     icon: 'contact_phone',
     active: false
   },
   {
     id: 4,
-    title: 'Illness',
+    title: 'illnesses',
     description: 'This section provides detailed information about any illnesses the user may have. It includes medical history, current conditions, and any relevant treatments or medications, ensuring proper care and attention.',
     icon: 'medical_services',
     active: false
@@ -230,20 +228,20 @@ const options = ref<OptionItem[]>([
 ]);
 
 const data = ref<DataItem[]>([
-  { title: 'Name', optionId: 1, icon: 'person' },
-  { title: 'Email', optionId: 1, icon: 'email' },
-  { title: 'CF', optionId: 1, icon: 'badge' },
-  { title: 'Birthday', optionId: 1, icon: 'cake' },
-  { title: 'Gender', optionId: 1, icon: 'wc' },
-  { title: 'CreatedAt', optionId: 1, icon: 'event' },
-  { title: 'Address', optionId: 2, icon: 'home' },
-  { title: 'Country', optionId: 2, icon: 'flag' },
-  { title: 'Nationality', optionId: 2, icon: 'public' },
-  { title: 'Mother', optionId: 3, icon: 'woman' },
-  { title: 'Father', optionId: 3, icon: 'man' },
-  { title: 'Tutor', optionId: 3, icon: 'support_agent' },
-  { title: 'Illness', optionId: 4, icon: 'medical_services' },
-  { title: 'Allergies', optionId: 4, icon: 'health_and_safety' },
+  { title: 'name', optionId: 1, icon: 'person' },
+  { title: 'email', optionId: 1, icon: 'email' },
+  { title: 'cf', optionId: 1, icon: 'badge' },
+  { title: 'birthday', optionId: 1, icon: 'cake' },
+  { title: 'gender', optionId: 1, icon: 'wc' },
+  { title: 'createdAt', optionId: 1, icon: 'event' },
+  { title: 'address', optionId: 2, icon: 'home' },
+  { title: 'country', optionId: 2, icon: 'flag' },
+  { title: 'nationality', optionId: 2, icon: 'public' },
+  { title: 'mother', optionId: 3, icon: 'woman' },
+  { title: 'father', optionId: 3, icon: 'man' },
+  { title: 'tutor', optionId: 3, icon: 'support_agent' },
+  { title: 'illness', optionId: 4, icon: 'medical_services' },
+  { title: 'allergies', optionId: 4, icon: 'health_and_safety' },
 ]);
 
 const isNextButtonDisabled = computed(() => {
