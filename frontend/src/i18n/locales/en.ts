@@ -29,6 +29,8 @@ export default {
     latest: 'Latest',
     finished: 'Finished',
     empty: 'Empty',
+    backToHome: 'Back to Home',
+    reportProblem: 'Report a Problem',
   },
   texts: {
     insertTarget: 'Insert the number of targets to create above',
@@ -135,6 +137,8 @@ export default {
     targetStartingYear: 'Check the ending year',
     targetEndingYear: 'Check the starting year',
     noUserFound: 'No user found',
+    pageNotFound: 'PAGE NOT FOUND',
+    pageNotFoundDescription: 'The page you are trying to access does not exist or has been moved. Verify the URL or return to the home page.',
   },
   warnings: {
     warningProgressTitle: 'You have unsaved progress!',
@@ -152,6 +156,17 @@ export default {
     pricing: 'Pricing',
     privacyPolicy: 'Privacy Policy',
     finance: 'Finance',
+  },
+  settings: {
+    tabs: {
+      general: 'General',
+      events: 'Events',
+      activities: 'Activities',
+      currency: 'Currency',
+      users: 'Users',
+      notifications: 'Notifications',
+      targets: 'Targets',
+    }
   },
   userOptions: {
     personalInfo: 'Personal information',

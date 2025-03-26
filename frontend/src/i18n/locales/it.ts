@@ -29,6 +29,8 @@ export default {
     latest: 'Ultimi',
     finished: 'Finiti',
     empty: 'Vuoti',
+    backToHome: 'Torna alla Home',
+    reportProblem: 'Segnala un Problema',
   },
   texts: {
     insertTarget: 'Inserisci un numero di target da creare qui sopra',
@@ -135,6 +137,8 @@ export default {
     targetStartingYear: 'Controlla l\'anno di fine',
     targetEndingYear: 'Controllo l\'anno di inizio',
     noUserFound: 'Nessun utente trovato',
+    pageNotFound: 'PAGINA NON TROVATA',
+    pageNotFoundDescription: 'La pagina a cui stai cercando di accedere non esiste o è stata spostata. Verifica l\'URL o torna alla home.',
   },
   warnings: {
     warningProgressTitle: 'Hai dei progressi non salvati!',
@@ -152,6 +156,17 @@ export default {
     pricing: 'Prezzi',
     privacyPolicy: 'Privacy Policy',
     finance: 'Bilancio',
+  },
+  settings: {
+    tabs: {
+      general: 'Generale',
+      events: 'Eventi',
+      activities: 'Attività',
+      currency: 'Valuta',
+      users: 'Utenti',
+      notifications: 'Notifiche',
+      targets: 'Targets',
+    }
   },
   userOptions: {
     personalInfo: 'Informazioni Personali',
