@@ -65,7 +65,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { locale } = useI18n()
+    const { t } = useI18n()
     const currentDate = ref(new Date())
     const eventDialog = ref(false)
     const selectedEvents = ref([])
@@ -84,31 +84,19 @@ export default defineComponent({
       }))
     })
 
-    const daysOfWeek = computed(() =>
-      locale.value === 'it'
-        ? ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom']
-        : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    )
-
-    const monthNames = {
-      it: {
-        'January': 'Gennaio', 'February': 'Febbraio', 'March': 'Marzo',
-        'April': 'Aprile', 'May': 'Maggio', 'June': 'Giugno',
-        'July': 'Luglio', 'August': 'Agosto', 'September': 'Settembre',
-        'October': 'Ottobre', 'November': 'Novembre', 'December': 'Dicembre'
-      },
-      en: {
-        'January': 'January', 'February': 'February', 'March': 'March',
-        'April': 'April', 'May': 'May', 'June': 'June',
-        'July': 'July', 'August': 'August', 'September': 'September',
-        'October': 'October', 'November': 'November', 'December': 'December'
+    const daysOfWeek = computed(() => {
+      const days = []
+      for(let i = 0; i < 7; i++) {
+        days.push(t(`calendar.daysOfWeek.${i}`))
       }
-    }
+      return days
+    })
 
     const currentMonthYear = computed(() => {
-      const month = date.formatDate(currentDate.value, 'MMMM')
-      const year = date.formatDate(currentDate.value, 'YYYY')
-      return `${monthNames[locale.value][month]} ${year}`
+      const month = currentDate.value.getMonth()
+      const year = currentDate.value.getFullYear()
+      const translatedMonth = t(`calendar.months.${month}`)
+      return `${translatedMonth} ${year}`
     })
 
     const getEventsForDay = (dateStr) => {

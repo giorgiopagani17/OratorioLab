@@ -145,6 +145,31 @@ export default {
     warningProgressDescription1: 'Se esci ora, tutti i dati inseriti verranno',
     warningProgressDescription2: 'eliminati definitivamente.',
   },
+  calendar: {
+    daysOfWeek: {
+      '0': 'Lun',
+      '1': 'Mar',
+      '2': 'Mer',
+      '3': 'Gio',
+      '4': 'Ven',
+      '5': 'Sab',
+      '6': 'Dom'
+    },
+    months: {
+      '0': 'Gennaio',
+      '1': 'Febbraio',
+      '2': 'Marzo',
+      '3': 'Aprile',
+      '4': 'Maggio',
+      '5': 'Giugno',
+      '6': 'Luglio',
+      '7': 'Agosto',
+      '8': 'Settembre',
+      '9': 'Ottobre',
+      '10': 'Novembre',
+      '11': 'Dicembre'
+    }
+  },
   menu: {
     home: 'Home',
     registry: 'Anagrafiche',
