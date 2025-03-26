@@ -231,12 +231,18 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0rem;
 
   @media (min-width: 600px) {
     flex: 1 1 50%;
     min-height: 445px;
     padding: 1rem 2rem 2rem;
+  }
+
+  @media (max-width: 600px) {
+    padding-bottom: 0px !important;
+    padding-bottom: 0px !important;
+
   }
 }
 

@@ -4,14 +4,14 @@
       <!-- Base activity period selection -->
       <div class="q-my-md">
         <div class="row items-center">
-          <div class="col">
-            <p class="text-h5 text-bold text-primary">{{ $t('labels.activityPeriod') }}</p>
+          <div class="col-12 col-sm-8">
+            <p class="text-h5 text-bold text-primary q-mb-none">{{ $t('labels.activityPeriod') }}</p>
           </div>
-          <div class="col-auto">
+          <div class="col-12 col-sm-4 flex justify-end">
             <q-toggle v-model="hasBaseActivity" color="primary" :label="$t('labels.enableBaseActivity')" />
           </div>
         </div>
-        <div v-if="hasBaseActivity" class="row q-col-gutter-md">
+        <div v-if="hasBaseActivity" class="row q-col-gutter-md q-pt-sm">
           <div class="col-12 col-sm-6">
             <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.startDate') }}</span>
             <q-input
@@ -37,15 +37,14 @@
         </div>
       </div>
 
-      <!-- Sub-activities section -->
       <q-separator class="q-my-lg" />
 
       <div>
         <div class="row items-center">
-          <div class="col">
+          <div class="col-12 col-sm-8">
             <p class="text-h5 text-bold text-primary q-mb-none">{{ $t('labels.activityReview') }}</p>
           </div>
-          <div class="col-auto">
+          <div class="col-12 col-sm-4 flex justify-end">
             <q-toggle v-model="hasSubActivities" color="primary" :label="$t('labels.enableActivityReview')" />
           </div>
         </div>
@@ -97,8 +96,8 @@
                 </q-tooltip>
               </q-btn>
             </div>
-            <div class="flex justify-between items-center">
-              <div class="text-left" style="width: 45%">
+            <div class="row justify-between" :class="{ 'q-col-gutter-md': $q.screen.gt.xs }">
+              <div class="col-12 col-sm-6 text-left">
                 <div class="q-mt-md">
                   <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.name') }}</span>
                   <q-input
@@ -112,7 +111,7 @@
                   />
                 </div>
               </div>
-              <div class="text-left" style="width: 45%">
+              <div class="col-12 col-sm-6 text-left">
                 <div class="row q-col-gutter-sm q-mt-sm">
                   <div class="col-6 text-left">
                     <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.startDate') }}</span>
@@ -303,10 +302,16 @@ onUnmounted(() => {
 .input-activityReview-container {
   flex-grow: 1;
   display: flex;
-  padding: 0 2rem 1rem 2rem;
+  padding-bottom: 1rem;
   flex-direction: column;
   min-height: 400px;
+
+  @media (min-width: 600px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
+
 
 .container-border {
   border: 1px solid #e0e0e0;

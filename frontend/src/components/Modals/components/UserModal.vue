@@ -9,7 +9,7 @@
     :fullWidth="true"
   >
     <div class="info-modal-content">
-      <div class="info-modal-main q-mt-sm q-mb-lg row justify-center q-px-md" :class="{ 'q-pt-md': $q.screen.lt.md, 'q-pt-lg': $q.screen.gt.sm }">
+      <div class="info-modal-main q-mt-sm q-mb-lg row justify-center q-px-md q-pt-md">
         <div class="col-12 col-md-3">
           <div class="row">
             <div class="col-12 col-sm-6 col-md-12" :class="{ 'flex flex-col items-center justify-center': $q.screen.lt.md }">
@@ -105,7 +105,7 @@
           </div>
 
           <div v-else class="q-mt-lg">
-            <div v-if="selectedField" class="q-mb-md">
+            <div v-if="selectedField" class="q-mb-md" style="padding: 2px">
               <q-card class="field-container">
                 <q-card-section>
                   <div class="text-subtitle1 text-bold q-mb-xs text-secondary flex justify-between">
@@ -124,7 +124,7 @@
                 </q-card-section>
               </q-card>
             </div>
-            <div v-else :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm q-pr-xs' : 'q-px-xs q-pt-xs']" style="overflow-y: auto; max-height: 350px;">
+            <div v-else :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm' : '']" style="overflow-y: auto; max-height: 350px; padding: 2px">
               <div
                 v-for="item in filteredData"
                 :key="item.title"
