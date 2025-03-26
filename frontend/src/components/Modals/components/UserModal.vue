@@ -124,7 +124,7 @@
                 </q-card-section>
               </q-card>
             </div>
-            <div v-else :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm' : '']" style="overflow-y: auto; max-height: 350px; padding: 2px">
+            <div v-else :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm' : '']" style="overflow-y: auto; max-height: 350px; padding: 2px 2px 4px 2px">
               <div
                 v-for="item in filteredData"
                 :key="item.title"
