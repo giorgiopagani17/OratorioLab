@@ -9,17 +9,17 @@
     :fullWidth="true"
   >
     <div class="info-modal-content">
-      <div class="info-modal-main q-mt-sm q-mb-lg row justify-center q-gutter-lg">
+      <div class="info-modal-main q-mt-sm q-mb-lg row justify-center q-px-md" :class="{ 'q-pt-md': $q.screen.lt.md, 'q-pt-lg': $q.screen.gt.sm }">
         <div class="col-12 col-md-3">
           <div class="row">
             <div class="col-12 col-sm-6 col-md-12" :class="{ 'flex flex-col items-center justify-center': $q.screen.lt.md }">
               <div class="bg-grey-3 flex items-center justify-center" style="width: 125px; height: 125px; border-radius: 50%">
                 <q-icon name="person" color="white" size="80px" />
               </div>
-              <div class="q-mt-sm text-bold text-truncate text-h6 text-secondary" :class="{ 'text-center': $q.screen.lt.md }">
+              <div class="q-mt-sm text-bold text-truncate text-h6 text-secondary" style="max-width: 100%;" :class="{ 'text-center q-px-md': $q.screen.lt.md }">
                 {{ rowData?.name || 'example@gmail.com' }}
               </div>
-              <div class="text-grey-7 q-mt-xs full-width" :class="{ 'text-center': $q.screen.lt.md }">{{ rowData?.email || 'example@gmail.com' }}</div>
+              <div class="text-grey-7 q-mt-xs full-width text-truncate" :class="{ 'text-center': $q.screen.lt.md }">{{ rowData?.email || 'example@gmail.com' }}</div>
             </div>
 
             <div class="col-12 col-sm-6 col-md-12 flex flex-col items-center" :class="{ 'q-mt-lg': $q.screen.gt.sm, 'q-mt-md': $q.screen.lt.sm }">
@@ -42,14 +42,20 @@
           </div>
         </div>
 
-        <q-separator class="q-my-xs" />
 
-        <div class="col-12 col-md-6">
-          <div class="text-h5 text-bold text-primary">{{ activeOption.title }}</div>
+        <div class="col-12 col-md-6 q-mb-lg" :class="{ 'q-mt-lg': $q.screen.lt.md, 'q-ml-md': $q.screen.gt.sm }">
+          <div class="text-h5 text-bold text-primary text-truncate">{{ activeOption.title }}</div>
           <div class="text-grey-7 q-mt-md">{{ activeOption.description }}</div>
 
-          <div v-if="isRegistration" class="q-mt-lg q-pt-sm">
-            <div :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-md q-mb-md' : '']" style="height: 265px;">
+          <div v-if="isRegistration" class="q-mt-lg">
+            <div
+              :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-md q-mb-md' : '']"
+              style="max-height: 265px"
+              :style="{
+                'overflow-y': $q.screen.lt.md ? 'auto' : 'hidden',
+                'padding-right': $q.screen.lt.md ? '4px' : '0'
+              }"
+            >
               <div
                 v-for="(item, index) in filteredData"
                 :key="item.title"
@@ -74,7 +80,7 @@
               </div>
             </div>
 
-            <div class="row justify-between">
+            <div class="row justify-between q-mt-md q-mb-xs">
               <q-btn
                 icon="arrow_back"
                 color="grey"
@@ -118,7 +124,7 @@
                 </q-card-section>
               </q-card>
             </div>
-            <div v-else :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm' : '']">
+            <div v-else :class="[activeOption.id === 1 ? 'row q-col-gutter-md q-pb-sm q-pr-xs' : 'q-px-xs q-pt-xs']" style="overflow-y: auto; max-height: 350px;">
               <div
                 v-for="item in filteredData"
                 :key="item.title"
@@ -132,25 +138,24 @@
                       {{ item.title }}
                       <q-icon :name="item.icon" color="secondary" size="sm"/>
                     </div>
-                    <div class="field-value">{{ convertToDisplayValue(rowData?.[item.title]) }}</div>
+                    <div class="field-value text-break">{{ convertToDisplayValue(rowData?.[item.title]) }}</div>
                   </q-card-section>
                 </q-card>
               </div>
             </div>
           </div>
-
         </div>
-      </div>
-      <div class="privacy-notice">
-        <q-icon name="security" color="secondary" size="md" />
-        <div class="text-subtitle1 text-bold q-mt-xs">Trattamento dei Dati Sensibili</div>
-        <p class="text-grey-7 q-mt-sm" style="width: 90%; margin: 0 auto;">
-          Oratori360 tratta i dati sensibili in conformità con il Regolamento UE 2016/679 (GDPR).
-          Adottiamo misure tecniche e organizzative adeguate per proteggere i dati personali da accessi
-          non autorizzati, perdita o modifica. I dati vengono conservati solo per il tempo necessario alle
-          finalità per cui sono stati raccolti e l'utente può esercitare i propri diritti contattando il
-          nostro responsabile della protezione dei dati.
-        </p>
+        <div class="privacy-notice full-width">
+          <q-icon name="security" color="secondary" size="md" />
+          <div class="text-subtitle1 text-bold q-mt-xs">Trattamento dei Dati Sensibili</div>
+          <p class="text-grey-7 q-mt-sm" style="width: 95%; max-width: 950px; margin: 0 auto;">
+            Oratori360 tratta i dati sensibili in conformità con il Regolamento UE 2016/679 (GDPR).
+            Adottiamo misure tecniche e organizzative adeguate per proteggere i dati personali da accessi
+            non autorizzati, perdita o modifica. I dati vengono conservati solo per il tempo necessario alle
+            finalità per cui sono stati raccolti e l'utente può esercitare i propri diritti contattando il
+            nostro responsabile della protezione dei dati.
+          </p>
+        </div>
       </div>
     </div>
   </ModalCustom>
@@ -369,16 +374,19 @@ watch(() => isOpen.value, (newValue) => {
 .field-container {
   border-radius: 12px;
   background-color: white;
+  width: 100%;
 }
 .info-modal-content {
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
 .info-modal-main {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .privacy-notice {
@@ -386,6 +394,18 @@ watch(() => isOpen.value, (newValue) => {
   text-align: center;
   background-color: white;
   border-top: 1px solid #e0e0e0;
-  padding: 24px 0px 16px 0px;
+  padding: 24px 16px 8px 16px;
+  word-wrap: break-word;
+}
+
+.field-value {
+  word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  .info-modal-main {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }
 </style>
