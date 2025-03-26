@@ -248,6 +248,6 @@ const handleClick = (eventActivity: EventActivity) => {
   overflow-y: auto;
   height: 62.5vh;
   width: 100%;
-  padding: 0px 8px 8px 8px;
+  padding: 0px 8px 10px 8px;
 }
 </style>
