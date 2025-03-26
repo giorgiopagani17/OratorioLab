@@ -1,8 +1,8 @@
 {
   "name": "oratoriolab",
   "version": "0.0.1",
-  "description": "OratorioLAB Front-End",
-  "productName": "OratorioLAB",
+  "description": "OratorioLab Front-End",
+  "productName": "OratorioLab",
   "author": "Giorgio Pagani <giorgio.pagani2003@gmail.com>",
   "private": true,
   "scripts": {

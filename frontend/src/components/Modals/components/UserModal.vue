@@ -149,7 +149,7 @@
           <q-icon name="security" color="secondary" size="md" />
           <div class="text-subtitle1 text-bold q-mt-xs">Trattamento dei Dati Sensibili</div>
           <p class="text-grey-7 q-mt-sm" style="width: 95%; max-width: 950px; margin: 0 auto;">
-            OratorioLAB tratta i dati sensibili in conformità con il Regolamento UE 2016/679 (GDPR).
+            OratorioLab tratta i dati sensibili in conformità con il Regolamento UE 2016/679 (GDPR).
             Adottiamo misure tecniche e organizzative adeguate per proteggere i dati personali da accessi
             non autorizzati, perdita o modifica. I dati vengono conservati solo per il tempo necessario alle
             finalità per cui sono stati raccolti e l'utente può esercitare i propri diritti contattando il
