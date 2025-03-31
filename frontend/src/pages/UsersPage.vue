@@ -9,19 +9,10 @@
 
         <template v-slot:left>
           <div class="col-12 margin-bottom-responsive">
-            <q-input
-              v-model="search"
-              clearable
-              dense
+            <InputSearchCustom
               input-style="color: white;"
-              :placeholder="$t('placeholders.search')"
-              color="white"
-              class="custom-input blue-container-input full-width q-pt-auto"
-            >
-              <template v-slot:prepend>
-                <q-icon name="search" color="white"/>
-              </template>
-            </q-input>
+              v-model="search"
+            />
           </div>
         </template>
 
@@ -71,6 +62,7 @@ import HeaderSection from '@/components/Sections/HeaderSection.vue';
 import ResponsiveButton from '@/components/Buttons/ResponsiveButton.vue';
 import DataTable from '@/components/Tables/DataTable.vue';
 import UserModal from '@/components/Modals/components/UserModal.vue';
+import InputSearchCustom from '@/components/Inputs/InputSearch.vue';
 
 defineOptions({
   name: 'UserPage'

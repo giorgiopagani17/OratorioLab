@@ -135,9 +135,12 @@ const emitPrevStep = () => {
 };
 
 const createEventActivity = () => {
-  store.clearEventActivities()
+  emitNextStep();
 
-  router.push(`/${props.section}/view`);
+  setTimeout(() => {
+    store.clearEventActivities();
+    router.push(`/${props.section}/view`);
+  }, 300);
 };
 
 const exit = () => {

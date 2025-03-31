@@ -9,18 +9,11 @@
 
         <template v-slot:left>
           <div class="col-12 margin-bottom-responsive">
-            <q-input
-              v-model="search"
-              dense
+            <InputSearchCustom
               input-style="color: white;"
-              :placeholder="$t('placeholders.search')"
-              color="white"
-              class="custom-input blue-container-input full-width q-pt-auto"
-            >
-              <template v-slot:prepend>
-                <q-icon name="search" color="white"/>
-              </template>
-            </q-input>
+              :inputColor="'white'"
+              v-model="search"
+            />
           </div>
         </template>
 
@@ -64,6 +57,7 @@ import DataTable from '@/components/Tables/DataTable.vue';
 import subscriptionsData from '@/data/subscriptions.json';
 import { Button } from '@/interfaces/Button';
 import {useI18n} from 'vue-i18n';
+import InputSearchCustom from '@/components/Inputs/InputSearch.vue';
 
 interface SubscriptionRow {
   id: number;

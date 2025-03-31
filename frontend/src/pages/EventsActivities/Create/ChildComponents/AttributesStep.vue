@@ -32,15 +32,15 @@
       <template v-if="isEvent">
         <div class="input-section">
           <span class="section-title">{{ $t('labels.description') }}</span>
-          <q-input
-            type="textarea"
-            rounded
-            outlined
+          <InputTextAreaCustom
+            :input-props="{
+              rounded: true,
+              outlined: true,
+              hideBottomSpace: true,
+            }"
             v-model="description"
             :placeholder="$t('placeholders.insertText')"
-            @blur="() => description = (description?.toString() || '').trim()"
             :rules="[val => !!val]"
-            hide-bottom-space
           />
         </div>
       </template>
@@ -48,7 +48,7 @@
       <template v-else>
         <div class="input-section">
           <span class="section-title">{{ $t('labels.maxParticipants') }}</span>
-          <InputNumberCustom
+          <InputPriceCustom
             :input-props="{
               rounded: true,
               outlined: true,
@@ -56,8 +56,8 @@
             }"
             :maxLength="6"
             v-model="maxParticipants"
+            :decimal="false"
             :placeholder="$t('placeholders.insertNumber')"
-            update="formatNumberNoDecimals"
             :rules="[(val: string) => parseFloat(val.replace(/\./g, '').replace(',', '.')) > 0]"
           />
         </div>
@@ -68,58 +68,53 @@
       <template v-if="isEvent">
         <div class="input-section">
           <span class="section-title">{{ $t('labels.maxParticipants') }}</span>
-          <InputNumberCustom
+          <InputPriceCustom
             :input-props="{
               rounded: true,
               outlined: true,
               hideBottomSpace: true,
             }"
             :maxLength="6"
+            :decimal="false"
             v-model="maxParticipants"
             :placeholder="$t('placeholders.insertNumber')"
-            update="formatNumberNoDecimals"
             :rules="[(val: string) => parseFloat(val.replace(/\./g, '').replace(',', '.')) > 0]"
           />
         </div>
 
         <div class="input-section">
           <span class="section-title">{{ $t('labels.startDate') }}</span>
-          <q-input
-            type="datetime-local"
-            class="q-mb-xs"
-            rounded
-            outlined
+          <InputDateTimeCustom
             v-model="startingDate"
-            :rules="[val => !!val]"
-            hide-bottom-space
+            :placeholder="$t('placeholders.selectDateTime')"
+            :rules="[(val: string) => !!val]"
+            :title="$t('labels.startDate')"
           />
         </div>
 
         <div class="input-section">
           <span class="section-title">{{ $t('labels.endDate') }}</span>
-          <q-input
-            type="datetime-local"
-            class="q-mb-xs"
-            rounded
-            outlined
+          <InputDateTimeCustom
             v-model="endingDate"
+            class="q-mb-xs"
+            :placeholder="$t('placeholders.selectDateTime')"
             :rules="[val => !!val, val => !startingDate || new Date(val) > new Date(startingDate)]"
-            hide-bottom-space
+            :title="$t('labels.startDate')"
           />
         </div>
       </template>
       <template v-else>
         <div class="input-section textarea-container">
           <span class="section-title">{{ $t('labels.description') }}</span>
-          <q-input
-            type="textarea"
-            rounded
-            outlined
+          <InputTextAreaCustom
+            :input-props="{
+              rounded: true,
+              outlined: true,
+              hideBottomSpace: true,
+            }"
             v-model="description"
             :placeholder="$t('placeholders.insertText')"
-            @blur="() => description = (description?.toString() || '').trim()"
             :rules="[val => !!val]"
-            hide-bottom-space
             class="description-textarea"
           />
         </div>
@@ -132,7 +127,9 @@
 import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import { useEventsActivitiesStore } from '@/stores/eventsActivities';
 import InputTextCustom from '@/components/Inputs/InputText.vue';
-import InputNumberCustom from '@/components/Inputs/InputNumber.vue';
+import InputTextAreaCustom from '@/components/Inputs/InputTextArea.vue';
+import InputPriceCustom from '@/components/Inputs/InputPrice.vue';
+import InputDateTimeCustom from '@/components/Inputs/InputDateTime.vue';
 
 const props = defineProps({
   isEvent: {
@@ -152,13 +149,16 @@ const maxParticipants = ref('');
 const store = useEventsActivitiesStore();
 
 const validateInputs = () => {
+  const maxParticipantsStr = typeof maxParticipants.value === 'string'
+    ? maxParticipants.value
+    : String(maxParticipants.value);
+
   let hasErrors = !name.value.trim() ||
     !description.value.trim() ||
     !note.value.trim() ||
     !maxParticipants.value ||
-    parseFloat(maxParticipants.value.replace(/\./g, '').replace(',', '.')) <= 0;
+    parseFloat(maxParticipantsStr.replace(/\./g, '').replace(',', '.')) <= 0;
 
-  // Only validate dates for events
   if (isEvent.value) {
     hasErrors = hasErrors ||
       !startingDate.value ||
@@ -177,12 +177,17 @@ watch([name, description, note, startingDate, endingDate, maxParticipants], () =
 
 const saveToLocalStorage = () => {
   const currentIndex = parseInt(store.eventsActivitiesIndex);
+
+  const maxParticipantsStr = typeof maxParticipants.value === 'string'
+    ? maxParticipants.value
+    : String(maxParticipants.value);
+
   const eventData = {
     type: type.value,
     name: name.value.trim(),
     description: description.value.trim(),
     note: note.value.trim(),
-    maxParticipants: parseFloat(maxParticipants.value.replace(/\./g, '').replace(',', '.')),
+    maxParticipants: parseFloat(maxParticipantsStr.replace(/\./g, '').replace(',', '.')),
     startDate: startingDate.value,
     endDate: endingDate.value,
   };

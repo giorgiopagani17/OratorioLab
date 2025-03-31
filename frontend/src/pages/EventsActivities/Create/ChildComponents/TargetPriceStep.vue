@@ -26,22 +26,21 @@
           <q-checkbox v-model="isPriceForAll" :label="$t('texts.priceForAll')" color="secondary" class="q-mt-md"/>
         </div>
         <div style="width: 20%" v-if="isPriceForAll" >
-          <q-input
-            rounded
-            maxlength="8"
-            outlined
+          <InputPriceCustom
+            :input-props="{
+              rounded: true,
+              outlined: true,
+              hideBottomSpace: true,
+            }"
             v-model="commonPrice"
+            :error="commonPrice < 0"
             :placeholder="$t('placeholders.commonPrice')"
             class="q-mt-md"
-            :error="!commonPrice"
-            hide-bottom-space
-            @update:model-value="handleCommonPrice"
-            @blur="handleCommonPriceBlur"
-          >
-            <template v-slot:append>
-              <q-icon name="euro" color="primary"/>
-            </template>
-          </q-input>
+            maxlength="8"
+            :iconName="'euro'"
+            :iconColor="'primary'"
+            :rules="[(val: string | number) => !!val]"
+          />
         </div>
       </div>
 
@@ -78,26 +77,33 @@
             <div class="text-left" style="width: 45%">
               <div>
                 <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.name') }}</span>
-                <q-input rounded outlined v-model="target.name" :placeholder="`${$t('labels.name')} Target`" @blur="() => target.name = (target.name?.toString() || '').trim()" :rules="[val => !!val]" hide-bottom-space/>
+                <InputTextCustom
+                  :input-props="{
+                      rounded: true,
+                      outlined: true,
+                      hideBottomSpace: true,
+                    }"
+                  v-model="target.name"
+                  :placeholder="`${$t('labels.name')} Target`"
+                />
               </div>
               <div class="q-mt-sm">
                 <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.price') }}</span>
-                <q-input
-                  rounded
-                  maxlength="8"
-                  outlined
+                <InputPriceCustom
+                  :input-props="{
+                    rounded: true,
+                    outlined: true,
+                    hideBottomSpace: true,
+                  }"
+                  v-model="target.price"
                   :disable="isPriceForAll"
-                  v-model="target.displayPrice"
+                  :error="!isPriceForAll && target.price < 0"
                   :placeholder="`${$t('labels.price')} Target`"
-                  :error="!isPriceForAll && !target.displayPrice"
-                  hide-bottom-space
-                  @update:model-value="(value) => handleNumbers(value, index)"
-                  @blur="() => handleNumbersBlur(index)"
-                >
-                  <template v-slot:append>
-                    <q-icon name="euro" color="primary"/>
-                  </template>
-                </q-input>
+                  maxlength="8"
+                  :iconName="'euro'"
+                  :iconColor="'primary'"
+                  :rules="[(val: string | number) => !!val]"
+                />
               </div>
             </div>
             <div class="text-left" style="width: 45%">
@@ -116,15 +122,16 @@
               <div class="row q-col-gutter-sm q-mt-sm">
                 <div class="col-6 text-left">
                   <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.startingYear') }}</span>
-                  <q-input
-                    rounded
-                    outlined
-                    v-model.number="target.startYear"
-                    type="number"
+                  <InputNumberCustom
+                    :input-props="{
+                      rounded: true,
+                      outlined: true,
+                      hideBottomSpace: true,
+                    }"
+                    v-model="target.startYear"
                     :rules="[
-                      val => (val !== null && val !== undefined && val !== '' && target.endYear !== null && val <= target.endYear),
+                      (val: number | string | null) => (val !== null && val !== undefined && val !== '' && target.endYear !== null && Number(val) <= target.endYear),
                     ]"
-                    hide-bottom-space
                     :max="new Date().getFullYear() - 1 || target.endYear"
                     :placeholder="`${$t('labels.startingYear')} Target`"
                     @update:model-value="validateStartYear"
@@ -132,15 +139,16 @@
                 </div>
                 <div class="col-6 text-left">
                   <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.endingYear') }}</span>
-                  <q-input
-                    rounded
-                    outlined
-                    v-model.number="target.endYear"
-                    type="number"
+                  <InputNumberCustom
+                    :input-props="{
+                      rounded: true,
+                      outlined: true,
+                      hideBottomSpace: true,
+                    }"
+                    v-model="target.endYear"
                     :rules="[
-                      val => val >= (target.startYear || new Date().getFullYear() || val === 0),
+                      (val: number | string | null) => (val !== null && val !== undefined && val !== '' && val >= (target.startYear || new Date().getFullYear() || val === 0)),
                     ]"
-                    hide-bottom-space
                     :min="target.startYear || new Date().getFullYear()"
                     :placeholder="`${$t('labels.endingYear')} Target`"
                     @update:model-value="validateEndYear"
@@ -159,11 +167,13 @@
 import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useEventsActivitiesStore } from '@/stores/eventsActivities';
+import InputTextCustom from '@/components/Inputs/InputText.vue';
+import InputPriceCustom from '@/components/Inputs/InputPrice.vue';
+import InputNumberCustom from '@/components/Inputs/InputNumber.vue';
 
 interface Target {
   name: string;
   price: number;
-  displayPrice: string;
   startYear: number;
   endYear: number;
   ageGroup: string;
@@ -173,7 +183,7 @@ const { t } = useI18n();
 const store = useEventsActivitiesStore();
 const targetNumber = ref(1);
 const targets = ref<Target[]>([]);
-const commonPrice = ref('0,00');
+const commonPrice = ref();
 const isPriceForAll = ref(false);
 const isTarget20 = ref(false);
 const ages = computed(() => [
@@ -185,8 +195,7 @@ const ages = computed(() => [
 const validateInputs = () => {
   const hasEmptyTargets = targets.value.some(target =>
     !target.name.trim() ||
-    !target.displayPrice ||
-    target.displayPrice === '' ||
+    target.price === undefined || target.price === null ||
     !target.startYear ||
     !target.endYear ||
     !target.ageGroup
@@ -221,85 +230,6 @@ const removeTarget = (index: number) => {
   }
 };
 
-const formatOnBlur = (value: string): string => {
-  if (value.endsWith(',')) {
-    return value.slice(0, -1);
-  }
-  if (value.includes(',') && value.split(',')[1] === '') {
-    return value.split(',')[0];
-  }
-  return value;
-};
-
-const cleanAndFormatInput = (input: string): string => {
-  if (!input) return '0';
-
-  const lastChar = input.slice(-1);
-  const isDecimalPoint = lastChar === ',';
-
-  const cleanedValue = input.replace(/[^\d,]/g, '');
-  const hasComma = cleanedValue.includes(',');
-
-  if (cleanedValue === ',') return '0,';
-  if (isDecimalPoint && !hasComma) return cleanedValue + ',';
-
-  const parts = cleanedValue.split(',');
-
-  if (parts[0].length > 4) {
-    parts[0] = parts[0].slice(0, 4);
-  }
-
-  if (parts.length > 2) {
-    parts[1] = parts[1].slice(0, 2);
-    parts.length = 2;
-  } else if (parts.length === 2) {
-    parts[1] = parts[1].slice(0, 2);
-  }
-
-  const numericValue = parseFloat(parts.join('.'));
-
-  if (isNaN(numericValue)) return '0';
-  if (numericValue === 0) return isDecimalPoint ? '0,' : '0';
-
-  const formatted = numericValue.toLocaleString('it-IT', {
-    minimumFractionDigits: parts.length === 2 ? parts[1].length : 0,
-    maximumFractionDigits: parts.length === 2 ? parts[1].length : 0
-  });
-
-  return isDecimalPoint ? formatted + ',' : formatted;
-};
-
-const handleNumbers = (value: string | number | null, index: number) => {
-  const val = typeof value === 'string' ? value : String(value);
-  const target = targets.value[index];
-  target.displayPrice = cleanAndFormatInput(val);
-  target.price = parseFloat(target.displayPrice.replace(/\./g, '').replace(',', '.'));
-};
-
-const handleNumbersBlur = (index: number) => {
-  const target = targets.value[index];
-  target.displayPrice = formatOnBlur(target.displayPrice);
-  target.price = parseFloat(target.displayPrice.replace(/\./g, '').replace(',', '.'));
-};
-
-const handleCommonPrice = (value: string | number | null) => {
-  const val = typeof value === 'string' ? value : String(value);
-  const formatted = cleanAndFormatInput(val);
-
-  commonPrice.value = formatted;
-
-  if (isPriceForAll.value) {
-    targets.value.forEach(target => {
-      target.price = parseFloat(formatted.replace(/\./g, '').replace(',', '.'));
-      target.displayPrice = formatted;
-    });
-  }
-};
-
-const handleCommonPriceBlur = () => {
-  commonPrice.value = formatOnBlur(commonPrice.value);
-};
-
 const validateStartYear = (value: string | number | null) => {
   const val = Number(value);
   const targetItem = targets.value[targets.value.length - 1];
@@ -332,8 +262,7 @@ watch(targetNumber, (newVal) => {
   while (targets.value.length < size) {
     targets.value.push({
       name: '',
-      price: isPriceForAll.value ? parseFloat(commonPrice.value.replace(/\./g, '').replace(',', '.')) : 0,
-      displayPrice: isPriceForAll.value ? commonPrice.value : '0,00',
+      price: isPriceForAll.value ? commonPrice.value : '',
       startYear: new Date().getFullYear() - 1,
       endYear: new Date().getFullYear(),
       ageGroup: ages.value[2].value
@@ -344,25 +273,33 @@ watch(targetNumber, (newVal) => {
 watch(isPriceForAll, (newVal) => {
   if (newVal === true) {
     targets.value.forEach(target => {
-      target.price = parseFloat(commonPrice.value.replace(/\./g, '').replace(',', '.'));
-      target.displayPrice = commonPrice.value;
+      target.price = commonPrice.value;
     });
-  } else {
-    targets.value.forEach(target => {
-      target.price = 0;
-      target.displayPrice = '';
-    });
-    commonPrice.value = '0,00';
   }
 });
 
+watch(commonPrice, () => {
+  targets.value.forEach(target => {
+    target.price = commonPrice.value;
+  });
+});
+
+const parseNumericPrice = (price: string | number): number => {
+  if (typeof price === 'string') {
+    return parseFloat(price.replace(/\./g, '').replace(',', '.'));
+  }
+  return price || 0;
+};
+
 const saveToLocalStorage = () => {
-  const formattedTargets = targets.value.map(target => ({
-    name: target.name,
-    price: target.price,
-    startYear: target.startYear,
-    endYear: target.endYear
-  }));
+  const formattedTargets = targets.value.map(target => {
+    return {
+      name: target.name,
+      price: parseNumericPrice(target.price),
+      startYear: target.startYear,
+      endYear: target.endYear
+    };
+  });
 
   const currentIndex = parseInt(store.eventsActivitiesIndex);
   store.addTargets(currentIndex, formattedTargets);
@@ -381,12 +318,6 @@ onMounted(() => {
     targets.value = savedEventActivity.targets.map((savedTarget: Target) => ({
       name: savedTarget.name || '',
       price: savedTarget.price || 0,
-      displayPrice: savedTarget.price ? savedTarget.price.toLocaleString('it-IT', {
-        minimumFractionDigits: String(savedTarget.price).includes('.') ?
-          String(savedTarget.price).split('.')[1].length : 0,
-        maximumFractionDigits: String(savedTarget.price).includes('.') ?
-          String(savedTarget.price).split('.')[1].length : 0
-      }).replace('.', ',') : '0,00',
       startYear: savedTarget.startYear || new Date().getFullYear() - 1,
       endYear: savedTarget.endYear || new Date().getFullYear(),
       ageGroup: 'custom'
@@ -397,7 +328,7 @@ onMounted(() => {
 
     if (allSamePrice && firstPrice > 0) {
       isPriceForAll.value = true;
-      commonPrice.value = targets.value[0].displayPrice;
+      commonPrice.value = targets.value[0].price;
     }
   }
 });

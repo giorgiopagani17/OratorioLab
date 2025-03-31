@@ -8,18 +8,14 @@
           Oratorio<span class="text-primary">Lab</span>
         </q-toolbar-title>
 
-        <q-input
-          v-model="search"
-          dense
+
+        <InputSearchCustom
           input-style="color: white;"
-          :placeholder="$t('placeholders.search')"
-          color="white"
           class="custom-input gt-xs"
-        >
-          <template v-slot:prepend>
-            <q-icon name="search" color="white"/>
-          </template>
-        </q-input>
+          v-model="search"
+          :isBluContainer="false"
+          style="width: 200px"
+        />
 
         <LanguageSwitcher />
       </q-toolbar>
@@ -99,6 +95,7 @@ import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import { EssentialLinkProps } from '@/components/EssentialLink.vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useDetailsStore } from '@/stores/details';
+import InputSearchCustom from '@/components/Inputs/InputSearch.vue';
 
 const { t } = useI18n();
 const leftDrawerOpen = ref(false);

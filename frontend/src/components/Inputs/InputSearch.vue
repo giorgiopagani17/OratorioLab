@@ -3,14 +3,18 @@
     v-trim
     v-bind="inputProps"
     v-model="model"
+    :color="inputColor"
     :maxlength="maxLength"
-    :label="label || undefined"
-    :placeholder="placeholder"
+    :placeholder="placeholder || $t('placeholders.search')"
     :rules="rules"
     type="text"
+    clearable
+    dense
+    hideBottomSpace
+    :class="['custom-input', {'blue-container-input full-width q-pt-auto' : isBluContainer}]"
   >
-    <template v-if="iconName" v-slot:append>
-      <q-icon :name="iconName" :color="iconColor" />
+    <template v-if="iconName" v-slot:prepend>
+      <q-icon :name="iconName" :color="iconColor"/>
     </template>
   </q-input>
 </template>
@@ -21,11 +25,7 @@ import trim from '@/directives/v-trim';
 const vTrim = trim;
 const model = defineModel<string>();
 
-const { label, placeholder, rules, maxLength, inputProps, iconName, iconColor } = defineProps({
-  label: {
-    type: String,
-    default: ''
-  },
+const { placeholder, inputColor, rules, maxLength, inputProps, iconName, iconColor, isBluContainer } = defineProps({
   placeholder: {
     type: String,
     default: ''
@@ -33,6 +33,10 @@ const { label, placeholder, rules, maxLength, inputProps, iconName, iconColor } 
   rules: {
     type: Array as () => ((val: string | null | undefined) => boolean)[],
     default: () => []
+  },
+  inputColor: {
+    type: String,
+    default: 'white'
   },
   maxLength: {
     type: Number,
@@ -44,28 +48,21 @@ const { label, placeholder, rules, maxLength, inputProps, iconName, iconColor } 
   },
   iconName: {
     type: String,
-    default: ''
+    default: 'search'
   },
   iconColor: {
     type: String,
-    default: ''
+    default: 'white'
+  },
+  isBluContainer: {
+    type: Boolean,
+    default: true
   }
 });
 </script>
 
-<style lang="scss" scoped>
-:deep(.q-field__native) {
-  &::placeholder {
-    opacity: 1 !important;
-    color: rgba(0, 0, 0, 0.6) !important;
-    transition: none !important;
-  }
-}
-
-:deep(.q-field--focused) {
-  .q-field__native::placeholder {
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
+<style scoped>
+:deep(.q-field__focusable-action) {
+  color: white !important;
 }
 </style>

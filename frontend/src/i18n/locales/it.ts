@@ -8,6 +8,8 @@ export default {
     edit: 'Modifica',
     next: 'Avanti',
     exit: 'Esci',
+    cancel: 'Cancella',
+    confirm: 'Conferma',
     logout: 'Disconnetti',
     create: 'Crea',
     spaceCreate: 'Spazio',
@@ -111,6 +113,7 @@ export default {
     tutor: 'Tutore',
     illness: 'Malattia',
     allergies: 'Allergie',
+    chooseDate: 'Scegli una data',
   },
   placeholders: {
     commonPrice: 'Prezzo comune',
@@ -118,6 +121,7 @@ export default {
     insertText: 'Inserisci testo qui',
     insertNumber: 'Inserisci numero qui',
     activityName: 'Nome Attività',
+    selectDateTime: 'Seleziona data e ora',
   },
   tooltips: {
     deleteTarget: 'Elimina Target',

@@ -8,18 +8,10 @@
         rightColMd="col-md-8">
         <template #left>
           <div class="col-12 margin-bottom-responsive">
-            <q-input
-              v-model="search"
-              dense
+            <InputSearchCustom
               input-style="color: white;"
-              :placeholder="$t('placeholders.search')"
-              color="white"
-              class="custom-input blue-container-input"
-            >
-              <template v-slot:prepend>
-                <q-icon name="search" color="white"/>
-              </template>
-            </q-input>
+              v-model="search"
+            />
           </div>
         </template>
         <template #right>
@@ -79,6 +71,7 @@ import ResponsiveButton from '@/components/Buttons/ResponsiveButton.vue';
 import { EventActivity } from '@/interfaces/EventActivity';
 import {useEventsActivitiesStore} from '@/stores/eventsActivities';
 import EventActivityListCard from '@/components/Card/EventActivityListCard.vue';
+import InputSearchCustom from '@/components/Inputs/InputSearch.vue';
 
 defineOptions({
   name: 'UserPage'

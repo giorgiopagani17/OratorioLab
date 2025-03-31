@@ -2,20 +2,19 @@
   <div class="q-pa-md address-container q-my-auto">
     <div class="row q-col-gutter-md">
       <div class="col-12 col-md-8">
-        <q-input
-          filled
+        <InputTextCustom
+          :input-props="{
+            filled: true,
+          }"
           v-model="address"
           :label="$t('labels.insertAddress')"
-          @update:model-value="onInput"
-          color="secondary"
           clearable
           :loading="loading"
           debounce="300"
-        >
-          <template v-slot:append>
-            <q-icon name="place" />
-          </template>
-        </q-input>
+          @update:model-value="onInput"
+          :iconName="'place'"
+          color="secondary"
+        />
 
         <q-list
           v-if="suggestions.length"
@@ -33,18 +32,17 @@
       </div>
 
       <div class="col-12 col-md-4">
-        <q-input
-          filled
+        <InputTextCustom
+          :input-props="{
+            filled: true,
+          }"
           v-model="civicNumber"
           :label="$t('titles.civicNumber')"
-          color="secondary"
           clearable
           debounce="300"
-        >
-          <template v-slot:append>
-            <q-icon name="pin" />
-          </template>
-        </q-input>
+          :iconName="'pin'"
+          color="secondary"
+        />
       </div>
     </div>
 
@@ -77,6 +75,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import InputTextCustom from '@/components/Inputs/InputText.vue';
 
 let DefaultIcon = L.icon({
   iconUrl: iconUrl,
@@ -91,6 +90,9 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 export default {
   name: 'AddressInput',
+  components: {
+    InputTextCustom
+  },
   data() {
     return {
       store: useEventsActivitiesStore(),

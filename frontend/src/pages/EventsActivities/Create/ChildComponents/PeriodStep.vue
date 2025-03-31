@@ -18,24 +18,18 @@
         <div v-if="hasBaseActivity" class="row q-col-gutter-md q-pt-sm">
           <div class="col-12 col-sm-6">
             <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.startDate') }}</span>
-            <q-input
-              type="datetime-local"
-              rounded
-              outlined
+            <InputDateTimeCustom
               v-model="baseStartDate"
+              :placeholder="$t('placeholders.selectDateTime')"
               :rules="[val => !!val]"
-              hide-bottom-space
             />
           </div>
           <div class="col-12 col-sm-6">
             <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.endDate') }}</span>
-            <q-input
-              type="datetime-local"
-              rounded
-              outlined
+            <InputDateTimeCustom
               v-model="baseEndDate"
+              :placeholder="$t('placeholders.selectDateTime')"
               :rules="[val => !!val, val => !baseStartDate || new Date(val) > new Date(baseStartDate)]"
-              hide-bottom-space
             />
           </div>
         </div>
@@ -118,14 +112,15 @@
               <div class="col-12 col-sm-6 text-left">
                 <div class="q-mt-md">
                   <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.name') }}</span>
-                  <q-input
-                    rounded
-                    outlined
+                  <InputTextCustom
+                    :input-props="{
+                      rounded: true,
+                      outlined: true,
+                      hideBottomSpace: true,
+                    }"
                     v-model="activityReview.name"
                     :placeholder="$t('placeholders.activityName')"
-                    @blur="() => activityReview.name = (activityReview.name?.toString() || '').trim()"
                     :rules="[val => !!val]"
-                    hide-bottom-space
                   />
                 </div>
               </div>
@@ -133,29 +128,23 @@
                 <div class="row q-col-gutter-sm q-mt-sm">
                   <div class="col-6 text-left">
                     <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.startDate') }}</span>
-                    <q-input
-                      type="datetime-local"
-                      class="q-mb-xs"
-                      rounded
-                      outlined
+                    <InputDateTimeCustom
                       v-model="activityReview.startDate"
+                      class="q-mb-xs"
+                      :placeholder="$t('placeholders.selectDateTime')"
                       :rules="[val => !!val]"
-                      hide-bottom-space
                     />
                   </div>
                   <div class="col-6 text-left">
                     <span class="text-bold text-primary" style="font-size: 17px;">{{ $t('labels.endDate') }}</span>
-                    <q-input
-                      type="datetime-local"
-                      class="q-mb-xs"
-                      rounded
-                      outlined
+                    <InputDateTimeCustom
                       v-model="activityReview.endDate"
+                      class="q-mb-xs"
+                      :placeholder="$t('placeholders.selectDateTime')"
                       :rules="[
                         val => !!val,
                         val => !activityReview.startDate || new Date(val) > new Date(activityReview.startDate),
                       ]"
-                      hide-bottom-space
                     />
                   </div>
                 </div>
@@ -171,6 +160,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useEventsActivitiesStore } from '@/stores/eventsActivities';
+import InputTextCustom from '@/components/Inputs/InputText.vue';
+import InputDateTimeCustom from '@/components/Inputs/InputDateTime.vue';
 
 interface ActivityReview {
   name: string;

@@ -53,21 +53,28 @@ const isOpen = computed({
 const formatEventDateTime = (event: EventActivity): string => {
   const startDate = new Date(event.startDate);
   const endDate = new Date(event.endDate);
-  const formatOptions: Intl.DateTimeFormatOptions = {
+  const lang = locale.value === 'it' ? 'it-IT' : 'en-US';
+
+  const formatter = new Intl.DateTimeFormat(lang, {
     day: 'numeric',
     month: 'long',
     year: 'numeric'
+  });
+
+  const formatDate = (date: Date): string => {
+    const formattedDate = formatter.format(date);
+    return formattedDate.replace(/\b[a-z]/g, c => c.toUpperCase());
   };
-  const lang = locale.value === 'it' ? 'it-IT' : 'en-US';
 
   if (
     startDate.getDate() === endDate.getDate() &&
     startDate.getMonth() === endDate.getMonth() &&
     startDate.getFullYear() === endDate.getFullYear()
   ) {
-    return startDate.toLocaleDateString(lang, formatOptions);
+    return formatDate(startDate);
   }
-  return `${startDate.toLocaleDateString(lang, formatOptions)} - ${endDate.toLocaleDateString(lang, formatOptions)}`;
+
+  return `${formatDate(startDate)} - ${formatDate(endDate)}`;
 };
 
 const isLastEvent = (event: EventActivity): boolean => {

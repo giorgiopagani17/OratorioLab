@@ -1,19 +1,29 @@
 <template>
   <q-input
     v-bind="inputProps"
-    :disable="isDisabled"
     v-model="model"
+    :disable="isDisabled"
     :maxlength="maxLength"
     :placeholder="placeholder"
-    @update:model-value="handleUpdate"
-    @blur="handleBlur"
-  />
+    :rules="rules"
+    type="number"
+    :min="min"
+    :max="max"
+  >
+    <template v-if="iconName" v-slot:append>
+      <q-icon :name="iconName" :color="iconColor" />
+    </template>
+  </q-input>
 </template>
 
 <script setup lang="ts">
-const model = defineModel<string>();
+import { PropType } from 'vue';
 
-const props = defineProps({
+type ValidationRule = (val: number | string | null) => boolean | string | Promise<boolean | string>;
+
+const model = defineModel<number>();
+
+const { isDisabled, placeholder, maxLength, inputProps, iconName, iconColor, rules, min, max } = defineProps({
   isDisabled: {
     type: Boolean,
     default: false
@@ -22,14 +32,6 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  update: {
-    type: String,
-    default: null
-  },
-  blur: {
-    type: String,
-    default: null
-  },
   maxLength: {
     type: Number,
     default: null
@@ -37,80 +39,26 @@ const props = defineProps({
   inputProps: {
     type: Object,
     default: () => ({})
-  }
+  },
+  iconName: {
+    type: String,
+    default: ''
+  },
+  iconColor: {
+    type: String,
+    default: 'white'
+  },
+  rules: {
+    type: Array as PropType<ValidationRule[]>,
+    default: () => []
+  },
+  min: {
+    type: [Number, String],
+    default: undefined
+  },
+  max: {
+    type: [Number, String],
+    default: undefined
+  },
 });
-
-const cleanAndFormatInputWithDecimals = (input: string): string => {
-  if (!input) return '0';
-
-  const lastChar = input.slice(-1);
-  const isDecimalPoint = lastChar === ',';
-
-  const cleanedValue = input.replace(/[^\d,]/g, '');
-  const hasComma = cleanedValue.includes(',');
-
-  if (cleanedValue === ',') return '0,';
-  if (isDecimalPoint && !hasComma) return cleanedValue + ',';
-
-  const parts = cleanedValue.split(',');
-
-  if (parts[0].length > 4) {
-    parts[0] = parts[0].slice(0, 4);
-  }
-
-  if (parts.length > 2) {
-    parts[1] = parts[1].slice(0, 2);
-    parts.length = 2;
-  } else if (parts.length === 2) {
-    parts[1] = parts[1].slice(0, 2);
-  }
-
-  const numericValue = parseFloat(parts.join('.'));
-
-  if (isNaN(numericValue)) return '0';
-  if (numericValue === 0) return isDecimalPoint ? '0,' : '0';
-
-  const formatted = numericValue.toLocaleString('it-IT', {
-    minimumFractionDigits: parts.length === 2 ? parts[1].length : 0,
-    maximumFractionDigits: parts.length === 2 ? parts[1].length : 0
-  });
-
-  return isDecimalPoint ? formatted + ',' : formatted;
-};
-
-const cleanAndFormatInputWithoutDecimals = (input: string): string => {
-  const cleanedValue = input.replace(/[^\d,]/g, '');
-  const normalizedValue = cleanedValue.replace(',', '.');
-  const numericValue = parseFloat(normalizedValue);
-
-  return isNaN(numericValue) || numericValue === 0
-    ? '0'
-    : numericValue.toLocaleString('it-IT');
-};
-
-const formatOnBlurWithDecimals = (value: string): string => {
-  if (value.endsWith(',')) {
-    return value.slice(0, -1);
-  }
-  if (value.includes(',') && value.split(',')[1] === '') {
-    return value.split(',')[0];
-  }
-  return value;
-};
-
-const handleUpdate = (value: string | number | null) => {
-  if (props.update === 'formatNumberDecimals') {
-    const val = typeof value === 'string' ? value : String(value);
-    model.value = cleanAndFormatInputWithDecimals(val);
-  } else if(props.update === 'formatNumberNoDecimals') {
-    const val = typeof value === 'string' ? value : String(value);
-    model.value = cleanAndFormatInputWithoutDecimals(val);
-  }
-};
-
-const handleBlur = () => {
-  if (props.blur === 'formatNumberDecimals' && model.value) {
-    model.value = formatOnBlurWithDecimals(model.value);
-  }
-};
 </script>
