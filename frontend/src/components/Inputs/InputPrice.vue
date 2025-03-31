@@ -85,7 +85,7 @@ const numericAndDecimalOnly = (event: KeyboardEvent) => {
     return;
   }
 
-  if (decimal && !/[\d,.]/.test(event.key)) {
+  if (decimal && !/[\d,]/.test(event.key)) {
     event.preventDefault();
     return;
   }
@@ -94,15 +94,20 @@ const numericAndDecimalOnly = (event: KeyboardEvent) => {
     const input = event.target as HTMLInputElement;
     const currentValue = input.value;
     const cursorPosition = input.selectionStart ?? 0;
+    const selectionEnd = input.selectionEnd ?? cursorPosition;
 
-    if ((event.key === '.' || event.key === ',') &&
+    const hasSelection = cursorPosition !== selectionEnd;
+
+    if ((event.key === ',') &&
       (cursorPosition === 0 || !currentValue.substring(0, cursorPosition).match(/\d/))) {
       event.preventDefault();
       return;
     }
 
-    if ((event.key === '.' || event.key === ',') &&
-      (currentValue.includes('.') || currentValue.includes(','))) {
+    const hasDecimalSeparator = currentValue.includes(',');
+
+    if ((event.key === ',') &&
+      !hasSelection && hasDecimalSeparator) {
       event.preventDefault();
       return;
     }
