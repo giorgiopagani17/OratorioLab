@@ -43,7 +43,7 @@
               :label="$t('buttons.create')"
               :disable="isNextButtonDisabled"
               icon-right="check"
-              @click="emitNextStep"
+              @click="createEventActivity"
             />
 
             <q-btn
@@ -75,6 +75,7 @@ import PlaceStep from './ChildComponents/PlaceStep.vue';
 import TargetPriceStep from './ChildComponents/TargetPriceStep.vue';
 import {useRouter} from 'vue-router';
 import ReviewStep from '@/pages/EventsActivities/Create/ChildComponents/ReviewStep.vue';
+import {useEventsActivitiesStore} from '@/stores/eventsActivities';
 
 const props = defineProps<{
   section: string;
@@ -94,6 +95,7 @@ const currentStep = ref(0);
 const progressLine = ref<ProgressLineInstance | null>(null);
 const hasInputErrors = ref(true);
 const router = useRouter();
+const store = useEventsActivitiesStore();
 
 const isNextButtonDisabled = computed(() => {
   return hasInputErrors.value;
@@ -130,6 +132,12 @@ const emitPrevStep = () => {
     progressLine.value.prevStep();
     currentStep.value--;
   }
+};
+
+const createEventActivity = () => {
+  store.clearEventActivities()
+
+  router.push(`/${props.section}/view`);
 };
 
 const exit = () => {

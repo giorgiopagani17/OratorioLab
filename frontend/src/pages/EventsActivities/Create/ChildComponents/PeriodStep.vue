@@ -238,6 +238,7 @@ const saveToLocalStorage = () => {
     };
 
     store.addPeriod(currentIndex, formattedData);
+    store.clearActivityReview(currentIndex);
   } else {
     store.addActivityReview(currentIndex, activitiesReview.value);
   }

@@ -123,6 +123,13 @@ export const useEventsActivitiesStore = defineStore('eventsActivities', {
         localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
       }
     },
+    clearActivityReview(index: number) {
+      if (this.eventsActivities[index]) {
+        this.eventsActivities[index].activitiesReview = [];
+        this.eventsActivities[index].isReview = false;
+        localStorage.setItem('eventsActivities', JSON.stringify(this.eventsActivities));
+      }
+    },
     clearEventActivities() {
       this.eventsActivities = [];
       this.eventsActivitiesIndex = '0';
