@@ -5,8 +5,7 @@
     @click="onClick"
   >
     <div class="hide-1274 flex-center">
-      <q-icon v-if="isIconVisible" class="gt-sm" :name="props.icon" />
-      <span v-else class="gt-sm">{{ props.text }}</span>
+      <q-icon class="gt-sm" :name="props.icon" />
     </div>
     <span class="show-1274">{{ props.text }}</span>
     <span class="lt-md gt-xs">{{ props.text }}</span>
@@ -15,9 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { useDetailsStore } from '@/stores/details';
-import { computed } from 'vue';
-
 interface Props {
   text: string;
   icon: string;
@@ -35,11 +31,6 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (e: 'click'): void;
 }>();
-
-const detailsStore = useDetailsStore();
-const isIconVisible = computed(() => {
-  return detailsStore.leftDrawerOpen === 'true';
-});
 
 const onClick = () => {
   emit('click');

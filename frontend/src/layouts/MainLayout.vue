@@ -8,7 +8,6 @@
           Oratorio<span class="text-primary">Lab</span>
         </q-toolbar-title>
 
-
         <InputSearchCustom
           input-style="color: white;"
           class="custom-input gt-xs"
@@ -24,14 +23,19 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
+      :mini="miniState && $q.screen.gt.xs"
+      @mouseover="miniState && $q.screen.gt.xs ? miniState = false : null"
+      @mouseout="isMiniState && $q.screen.gt.xs ? miniState = true : null"
+      :mini-to-overlay="false"
       elevated
       class="custom-shadow"
       :width="250"
+      :mini-width="60"
     >
       <div class="drawer-container">
         <q-scroll-area class="col drawer-scroll">
-          <q-toolbar-title header class="text-bold text-secondary text-center cursor-pointer q-my-md lt-md" style="font-size: 1.8em" @click="router.push('/home')">
-            Oratorio<span class="text-primary">Lab</span>
+          <q-toolbar-title header class="text-bold text-secondary text-center q-mt-md q-pt-xs lt-md" style="font-size: 1.8em">
+            <img src="../assets/logos/PNG/OratorioLAB_Logo-01.png" alt="Logo" style="width: 100%; height: 60px; object-fit: cover;" class="cursor-pointer" @click="router.push('/home')"/>
           </q-toolbar-title>
 
           <q-list class="q-mt-sm">
@@ -69,12 +73,13 @@
           </q-list>
         </q-scroll-area>
 
-        <div class="drawer-footer">
+        <div class="drawer-footer" :class="{ 'mini-footer': miniState && $q.screen.gt.xs }">
           <q-btn
             color="primary"
-            :label="$t('buttons.logout')"
+            :label="miniState && $q.screen.gt.xs ? '' : $t('buttons.logout')"
+            icon="logout"
             class="q-my-md logout-btn"
-            style="width: 200px;"
+            :style="miniState && $q.screen.gt.xs ? 'width: 40px' : 'width: 200px'"
             @click="logout"
           />
         </div>
@@ -90,6 +95,7 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useQuasar } from 'quasar';
 import EssentialLink from 'components/EssentialLink.vue';
 import LanguageSwitcher from 'components/LanguageSwitcher.vue';
 import { EssentialLinkProps } from '@/components/EssentialLink.vue';
@@ -98,7 +104,10 @@ import { useDetailsStore } from '@/stores/details';
 import InputSearchCustom from '@/components/Inputs/InputSearch.vue';
 
 const { t } = useI18n();
-const leftDrawerOpen = ref(false);
+const $q = useQuasar();
+const leftDrawerOpen = ref(true);
+const miniState = ref(false);
+const isMiniState = ref(false);
 
 defineOptions({
   name: 'MainLayout'
@@ -164,7 +173,13 @@ const settingsList = computed((): EssentialLinkProps[] => [
 ]);
 
 const toggleLeftDrawer = () => {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
+  if ($q.screen.gt.xs) {
+    miniState.value = !miniState.value;
+    isMiniState.value = !isMiniState.value;
+    leftDrawerOpen.value = true;
+  } else {
+    leftDrawerOpen.value = !leftDrawerOpen.value;
+  }
   detailsStore.setLeftDrawerOpen(leftDrawerOpen.value.toString());
 };
 
@@ -201,6 +216,12 @@ const isActiveLink = (link?: string) => {
   padding: 1rem;
   text-align: center;
   background: white;
+}
+
+.mini-footer {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
 }
 
 .logout-btn {

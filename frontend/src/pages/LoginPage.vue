@@ -5,7 +5,7 @@
         Login
       </div>
       <div class="text-center q-pa-md container-body">
-        <p class="text-secondary text-bold text-25 q-pa-sm">ORATORIO<span class="text-primary">LAB</span></p>
+        <img src="../assets/logos/PNG/OratorioLAB_Logo-01.png" alt="Logo" class="q-mb-sm" style="width: 100%; height: 100px; object-fit: cover;"/>
         <q-input rounded outlined v-model="username" color="secondary" label="Username" />
         <q-input rounded outlined v-model="password" color="secondary" label="Password" type="password" class="q-mt-md"/>
         <q-btn color="primary" label="Login" class="q-mt-lg" style="width: 15vh" @click="handleLogin"/>
