@@ -6,7 +6,7 @@
     max-width="400px"
   >
     <div class="text-center">
-      <q-avatar icon="warning" size="70px" color="warning" text-color="white"/>
+      <q-avatar icon="warning" size="70px" color="yellow" text-color="white"/>
       <div class="q-mt-md" style="font-size: 22px">{{ $t('warnings.warningProgressTitle') }}</div>
       <div class="text-grey-7 q-mt-xs" style="font-size: 16px">
         {{ $t('warnings.warningProgressDescription1') }} <br/>
@@ -16,8 +16,8 @@
 
     <template #actions>
       <div class="row justify-center full-width q-mt-md">
-        <q-btn label="Elimina" class="q-mr-md" color="negative" @click="deleteData" />
-        <q-btn label="Recupera" color="positive" @click="recoverData" />
+        <q-btn label="Elimina" class="q-mr-md" color="red" @click="deleteData" />
+        <q-btn label="Recupera" color="green" @click="recoverData" />
       </div>
     </template>
   </ModalCustom>
