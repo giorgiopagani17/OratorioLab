@@ -29,7 +29,7 @@
             <InputDateTimeCustom
               v-model="baseEndDate"
               :placeholder="$t('placeholders.selectDateTime')"
-              :rules="[val => !!val, val => !baseStartDate || new Date(val) > new Date(baseStartDate)]"
+              :rules="[val => !!val, val => !baseStartDate || new Date(baseEndDate) > new Date(baseStartDate)]"
             />
           </div>
         </div>

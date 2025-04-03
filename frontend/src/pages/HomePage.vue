@@ -30,18 +30,24 @@
           {{ $t('titles.latestEvents')}}
         </template>
 
-        <q-card v-for="card in cards" :key="card.title" class="card">
-          <q-img :src="card.img" style="width: 100%; height: 225px;">
-            <div class="absolute-bottom text-h6">
-              {{ card.title }}
-            </div>
-          </q-img>
-
-          <q-card-section>
-            {{ card.caption }}
-          </q-card-section>
-        </q-card>
+        <EventActivityListCard
+          class="q-ma-sm"
+          v-for="item in upcomingItems"
+          :key="item.id"
+          :eventActivity="{
+          id: item.id,
+          name: item.title,
+          description: item.caption,
+          image: item.img,
+          price: item.price,
+          startDate: item.startDate,
+          endDate: item.endDate,
+        }"
+          :isDraft="false"
+          @click="navigateToDetail(item)"
+        />
       </BodySection>
+
     </div>
   </q-page>
 </template>
@@ -51,15 +57,30 @@ import { useRouter } from 'vue-router';
 import HeaderSection from '@/components/Sections/HeaderSection.vue';
 import ResponsiveButton from '@/components/Buttons/ResponsiveButton.vue';
 import BodySection from '@/components/Sections/BodySection.vue';
+import EventActivityListCard from '@/components/Card/EventActivityListCard.vue';
+import activities from '@/data/activities.json';
+import events from '@/data/events.json';
+import {computed} from 'vue';
 
 defineOptions({
   name: 'HomePage'
 });
 
+interface Target {
+  name: string,
+  price: number,
+  startYear: number,
+  endYear: number
+}
+
 interface Card {
   title: string;
   caption: string;
   img: string;
+  startDate: string;
+  endDate: string;
+  targets?: Target[];
+  price? : number;
 }
 
 interface Button {
@@ -68,26 +89,55 @@ interface Button {
   icon: string;
 }
 
+interface Card {
+  title: string;
+  caption: string;
+  img: string;
+  id?: number;
+  type?: 'event' | 'activity';
+}
+
 const oratorio = 'ORATORIO';
 const router = useRouter();
 
-const cards: Card[] = [
-  {
-    title: 'Soccer Training',
-    caption: 'Weekly soccer training sessions. Bring your own soccer shoes',
-    img: 'https://cloud.rtl.it/RTLFM/News/Article/1000x1000/calcio-continuano-le-grandi-firme-della-serie-a-mud06.jpg'
-  },
-  {
-    title: 'Christmas Concert',
-    caption: 'Annual Christmas concert and celebration. Rehearsals start two weeks before',
-    img: 'https://m.media-amazon.com/images/I/715Gimb12nL._AC_UF1000,1000_QL80_.jpg'
-  },
-  {
-    title: 'Group music lessons',
-    caption: 'Group music lessons. Instruments provided',
-    img: 'https://as1.ftcdn.net/v2/jpg/08/56/39/54/1000_F_856395497_Hhxp5fU8SKUrTqe1pZyAc3tHrOfDrQ2I.jpg'
+const upcomingItems = computed<Card[]>(() => {
+  const allActivities = activities.activities.map(item => ({
+    id: item.id,
+    title: item.name,
+    caption: item.description,
+    img: item.image || 'https://cdn.quasar.dev/img/paris.jpg',
+    startDate: item.startDate,
+    endDate: item.endDate,
+    price: item.targets[0].price || 0,
+    type: 'activity' as const
+  }));
+
+  const allEvents = events.events.map(item => ({
+    id: item.id,
+    title: item.name,
+    caption: item.description,
+    img: item.image || 'https://cdn.quasar.dev/img/paris.jpg',
+    startDate: item.startDate,
+    endDate: item.endDate,
+    price: 0,
+    type: 'event' as const
+  }));
+
+  const now = new Date().getTime();
+
+  const combined = [...allActivities, ...allEvents]
+    .filter(item => new Date(item.startDate).getTime() >= now)
+    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
+
+  return combined.slice(0, 3);
+});
+
+const navigateToDetail = (item: Card) => {
+  if (item.id && item.type) {
+    const routePrefix = item.type === 'activity' ? 'activities' : 'events';
+    router.push(`/${routePrefix}/view/${item.id}`);
   }
-];
+};
 
 const buttons: Button[] = [
   {

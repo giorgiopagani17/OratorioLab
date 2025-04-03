@@ -23,7 +23,7 @@
               outlined: true,
               hideBottomSpace: true,
             }"
-          v-model="note"
+          v-model="notes"
           :placeholder="$t('placeholders.insertText')"
           :rules="[val => !!val]"
         />
@@ -142,7 +142,7 @@ const type = computed(() => props.isEvent ? 'event' : 'activity');
 const isEvent = computed(() => props.isEvent);
 const name = ref('');
 const description = ref('');
-const note = ref('');
+const notes = ref('');
 const startingDate = ref('');
 const endingDate = ref('');
 const maxParticipants = ref('');
@@ -155,7 +155,7 @@ const validateInputs = () => {
 
   let hasErrors = !name.value.trim() ||
     !description.value.trim() ||
-    !note.value.trim() ||
+    !notes.value.trim() ||
     !maxParticipants.value ||
     parseFloat(maxParticipantsStr.replace(/\./g, '').replace(',', '.')) <= 0;
 
@@ -171,7 +171,7 @@ const validateInputs = () => {
   }));
 };
 
-watch([name, description, note, startingDate, endingDate, maxParticipants], () => {
+watch([name, description, notes, startingDate, endingDate, maxParticipants], () => {
   validateInputs();
 });
 
@@ -186,7 +186,7 @@ const saveToLocalStorage = () => {
     type: type.value,
     name: name.value.trim(),
     description: description.value.trim(),
-    note: note.value.trim(),
+    notes: notes.value.trim(),
     maxParticipants: parseFloat(maxParticipantsStr.replace(/\./g, '').replace(',', '.')),
     startDate: startingDate.value,
     endDate: endingDate.value,
@@ -213,7 +213,7 @@ onMounted(() => {
   if (savedEventActivity) {
     name.value = savedEventActivity.name;
     description.value = savedEventActivity.description;
-    note.value = savedEventActivity.note;
+    notes.value = savedEventActivity.notes;
     startingDate.value = savedEventActivity.startDate;
     endingDate.value = savedEventActivity.endDate;
     maxParticipants.value = savedEventActivity.maxParticipants.toLocaleString('it-IT');

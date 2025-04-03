@@ -17,9 +17,9 @@
                 <q-icon name="person" color="white" size="80px" />
               </div>
               <div class="q-mt-sm text-bold text-truncate text-h6 text-secondary" style="max-width: 100%;" :class="{ 'text-center q-px-md': $q.screen.lt.md }">
-                {{ rowData?.name || 'example@gmail.com' }}
+                {{ localRowData?.name || 'example@gmail.com' }}
               </div>
-              <div class="text-grey-7 q-mt-xs full-width text-truncate" :class="{ 'text-center': $q.screen.lt.md }">{{ rowData?.email || 'example@gmail.com' }}</div>
+              <div class="text-grey-7 q-mt-xs full-width text-truncate" :class="{ 'text-center': $q.screen.lt.md }">{{ localRowData?.email || 'example@gmail.com' }}</div>
             </div>
 
             <div class="col-12 col-sm-6 col-md-12 flex flex-col items-center" :class="{ 'q-mt-lg': $q.screen.gt.sm, 'q-mt-md': $q.screen.lt.sm }">
@@ -109,7 +109,7 @@
               <q-card class="field-container">
                 <q-card-section>
                   <div class="text-subtitle1 text-bold q-mb-xs text-secondary flex justify-between">
-                    {{ selectedField.title }}
+                    {{ $t(`labels.${selectedField.title}`) }}
                     <q-icon :name="selectedField.icon" color="secondary" size="sm" class="q-ml-xs" />
                   </div>
                   <q-input
@@ -138,7 +138,7 @@
                       {{ $t(`labels.${item.title}`) }}
                       <q-icon :name="item.icon" color="secondary" size="sm"/>
                     </div>
-                    <div class="field-value text-break text-truncate">{{ convertToDisplayValue(rowData?.[item.title]) }}</div>
+                    <div class="field-value text-break text-truncate">{{ convertToDisplayValue(localRowData?.[item.title]) }}</div>
                   </q-card-section>
                 </q-card>
               </div>
@@ -193,6 +193,7 @@ const isOpen = computed({
   set: (value) => emit('update:modelValue', value)
 });
 
+const localRowData = ref<Record<string, unknown> | null>(null);
 const selectedField = ref<DataItem | null>(null);
 const editValue = ref<string>('');
 const formData = reactive<Record<string, string | number | null>>({});
@@ -244,6 +245,20 @@ const data = ref<DataItem[]>([
   { title: 'allergies', optionId: 4, icon: 'health_and_safety' },
 ]);
 
+watch(() => props.rowData, (newData) => {
+  localRowData.value = newData ? { ...newData } : null;
+
+  if (newData) {
+    Object.entries(newData).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData[key] = typeof value === 'object' ? JSON.stringify(value) : String(value);
+      } else {
+        formData[key] = '';
+      }
+    });
+  }
+}, { immediate: true });
+
 const isNextButtonDisabled = computed(() => {
   if (!props.isRegistration) return false;
 
@@ -254,16 +269,6 @@ const isNextButtonDisabled = computed(() => {
     return value === undefined || value === null || value === '';
   });
 });
-
-if (props.rowData) {
-  Object.entries(props.rowData).forEach(([key, value]) => {
-    if (value !== null && value !== undefined) {
-      formData[key] = typeof value === 'object' ? JSON.stringify(value) : String(value);
-    } else {
-      formData[key] = '';
-    }
-  });
-}
 
 const activeOption = computed<OptionItem>(() => {
   return options.value.find(option => option.active) ||
@@ -278,7 +283,6 @@ const setActive = (selectedOption: OptionItem): void => {
   options.value.forEach(option => {
     option.active = option === selectedOption;
   });
-  // Close any editing field when changing tabs
   selectedField.value = null;
 };
 
@@ -309,7 +313,7 @@ const moveToNextOption = () => {
 
 const selectField = (item: DataItem): void => {
   selectedField.value = item;
-  const currentValue = props.rowData?.[item.title];
+  const currentValue = localRowData.value?.[item.title];
   editValue.value = currentValue !== null && currentValue !== undefined ? String(currentValue) : '';
 };
 
@@ -319,21 +323,18 @@ const cancelEdit = (): void => {
 };
 
 const saveEdit = (): void => {
-  if (selectedField.value && props.rowData) {
-    // In a real application, you would likely emit an event here to update the actual data
-    console.log(`Updating ${selectedField.value.title} from ${props.rowData[selectedField.value.title]} to ${editValue.value}`);
-
-    // Save the change to the formData object
+  if (selectedField.value) {
     formData[selectedField.value.title] = editValue.value;
 
-    // Here you would typically call an API or dispatch an action to update the data
-    // For now, we'll just close the edit mode
-    selectedField.value = null;
-
-    // If in registration mode, emit the save event
-    if (props.isRegistration) {
-      emit('save', formData);
+    if (localRowData.value && !props.isRegistration) {
+      localRowData.value = {
+        ...localRowData.value,
+        [selectedField.value.title]: editValue.value
+      };
     }
+
+    emit('save', { ...formData });
+    selectedField.value = null;
   }
 };
 

@@ -24,7 +24,7 @@ interface EventActivity {
   type: string;
   name: string;
   description: string;
-  note: string;
+  notes: string;
   maxParticipants: number;
   place?: Coordinates[];
   startDate: string;
@@ -49,7 +49,7 @@ export const useEventsActivitiesStore = defineStore('eventsActivities', {
         type: eventActivity.type || '',
         name: eventActivity.name || '',
         description: eventActivity.description || '',
-        note: eventActivity.note || '',
+        notes: eventActivity.notes || '',
         maxParticipants: eventActivity.maxParticipants || 0,
         startDate: eventActivity.startDate || '',
         endDate: eventActivity.endDate || '',

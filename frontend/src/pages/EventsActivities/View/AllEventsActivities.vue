@@ -108,7 +108,6 @@ const applyFilters = (items?: EventActivity[]): EventActivity[] => {
 
   if (activeFilter) {
     if (props.isDraft) {
-      // Draft filters
       switch (activeFilter.action) {
         case 'latest':
           filteredItems.sort((a, b) => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="event-card q-pa-md">
+  <div class="event-card q-pa-md" style="width: 340px">
     <q-img
       :src="props.eventActivity.image || ''"
       class="event-card-image"

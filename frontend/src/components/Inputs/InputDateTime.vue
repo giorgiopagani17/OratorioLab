@@ -154,10 +154,12 @@ const confirmSelection = () => {
 
 watch(() => props.modelValue, (newValue) => {
   if (newValue) {
-    const dateTime = new Date(newValue);
-    if (!isNaN(dateTime.getTime())) {
-      dateModel.value = dateTime.toISOString().split('T')[0];
-      timeModel.value = newValue.split('T')[1] ? newValue.split('T')[1].substring(0, 5) : '00:00';
+    const [datePart, timePart] = newValue.split('T');
+
+    if (datePart) {
+      dateModel.value = datePart;
+
+      timeModel.value = timePart ? timePart.substring(0, 5) : '00:00';
     }
   } else {
     dateModel.value = '';

@@ -264,7 +264,7 @@ export default {
 .suggestions-list {
   position: absolute;
   z-index: 10000;
-  width: 100%;
+  width: calc(100% - 32px); // Adjust width to match only the address input
   background: white;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   border-radius: 4px;

@@ -2,21 +2,21 @@
   "activities": [
     {
       "id": 1,
-      "name": "Soccer Training",
-      "description": "Weekly soccer training sessions",
-      "notes": "Bring your own soccer shoes",
+      "name": "Allenamento di Calcio",
+      "description": "Sessioni settimanali di allenamento calcistico",
+      "notes": "Porta le tue scarpe da calcio",
       "startDate": "2025-01-15T16:00:00",
       "endDate": "2025-01-17T18:00:00",
       "image": "https://cloud.rtl.it/RTLFM/News/Article/1000x1000/calcio-continuano-le-grandi-firme-della-serie-a-mud06.jpg",
       "targets": [
         {
-          "name": "Junior Players",
+          "name": "Giocatori Junior",
           "price": 80.00,
           "startYear": 2012,
           "endYear": 2014
         },
         {
-          "name": "Senior Players",
+          "name": "Giocatori Senior",
           "price": 100.00,
           "startYear": 2008,
           "endYear": 2011
@@ -25,27 +25,27 @@
     },
     {
       "id": 2,
-      "name": "Music Workshop",
-      "description": "Group music lessons",
-      "notes": "Instruments provided",
+      "name": "Laboratorio Musicale",
+      "description": "Lezioni di musica di gruppo",
+      "notes": "Strumenti forniti",
       "startDate": "2025-02-01T15:00:00",
       "endDate": "2025-02-06T17:00:00",
       "image": "https://as1.ftcdn.net/v2/jpg/08/56/39/54/1000_F_856395497_Hhxp5fU8SKUrTqe1pZyAc3tHrOfDrQ2I.jpg",
       "targets": [
         {
-          "name": "Beginners",
+          "name": "Principianti",
           "price": 0.00,
           "startYear": 2014,
           "endYear": 2016
         },
         {
-          "name": "Intermediate",
+          "name": "Intermedio",
           "price": 110.00,
           "startYear": 2010,
           "endYear": 2013
         },
         {
-          "name": "Advanced",
+          "name": "Avanzato",
           "price": 130.00,
           "startYear": 2006,
           "endYear": 2009
@@ -54,21 +54,21 @@
     },
     {
       "id": 3,
-      "name": "Basketball Academy",
-      "description": "Basketball training and tactics",
-      "notes": "Indoor court, shoes required",
+      "name": "Accademia di Basket",
+      "description": "Allenamento e tattica di pallacanestro",
+      "notes": "Campo interno, scarpe richieste",
       "startDate": "2025-03-10T15:00:00",
       "endDate": "2025-03-11T17:30:00",
       "image": "https://www.bauerfeind-sports.it/media/24/7f/0b/1700054753/nba-knee-support-black-lifestyle-1000x1000.jpg",
       "targets": [
         {
-          "name": "Beginners",
+          "name": "Principianti",
           "price": 75.00,
           "startYear": 2014,
           "endYear": 2016
         },
         {
-          "name": "Advanced",
+          "name": "Avanzato",
           "price": 95.00,
           "startYear": 2010,
           "endYear": 2013
@@ -77,21 +77,21 @@
     },
     {
       "id": 4,
-      "name": "Coding Club",
-      "description": "Programming basics and web development",
-      "notes": "Laptops provided if needed",
-      "startDate": "2025-02-15T16:30:00",
-      "endDate": "2025-02-15T18:30:00",
+      "name": "Club di Programmazione",
+      "description": "Fondamenti di programmazione e sviluppo web",
+      "notes": "Computer portatili forniti se necessario",
+      "startDate": "2025-04-15T16:30:00",
+      "endDate": "2025-04-15T18:30:00",
       "image": "https://coachart.org/wp-content/uploads/2022/10/coding-club-steam.png",
       "targets": [
         {
-          "name": "Kids",
+          "name": "Bambini",
           "price": 85.00,
           "startYear": 2012,
           "endYear": 2014
         },
         {
-          "name": "Teens",
+          "name": "Ragazzi",
           "price": 95.00,
           "startYear": 2008,
           "endYear": 2011
@@ -100,27 +100,27 @@
     },
     {
       "id": 5,
-      "name": "Theater Workshop",
-      "description": "Acting and stage performance",
-      "notes": "Final show for parents",
+      "name": "Laboratorio Teatrale",
+      "description": "Recitazione e performance sul palco",
+      "notes": "Spettacolo finale per i genitori",
       "startDate": "2025-04-05T14:00:00",
       "endDate": "2025-04-05T16:00:00",
       "image": "https://www.katebackdrop.com/cdn/shop/files/BH1048512G.jpg?v=1705384334&width=1000",
       "targets": [
         {
-          "name": "Junior Group",
+          "name": "Gruppo Junior",
           "price": 70.00,
           "startYear": 2013,
           "endYear": 2015
         },
         {
-          "name": "Senior Group",
+          "name": "Gruppo Senior",
           "price": 85.00,
           "startYear": 2009,
           "endYear": 2012
         },
         {
-          "name": "Advanced Group",
+          "name": "Gruppo Avanzato",
           "price": 100.00,
           "startYear": 2005,
           "endYear": 2008
@@ -129,21 +129,21 @@
     },
     {
       "id": 6,
-      "name": "Science Lab",
-      "description": "Hands-on science experiments",
-      "notes": "Safety equipment provided",
+      "name": "Laboratorio di Scienze",
+      "description": "Esperimenti scientifici pratici",
+      "notes": "Attrezzatura di sicurezza fornita",
       "startDate": "2025-03-20T15:00:00",
       "endDate": "2025-03-23T17:00:00",
       "image": "https://as2.ftcdn.net/v2/jpg/04/97/82/73/1000_F_497827346_hTckDJS3IheDv9J2ceCNO3ZP482Mc7dG.jpg",
       "targets": [
         {
-          "name": "Elementary",
+          "name": "Elementare",
           "price": 65.00,
           "startYear": 2013,
           "endYear": 2015
         },
         {
-          "name": "Middle School",
+          "name": "Scuola Media",
           "price": 80.00,
           "startYear": 2009,
           "endYear": 2012
@@ -152,30 +152,226 @@
     },
     {
       "id": 7,
-      "name": "Language Club",
-      "description": "English and Spanish lessons",
-      "notes": "Materials included",
-      "startDate": "2025-02-28T16:00:00",
-      "endDate": "2025-02-30T18:00:00",
+      "name": "Club di Lingue",
+      "description": "Lezioni di inglese e spagnolo",
+      "notes": "Materiali inclusi",
+      "startDate": "2025-04-28T16:00:00",
+      "endDate": "2025-04-30T18:00:00",
       "image": "https://www.ocarinaplayer.com/wp-content/uploads/2021/07/2021-04-29_ENGLISH-RHYMES-Coll2_WEB-jpg-1000x1000.webp",
       "targets": [
         {
-          "name": "Beginners",
+          "name": "Principianti",
           "price": 60.00,
           "startYear": 2014,
           "endYear": 2016
         },
         {
-          "name": "Intermediate",
+          "name": "Intermedio",
           "price": 75.00,
           "startYear": 2010,
           "endYear": 2013
         },
         {
-          "name": "Advanced",
+          "name": "Avanzato",
           "price": 90.00,
           "startYear": 2006,
           "endYear": 2009
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Campo Estivo 2025",
+      "description": "Attività all'aperto e giochi di gruppo per bambini e ragazzi",
+      "notes": "Pranzo e merenda inclusi, portare cappellino e crema solare",
+      "startDate": "2025-05-15T08:30:00",
+      "endDate": "2025-05-26T17:00:00",
+      "image": "https://as2.ftcdn.net/v2/jpg/02/84/20/77/1000_F_284207789_wmGtvC8Sg8azJMchQeUQhbKGQ6rprRKB.jpg",
+      "targets": [
+        {
+          "name": "Bambini",
+          "price": 180.00,
+          "startYear": 2014,
+          "endYear": 2017
+        },
+        {
+          "name": "Ragazzi",
+          "price": 200.00,
+          "startYear": 2010,
+          "endYear": 2013
+        },
+        {
+          "name": "Adolescenti",
+          "price": 220.00,
+          "startYear": 2006,
+          "endYear": 2009
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Nuoto Estivo",
+      "description": "Corso intensivo di nuoto per tutti i livelli",
+      "notes": "Portare costume, cuffia e asciugamano",
+      "startDate": "2025-05-25T10:00:00",
+      "endDate": "2025-05-31T12:00:00",
+      "image": "https://as1.ftcdn.net/v2/jpg/02/67/85/60/1000_F_267856046_XLvH5Ms5BK6Td0cjBq0UutPCmdaPG7LF.jpg",
+      "targets": [
+        {
+          "name": "Principianti",
+          "price": 120.00,
+          "startYear": 2016,
+          "endYear": 2018
+        },
+        {
+          "name": "Intermedio",
+          "price": 140.00,
+          "startYear": 2010,
+          "endYear": 2015
+        },
+        {
+          "name": "Avanzato",
+          "price": 160.00,
+          "startYear": 2005,
+          "endYear": 2009
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Settimana della Creatività",
+      "description": "Laboratori artistici e creativi estivi",
+      "notes": "Materiali inclusi nel prezzo",
+      "startDate": "2025-06-22T09:00:00",
+      "endDate": "2025-06-26T16:00:00",
+      "image": "https://as1.ftcdn.net/v2/jpg/05/66/36/28/1000_F_566362899_kzNrWj1OX2DYsYHiRQLqGixd7DAaL6Pn.jpg",
+      "targets": [
+        {
+          "name": "Bambini",
+          "price": 150.00,
+          "startYear": 2014,
+          "endYear": 2017
+        },
+        {
+          "name": "Ragazzi",
+          "price": 170.00,
+          "startYear": 2009,
+          "endYear": 2013
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Torneo di Beach Volley",
+      "description": "Competizione estiva sulla spiaggia",
+      "notes": "Squadre di 4 persone, premi per i vincitori",
+      "startDate": "2025-05-10T09:00:00",
+      "endDate": "2025-05-11T18:00:00",
+      "image": "https://as2.ftcdn.net/v2/jpg/06/43/28/21/1000_F_643282132_M8SS7CzXZzpTqXKfRSnm5eSEIEO54onQ.jpg",
+      "targets": [
+        {
+          "name": "Under 18",
+          "price": 40.00,
+          "startYear": 2007,
+          "endYear": 2010
+        },
+        {
+          "name": "Adulti",
+          "price": 60.00,
+          "startYear": 1980,
+          "endYear": 2006
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Escursione in Montagna",
+      "description": "Trekking guidato con attività naturalistiche",
+      "notes": "Portare scarponcini, acqua e pranzo al sacco",
+      "startDate": "2025-05-05T07:30:00",
+      "endDate": "2025-05-05T17:00:00",
+      "image": "https://as2.ftcdn.net/v2/jpg/02/59/98/25/1000_F_259982506_JAf29DFkMhp2PDIuBrRxnxUgQRYjYXLw.jpg",
+      "targets": [
+        {
+          "name": "Famiglie",
+          "price": 25.00,
+          "startYear": 2010,
+          "endYear": 2018
+        },
+        {
+          "name": "Escursionisti",
+          "price": 35.00,
+          "startYear": 1970,
+          "endYear": 2009
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Corso di Fotografia Estiva",
+      "description": "Tecniche fotografiche all'aperto",
+      "notes": "Consigliata macchina fotografica propria",
+      "startDate": "2025-04-18T15:00:00",
+      "endDate": "2025-04-22T18:00:00",
+      "image": "https://as1.ftcdn.net/v2/jpg/03/05/09/00/1000_F_305090052_EgIbzrfmFNAXUDyjEeKXnz9YTBzKCQX9.jpg",
+      "targets": [
+        {
+          "name": "Under 18",
+          "price": 85.00,
+          "startYear": 2006,
+          "endYear": 2010
+        },
+        {
+          "name": "Adulti",
+          "price": 110.00,
+          "startYear": 1970,
+          "endYear": 2005
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Workshop di Cucina",
+      "description": "Corsi di cucina mediterranea estiva",
+      "notes": "Ingredienti e ricettario inclusi",
+      "startDate": "2025-05-29T17:00:00",
+      "endDate": "2025-05-02T20:00:00",
+      "image": "https://as1.ftcdn.net/v2/jpg/02/44/49/28/1000_F_244492855_k7UBhn5ywUqLUMQmvM7VN2hLJCS8MuCX.jpg",
+      "targets": [
+        {
+          "name": "Ragazzi",
+          "price": 90.00,
+          "startYear": 2006,
+          "endYear": 2012
+        },
+        {
+          "name": "Adulti",
+          "price": 120.00,
+          "startYear": 1970,
+          "endYear": 2005
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Festival della Musica",
+      "description": "Evento musicale con band locali",
+      "notes": "Ingresso gratuito per minori di 10 anni",
+      "startDate": "2025-04-20T18:00:00",
+      "endDate": "2025-04-20T23:00:00",
+      "image": "https://as2.ftcdn.net/v2/jpg/04/28/83/13/1000_F_428831346_LpbXRqGpWUhWlMskuBF1Wa6nRRKRn4aR.jpg",
+      "targets": [
+        {
+          "name": "Giovani",
+          "price": 15.00,
+          "startYear": 2006,
+          "endYear": 2012
+        },
+        {
+          "name": "Adulti",
+          "price": 25.00,
+          "startYear": 1970,
+          "endYear": 2005
         }
       ]
     }

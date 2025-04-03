@@ -6,13 +6,13 @@
       "userName": "John Doe",
       "email": "john.doe@example.com",
       "dateOfBirth": "2005-05-15",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-10T14:30:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 1,
-      "itemName": "Summer Camp 2024"
+      "itemName": "Campo Estivo 2024"
     },
     {
       "id": 2,
@@ -20,14 +20,14 @@
       "userName": "Emma Wilson",
       "email": "emma.wilson@example.com",
       "dateOfBirth": "2010-03-22",
-      "gender": "Female",
-      "status": "Pending",
-      "paymentStatus": "Unpaid",
+      "gender": "Femmina",
+      "status": "In attesa",
+      "paymentStatus": "Non pagato",
       "registrationDate": "2024-07-12T09:15:00",
-      "subscriptionType": "activity",
+      "subscriptionType": "attività",
       "itemId": 1,
-      "itemName": "Soccer Training",
-      "targetName": "Junior Players"
+      "itemName": "Allenamento di Calcio",
+      "targetName": "Giocatori Junior"
     },
     {
       "id": 3,
@@ -35,14 +35,14 @@
       "userName": "Michael Brown",
       "email": "michael.brown@example.com",
       "dateOfBirth": "2008-11-08",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-05T16:45:00",
-      "subscriptionType": "activity",
+      "subscriptionType": "attività",
       "itemId": 2,
-      "itemName": "Music Workshop",
-      "targetName": "Intermediate"
+      "itemName": "Laboratorio Musicale",
+      "targetName": "Intermedio"
     },
     {
       "id": 4,
@@ -50,13 +50,13 @@
       "userName": "Sophia Garcia",
       "email": "sophia.garcia@example.com",
       "dateOfBirth": "2012-07-30",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-08T10:30:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 2,
-      "itemName": "Easter Workshop"
+      "itemName": "Laboratorio di Pasqua"
     },
     {
       "id": 5,
@@ -64,13 +64,13 @@
       "userName": "David Miller",
       "email": "david.miller@example.com",
       "dateOfBirth": "2007-09-14",
-      "gender": "Male",
-      "status": "Inactive",
-      "paymentStatus": "Refunded",
+      "gender": "Maschio",
+      "status": "Inattivo",
+      "paymentStatus": "Rimborsato",
       "registrationDate": "2024-06-25T12:00:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 3,
-      "itemName": "Youth Weekend Retreat"
+      "itemName": "Ritiro del Fine Settimana per Giovani"
     },
     {
       "id": 6,
@@ -78,14 +78,14 @@
       "userName": "Olivia Johnson",
       "email": "olivia.johnson@example.com",
       "dateOfBirth": "2009-02-18",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-01T14:15:00",
-      "subscriptionType": "activity",
+      "subscriptionType": "attività",
       "itemId": 3,
-      "itemName": "Basketball Academy",
-      "targetName": "Advanced"
+      "itemName": "Accademia di Basket",
+      "targetName": "Avanzato"
     },
     {
       "id": 7,
@@ -93,14 +93,14 @@
       "userName": "James Wilson",
       "email": "james.wilson@example.com",
       "dateOfBirth": "2014-04-25",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-03T09:30:00",
-      "subscriptionType": "activity",
+      "subscriptionType": "attività",
       "itemId": 4,
-      "itemName": "Coding Club",
-      "targetName": "Kids"
+      "itemName": "Club di Programmazione",
+      "targetName": "Bambini"
     },
     {
       "id": 8,
@@ -108,13 +108,13 @@
       "userName": "Isabella Martinez",
       "email": "isabella.martinez@example.com",
       "dateOfBirth": "2006-12-10",
-      "gender": "Female",
-      "status": "Pending",
-      "paymentStatus": "Unpaid",
+      "gender": "Femmina",
+      "status": "In attesa",
+      "paymentStatus": "Non pagato",
       "registrationDate": "2024-07-14T11:45:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 4,
-      "itemName": "Christmas Concert"
+      "itemName": "Concerto di Natale"
     },
     {
       "id": 9,
@@ -122,14 +122,14 @@
       "userName": "Ethan Thompson",
       "email": "ethan.thompson@example.com",
       "dateOfBirth": "2011-08-05",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-06-28T15:00:00",
-      "subscriptionType": "activity",
+      "subscriptionType": "attività",
       "itemId": 5,
-      "itemName": "Theater Workshop",
-      "targetName": "Junior Group"
+      "itemName": "Laboratorio Teatrale",
+      "targetName": "Gruppo Junior"
     },
     {
       "id": 10,
@@ -137,13 +137,13 @@
       "userName": "Mia Anderson",
       "email": "mia.anderson@example.com",
       "dateOfBirth": "2013-05-20",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-07T13:20:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 5,
-      "itemName": "Sports Tournament"
+      "itemName": "Torneo Sportivo"
     },
     {
       "id": 11,
@@ -151,13 +151,13 @@
       "userName": "Matteo Ricci",
       "email": "matteo.ricci@example.com",
       "dateOfBirth": "2006-11-12",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-06-30T10:15:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 1,
-      "itemName": "Summer Camp 2024"
+      "itemName": "Campo Estivo 2024"
     },
     {
       "id": 12,
@@ -165,13 +165,13 @@
       "userName": "Sofia Bianchi",
       "email": "sofia.bianchi@example.com",
       "dateOfBirth": "2007-02-28",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-02T13:40:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 1,
-      "itemName": "Summer Camp 2024"
+      "itemName": "Campo Estivo 2024"
     },
     {
       "id": 13,
@@ -179,13 +179,13 @@
       "userName": "Lorenzo Ferrari",
       "email": "lorenzo.ferrari@example.com",
       "dateOfBirth": "2008-05-17",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-05T09:20:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 1,
-      "itemName": "Summer Camp 2024"
+      "itemName": "Campo Estivo 2024"
     },
     {
       "id": 14,
@@ -193,13 +193,13 @@
       "userName": "Chiara Romano",
       "email": "chiara.romano@example.com",
       "dateOfBirth": "2009-08-03",
-      "gender": "Female",
-      "status": "Pending",
-      "paymentStatus": "Unpaid",
+      "gender": "Femmina",
+      "status": "In attesa",
+      "paymentStatus": "Non pagato",
       "registrationDate": "2024-07-15T11:30:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 1,
-      "itemName": "Summer Camp 2024"
+      "itemName": "Campo Estivo 2024"
     },
     {
       "id": 15,
@@ -207,13 +207,13 @@
       "userName": "Francesco Esposito",
       "email": "francesco.esposito@example.com",
       "dateOfBirth": "2004-12-20",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-08T14:45:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 1,
-      "itemName": "Summer Camp 2024"
+      "itemName": "Campo Estivo 2024"
     },
     {
       "id": 16,
@@ -221,13 +221,13 @@
       "userName": "Giorgia Colombo",
       "email": "giorgia.colombo@example.com",
       "dateOfBirth": "2006-04-15",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-03T15:10:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 2,
-      "itemName": "Easter Workshop"
+      "itemName": "Laboratorio di Pasqua"
     },
     {
       "id": 17,
@@ -235,13 +235,13 @@
       "userName": "Alessandro Marino",
       "email": "alessandro.marino@example.com",
       "dateOfBirth": "2009-01-24",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-05T10:30:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 2,
-      "itemName": "Easter Workshop"
+      "itemName": "Laboratorio di Pasqua"
     },
     {
       "id": 18,
@@ -249,13 +249,13 @@
       "userName": "Martina Greco",
       "email": "martina.greco@example.com",
       "dateOfBirth": "2010-10-08",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-04T16:45:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 2,
-      "itemName": "Easter Workshop"
+      "itemName": "Laboratorio di Pasqua"
     },
     {
       "id": 19,
@@ -263,13 +263,13 @@
       "userName": "Leonardo Conti",
       "email": "leonardo.conti@example.com",
       "dateOfBirth": "2011-07-11",
-      "gender": "Male",
-      "status": "Pending",
-      "paymentStatus": "Unpaid",
+      "gender": "Maschio",
+      "status": "In attesa",
+      "paymentStatus": "Non pagato",
       "registrationDate": "2024-07-12T09:15:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 2,
-      "itemName": "Easter Workshop"
+      "itemName": "Laboratorio di Pasqua"
     },
     {
       "id": 20,
@@ -277,13 +277,13 @@
       "userName": "Giulia De Luca",
       "email": "giulia.deluca@example.com",
       "dateOfBirth": "2005-06-30",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-01T13:20:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 3,
-      "itemName": "Youth Weekend Retreat"
+      "itemName": "Ritiro del Fine Settimana per Giovani"
     },
     {
       "id": 21,
@@ -291,13 +291,13 @@
       "userName": "Tommaso Costa",
       "email": "tommaso.costa@example.com",
       "dateOfBirth": "2004-03-25",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-06-29T14:10:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 3,
-      "itemName": "Youth Weekend Retreat"
+      "itemName": "Ritiro del Fine Settimana per Giovani"
     },
     {
       "id": 22,
@@ -305,13 +305,13 @@
       "userName": "Aurora Barbieri",
       "email": "aurora.barbieri@example.com",
       "dateOfBirth": "2006-09-14",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-02T11:50:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 3,
-      "itemName": "Youth Weekend Retreat"
+      "itemName": "Ritiro del Fine Settimana per Giovani"
     },
     {
       "id": 23,
@@ -319,13 +319,13 @@
       "userName": "Riccardo Lombardi",
       "email": "riccardo.lombardi@example.com",
       "dateOfBirth": "2005-12-05",
-      "gender": "Male",
-      "status": "Inactive",
-      "paymentStatus": "Refunded",
+      "gender": "Maschio",
+      "status": "Inattivo",
+      "paymentStatus": "Rimborsato",
       "registrationDate": "2024-06-28T15:30:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 3,
-      "itemName": "Youth Weekend Retreat"
+      "itemName": "Ritiro del Fine Settimana per Giovani"
     },
     {
       "id": 24,
@@ -333,13 +333,13 @@
       "userName": "Nicole Moretti",
       "email": "nicole.moretti@example.com",
       "dateOfBirth": "2007-08-22",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-03T10:15:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 4,
-      "itemName": "Christmas Concert"
+      "itemName": "Concerto di Natale"
     },
     {
       "id": 25,
@@ -347,13 +347,13 @@
       "userName": "Edoardo Galli",
       "email": "edoardo.galli@example.com",
       "dateOfBirth": "2008-04-17",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-04T15:20:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 4,
-      "itemName": "Christmas Concert"
+      "itemName": "Concerto di Natale"
     },
     {
       "id": 26,
@@ -361,13 +361,13 @@
       "userName": "Beatrice Caruso",
       "email": "beatrice.caruso@example.com",
       "dateOfBirth": "2009-02-09",
-      "gender": "Female",
-      "status": "Pending",
-      "paymentStatus": "Unpaid",
+      "gender": "Femmina",
+      "status": "In attesa",
+      "paymentStatus": "Non pagato",
       "registrationDate": "2024-07-10T09:45:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 4,
-      "itemName": "Christmas Concert"
+      "itemName": "Concerto di Natale"
     },
     {
       "id": 27,
@@ -375,13 +375,13 @@
       "userName": "Davide Vitale",
       "email": "davide.vitale@example.com",
       "dateOfBirth": "2010-11-28",
-      "gender": "Male",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Maschio",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-05T13:00:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 5,
-      "itemName": "Sports Tournament"
+      "itemName": "Torneo Sportivo"
     },
     {
       "id": 28,
@@ -389,13 +389,13 @@
       "userName": "Camilla Ferrara",
       "email": "camilla.ferrara@example.com",
       "dateOfBirth": "2005-10-19",
-      "gender": "Female",
-      "status": "Active",
-      "paymentStatus": "Paid",
+      "gender": "Femmina",
+      "status": "Attivo",
+      "paymentStatus": "Pagato",
       "registrationDate": "2024-07-01T10:30:00",
-      "subscriptionType": "event",
+      "subscriptionType": "evento",
       "itemId": 5,
-      "itemName": "Sports Tournament"
+      "itemName": "Torneo Sportivo"
     }
   ]
 }
