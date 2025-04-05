@@ -16,7 +16,8 @@
       "father": "Paolo Smith, +39 334 7654321",
       "tutor": "Maria Smith, +39 333 1234567",
       "illness": "Nessuna",
-      "allergies": "Pollini, Lattosio"
+      "allergies": "Pollini, Lattosio",
+      "telephone": "+39 340 1234567"
     },
     {
       "name": "Mohammed Al-Farsi",
@@ -34,7 +35,8 @@
       "father": "Karim Al-Farsi, +39 339 1234987",
       "tutor": "",
       "illness": "Ipertensione",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 348 2345678"
     },
     {
       "name": "Carlo Bruni",
@@ -52,7 +54,8 @@
       "father": "Antonio Bruni, +39 334 5678901",
       "tutor": "",
       "illness": "Asma lieve",
-      "allergies": "Polvere"
+      "allergies": "Polvere",
+      "telephone": "+39 342 3456789"
     },
     {
       "name": "Elia Davidi",
@@ -70,7 +73,8 @@
       "father": "Franco Davidi, +39 339 2233445",
       "tutor": "",
       "illness": "Nessuna",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 347 4567890"
     },
     {
       "name": "Diana Principi",
@@ -88,7 +92,8 @@
       "father": "Luca Principi, +39 334 6655443",
       "tutor": "Martina Principi, +39 333 5544332",
       "illness": "Nessuna",
-      "allergies": "Fragole"
+      "allergies": "Fragole",
+      "telephone": "+39 333 5544332"
     },
     {
       "name": "Fiona Villani",
@@ -106,7 +111,8 @@
       "father": "Giorgio Villani, +39 337 8899001",
       "tutor": "",
       "illness": "Nessuna",
-      "allergies": "Noci"
+      "allergies": "Noci",
+      "telephone": "+39 349 5678901"
     },
     {
       "name": "Gurpreet Singh",
@@ -124,7 +130,8 @@
       "father": "Rajinder Singh, +39 334 0099887",
       "tutor": "",
       "illness": "Diabete tipo 1",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 341 6789012"
     },
     {
       "name": "Hanna Leoni",
@@ -142,7 +149,8 @@
       "father": "Paolo Leoni, +39 339 2233445",
       "tutor": "Elena Marini, +39 338 1122334",
       "illness": "Nessuna",
-      "allergies": "Penicillina"
+      "allergies": "Penicillina",
+      "telephone": "+39 338 1122334"
     },
     {
       "name": "Abdul Rahman",
@@ -160,7 +168,8 @@
       "father": "Mahmoud Rahman, +39 337 4455667",
       "tutor": "",
       "illness": "Ipertensione",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 345 7890123"
     },
     {
       "name": "Giulia Martini",
@@ -178,7 +187,8 @@
       "father": "Michele Martini, +39 334 6677889",
       "tutor": "",
       "illness": "Nessuna",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 346 8901234"
     },
     {
       "name": "Kevin Andreoli",
@@ -196,7 +206,8 @@
       "father": "Pietro Andreoli, +39 339 8899001",
       "tutor": "",
       "illness": "Nessuna",
-      "allergies": "Polvere, Acari"
+      "allergies": "Polvere, Acari",
+      "telephone": "+39 344 9012345"
     },
     {
       "name": "Laura Taddei",
@@ -214,7 +225,8 @@
       "father": "Alberto Taddei, +39 337 1122334",
       "tutor": "",
       "illness": "Nessuna",
-      "allergies": "Nichel"
+      "allergies": "Nichel",
+      "telephone": "+39 343 0123456"
     },
     {
       "name": "Michele Volpi",
@@ -232,7 +244,8 @@
       "father": "Roberto Volpi, +39 334 3344556",
       "tutor": "Anna Moretti, +39 333 2233445",
       "illness": "Nessuna",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 333 2233445"
     },
     {
       "name": "Nina Ricci",
@@ -250,7 +263,8 @@
       "father": "Giovanni Ricci, +39 339 5566778",
       "tutor": "",
       "illness": "Allergia stagionale",
-      "allergies": "Pollini"
+      "allergies": "Pollini",
+      "telephone": "+39 348 1234567"
     },
     {
       "name": "Oliver Bianchi",
@@ -268,7 +282,8 @@
       "father": "Marco Bianchi, +39 337 7788990",
       "tutor": "",
       "illness": "Nessuna",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 349 2345678"
     },
     {
       "name": "Patrizia Bruno",
@@ -286,7 +301,8 @@
       "father": "Stefano Bruno, +39 334 9900112",
       "tutor": "",
       "illness": "Nessuna",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 341 3456789"
     },
     {
       "name": "Yuki Tanaka",
@@ -304,7 +320,8 @@
       "father": "Kenji Tanaka, +39 339 1122334",
       "tutor": "",
       "illness": "Nessuna",
-      "allergies": "Glutine"
+      "allergies": "Glutine",
+      "telephone": "+39 347 4567890"
     },
     {
       "name": "Rachele Verdi",
@@ -322,7 +339,8 @@
       "father": "Davide Verdi, +39 337 3344556",
       "tutor": "Elena Mancini, +39 336 2233445",
       "illness": "Nessuna",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 336 2233445"
     },
     {
       "name": "Samuele Cooperi",
@@ -340,7 +358,8 @@
       "father": "Luigi Cooperi, +39 334 5566778",
       "tutor": "",
       "illness": "Pressione bassa",
-      "allergies": "Nessuna"
+      "allergies": "Nessuna",
+      "telephone": "+39 345 6789012"
     },
     {
       "name": "Amina Hassan",
@@ -358,7 +377,8 @@
       "father": "Omar Hassan, +39 339 7788990",
       "tutor": "",
       "illness": "Nessuna",
-      "allergies": "Lattosio"
+      "allergies": "Lattosio",
+      "telephone": "+39 342 7890123"
     }
   ]
 }

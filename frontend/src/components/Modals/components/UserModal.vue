@@ -71,6 +71,7 @@
                     <q-icon :name="item.icon" color="secondary" size="sm"/>
                   </div>
                   <q-input
+                    :type="getInputType(item.type)"
                     v-model="formData[item.title]"
                     outlined
                     dense
@@ -113,6 +114,7 @@
                     <q-icon :name="selectedField.icon" color="secondary" size="sm" class="q-ml-xs" />
                   </div>
                   <q-input
+                    :type="inputType"
                     v-model="editValue"
                     @keyup.enter="saveEdit"
                     style="font-size: 17.5px"
@@ -173,6 +175,7 @@ interface OptionItem {
 
 interface DataItem {
   title: string;
+  type: string;
   optionId: number;
   icon: string;
 }
@@ -229,21 +232,33 @@ const options = ref<OptionItem[]>([
 ]);
 
 const data = ref<DataItem[]>([
-  { title: 'name', optionId: 1, icon: 'person' },
-  { title: 'email', optionId: 1, icon: 'email' },
-  { title: 'cf', optionId: 1, icon: 'badge' },
-  { title: 'birthday', optionId: 1, icon: 'cake' },
-  { title: 'gender', optionId: 1, icon: 'wc' },
-  { title: 'createdAt', optionId: 1, icon: 'event' },
-  { title: 'address', optionId: 2, icon: 'home' },
-  { title: 'country', optionId: 2, icon: 'flag' },
-  { title: 'nationality', optionId: 2, icon: 'public' },
-  { title: 'mother', optionId: 3, icon: 'woman' },
-  { title: 'father', optionId: 3, icon: 'man' },
-  { title: 'tutor', optionId: 3, icon: 'support_agent' },
-  { title: 'illness', optionId: 4, icon: 'medical_services' },
-  { title: 'allergies', optionId: 4, icon: 'health_and_safety' },
+  { title: 'name', type:'text', optionId: 1, icon: 'person' },
+  { title: 'email', type:'text', optionId: 1, icon: 'email' },
+  { title: 'cf', type:'text', optionId: 1, icon: 'badge' },
+  { title: 'birthday', type:'date', optionId: 1, icon: 'cake' },
+  { title: 'gender', type:'text', optionId: 1, icon: 'wc' },
+  { title: 'telephone', type: 'tel', optionId: 1, icon: 'phone' },
+  { title: 'address', type:'text', optionId: 2, icon: 'home' },
+  { title: 'country', type:'text', optionId: 2, icon: 'flag' },
+  { title: 'nationality', type:'text', optionId: 2, icon: 'public' },
+  { title: 'mother', type:'text', optionId: 3, icon: 'woman' },
+  { title: 'father', type:'text', optionId: 3, icon: 'man' },
+  { title: 'tutor', type:'text', optionId: 3, icon: 'support_agent' },
+  { title: 'illness', type:'text', optionId: 4, icon: 'medical_services' },
+  { title: 'allergies', type:'text', optionId: 4, icon: 'health_and_safety' },
 ]);
+
+type InputType = 'number' | 'search' | 'textarea' | 'time' | 'email' | 'tel' | 'text' | 'date' | 'password' | 'file' | 'url' | 'datetime-local';
+
+const getInputType = (type: string): InputType => {
+  const allowedTypes: InputType[] = [
+    'number', 'text', 'email', 'date', 'textarea', 'time', 'password', 'search', 'tel', 'file', 'url', 'datetime-local'
+  ];
+  return allowedTypes.includes(type as InputType) ? type as InputType : 'text';
+};
+
+const inputType = computed<InputType>(() => getInputType(selectedField.value?.type || 'text'));
+
 
 watch(() => props.rowData, (newData) => {
   localRowData.value = newData ? { ...newData } : null;
@@ -314,28 +329,33 @@ const moveToNextOption = () => {
 const selectField = (item: DataItem): void => {
   selectedField.value = item;
   const currentValue = localRowData.value?.[item.title];
-  editValue.value = currentValue !== null && currentValue !== undefined ? String(currentValue) : '';
-};
 
-const cancelEdit = (): void => {
-  selectedField.value = null;
-  editValue.value = '';
-};
+  if (item.type === 'date' && currentValue) {
+    try {
+      const parts = String(currentValue).split('/');
+      let dateObj;
 
-const saveEdit = (): void => {
-  if (selectedField.value) {
-    formData[selectedField.value.title] = editValue.value;
+      if (parts.length === 3) {
+        const [day, month, year] = parts;
+        dateObj = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+      } else {
+        dateObj = new Date(currentValue as string);
+      }
 
-    if (localRowData.value && !props.isRegistration) {
-      localRowData.value = {
-        ...localRowData.value,
-        [selectedField.value.title]: editValue.value
-      };
+      if (!isNaN(dateObj.getTime())) {
+        // Format as YYYY-MM-DD for the date input
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        editValue.value = `${year}-${month}-${day}`;
+        return;
+      }
+    } catch (e) {
+      console.warn(e);
     }
-
-    emit('save', { ...formData });
-    selectedField.value = null;
   }
+
+  editValue.value = currentValue !== null && currentValue !== undefined ? String(currentValue) : '';
 };
 
 const convertToDisplayValue = (value: unknown): string => {
@@ -351,11 +371,75 @@ const convertToDisplayValue = (value: unknown): string => {
     return value.join(', ');
   }
 
+  const dateField = data.value.find(item =>
+    item.title === selectedField.value?.title ||
+    (item.type === 'date' && localRowData.value &&
+      item.title in localRowData.value &&
+      localRowData.value[item.title] === value));
+
+  if (dateField?.type === 'date' && value) {
+    try {
+      let dateObj;
+      const strValue = String(value);
+
+      if (strValue.includes('/')) {
+        return strValue;
+      } else {
+        dateObj = new Date(strValue);
+        if (!isNaN(dateObj.getTime())) {
+          const day = String(dateObj.getDate()).padStart(2, '0');
+          const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+          const year = dateObj.getFullYear();
+          return `${day}/${month}/${year}`;
+        }
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
   if (typeof value === 'object') {
     return JSON.stringify(value);
   }
 
   return String(value);
+};
+
+const cancelEdit = (): void => {
+  selectedField.value = null;
+  editValue.value = '';
+};
+
+const saveEdit = (): void => {
+  if (selectedField.value) {
+    let valueToSave: string | number | boolean | null = editValue.value;
+
+    if (selectedField.value.type === 'date' && editValue.value) {
+      try {
+        const dateObj = new Date(editValue.value);
+        if (!isNaN(dateObj.getTime())) {
+          const day = String(dateObj.getDate()).padStart(2, '0');
+          const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+          const year = dateObj.getFullYear();
+          valueToSave = `${day}/${month}/${year}`;
+        }
+      } catch (e) {
+        valueToSave = editValue.value;
+      }
+    }
+
+    formData[selectedField.value.title] = valueToSave;
+
+    if (localRowData.value && !props.isRegistration) {
+      localRowData.value = {
+        ...localRowData.value,
+        [selectedField.value.title]: valueToSave
+      };
+    }
+
+    emit('save', { ...formData });
+    selectedField.value = null;
+  }
 };
 
 watch(() => isOpen.value, (newValue) => {
