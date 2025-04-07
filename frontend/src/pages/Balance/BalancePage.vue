@@ -39,9 +39,8 @@
             </div>
 
             <div
-              class="col-12 col-lg-8 q-pr-sm"
+              class="col-12 col-lg-8 q-pr-sm transactions-container-scrollable"
               :class="$q.screen.lt.lg ? 'q-mt-sm' : ''"
-              style="height: 445px; overflow: auto"
               v-if="filteredTransactions.length"
             >
               <TransactionCard
@@ -52,10 +51,11 @@
                 @click="handleTransactionClick(transaction)"
               />
             </div>
-            <div class="col-12 text-center q-pa-xl" v-if="!filteredTransactions.length">
-              <q-icon name="payments" size="4rem" color="grey-5" />
-              <div class="text-h6 text-grey-6 q-mt-md">{{ $t('balance.noTransactions') }}</div>
-            </div>
+
+            <EmptyStateDisplay
+              v-if="!filteredTransactions.length"
+              :message="$t('errors.noTransactionsFound')"
+            />
           </div>
         </div>
       </BodySection>
@@ -72,6 +72,7 @@ import SelectMonth from '@/pages/Balance/ChildComponents/SelectMonth.vue';
 import transactionsData from '@/data/transactions.json';
 import StatusKnobChart from '@/components/Charts/StatusKnobChart.vue';
 import TransactionCard from '@/components/Card/TransactionCard.vue';
+import EmptyStateDisplay from '@/components/Utils/EmptyStateDisplay.vue';
 
 defineOptions({
   name: 'BalancePage'
@@ -180,6 +181,16 @@ const handleTransactionClick = (transaction: Transaction) => {
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.transactions-container-scrollable {
+  max-height: 445px;
+  min-height: 445px;
+  overflow: auto;
+
+  @media (max-width: 1439px) {
+    min-height: 0px;
   }
 }
 

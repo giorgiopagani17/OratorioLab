@@ -54,6 +54,11 @@
               @click="handleClick"
             />
           </div>
+
+          <EmptyStateDisplay
+            v-if="!eventsActivities.length"
+            :message="$t(`errors.no${props.section.charAt(0).toUpperCase() + props.section.slice(1)}Found`)"
+          />
         </div>
       </BodySection>
     </div>
@@ -72,6 +77,7 @@ import { EventActivity } from '@/interfaces/EventActivity';
 import {useEventsActivitiesStore} from '@/stores/eventsActivities';
 import EventActivityListCard from '@/components/Card/EventActivityListCard.vue';
 import InputSearchCustom from '@/components/Inputs/InputSearch.vue';
+import EmptyStateDisplay from '@/components/Utils/EmptyStateDisplay.vue';
 
 defineOptions({
   name: 'UserPage'
@@ -93,6 +99,7 @@ const props = defineProps<{
 const search = ref<string>('');
 const router = useRouter();
 const route = useRoute();
+
 
 const toggleFilter = (button: Button) => {
   buttons.value = buttons.value.map(btn => ({
