@@ -148,9 +148,9 @@ const linksList1 = computed((): EssentialLinkProps[] => [
 
 const linksList2 = computed((): EssentialLinkProps[] => [
   {
-    title: t('menu.finance'),
+    title: t('menu.balance'),
     icon: 'payments',
-    link: '/finance'
+    link: '/balance'
   },
 ]);
 
@@ -184,6 +184,13 @@ const toggleLeftDrawer = () => {
 };
 
 const isActiveLink = (link?: string) => {
+  if (link === '/balance') {
+    return (route.path === '/balance') ||
+      (route.path.startsWith('/balance/') &&
+        !route.path.includes('/activities') &&
+        !route.path.includes('/events'));
+  }
+
   return link ? route.path.includes(link) : false;
 };
 </script>

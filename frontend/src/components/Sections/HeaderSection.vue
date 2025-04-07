@@ -1,13 +1,18 @@
 <template>
   <div class="row container items-center justify-between q-px-lg q-py-lg">
-    <div :class="leftClass" class="border-right-grey-responsive">
+    <div :class="leftClass" class="border-right-grey-responsive" v-if="!fullWidth">
       <div class="row justify-center no-wrap w-100">
         <slot name="left"/>
       </div>
     </div>
-    <div :class="rightClass" class="padding-left-responsive">
+    <div :class="rightClass" class="padding-left-responsive" v-if="!fullWidth">
       <div class="row justify-center no-wrap w-100">
         <slot name="right"/>
+      </div>
+    </div>
+    <div class="col-12" v-if="fullWidth">
+      <div class="row justify-center no-wrap w-100">
+        <slot name="full"/>
       </div>
     </div>
   </div>
@@ -25,6 +30,7 @@ interface Props {
   rightColSm?: string;
   rightColMd?: string;
   rightColLg?: string;
+  fullWidth?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -36,6 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
   rightColSm: 'col-9',
   rightColMd: 'col-9',
   rightColLg: 'col-9',
+  fullWidth: false,
   items: () => []
 });
 

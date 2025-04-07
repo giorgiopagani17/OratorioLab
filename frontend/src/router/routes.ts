@@ -18,12 +18,17 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/events',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/EventsActivities/HomeEventsActivities.vue'), props: { type: 'events' } }],
+    children: [{ path: '', component: () => import('pages/EventsActivities/HomeEventsActivitiesPage.vue'), props: { type: 'events' } }],
   },
   {
     path: '/activities',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/EventsActivities/HomeEventsActivities.vue'), props: { type: 'activities' } }],
+    children: [{ path: '', component: () => import('pages/EventsActivities/HomeEventsActivitiesPage.vue'), props: { type: 'activities' } }],
+  },
+  {
+    path: '/balance',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [{ path: '', component: () => import('pages/Balance/BalancePage.vue'),  props: { section: 'all' } }],
   },
   {
     path: '/:section(activities|events)',
@@ -55,7 +60,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: 'view/:id/subscriptions',
-        component: () => import('@/pages/Subscriptions/View/AllSubscriptions.vue'),
+        component: () => import('@/pages/Subscriptions/View/AllSubscriptionsPage.vue'),
         props: (route) => ({
           id: Number(route.params.id),
           section: route.params.section
@@ -73,6 +78,19 @@ const routes: RouteRecordRaw[] = [
         props: (route) => ({
           section: route.params.section,
           isDraft: true
+        })
+      }
+    ]
+  },
+  {
+    path: '/:section(activities|events)',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: 'balance',
+        component: () => import('@/pages/Balance/BalancePage.vue'),
+        props: (route) => ({
+          section: route.params.section,
         })
       }
     ]

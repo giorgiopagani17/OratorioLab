@@ -16,7 +16,7 @@
     <div class="calendar-grid">
       <div v-for="(day, index) in calendarDays" :key="index"
            class="calendar-day q-pa-sm"
-           :class="{ 'other-month': !day.isCurrentMonth }">
+           :class="{ 'other-month': !day.isCurrentMonth, 'today': day.isToday }">
         <div class="row items-start justify-between">
           <span :class="{ 'text-weight-medium': day.isToday }">
             {{ day.dayNumber }}
@@ -126,7 +126,7 @@ export default defineComponent({
         days.push({
           dayNumber: prevMonthLastDay - i,
           isCurrentMonth: false,
-          isToday: false,
+          isToday: date.isSameDate(prevDate, new Date()),
           events: getEventsForDay(formattedDate)
         })
       }
@@ -138,7 +138,7 @@ export default defineComponent({
         days.push({
           dayNumber: i,
           isCurrentMonth: true,
-          isToday: date.isSameDate(currentDate, today),
+          isToday: date.isSameDate(currentDate, today, 'day'),
           events: getEventsForDay(formattedDate)
         })
       }
@@ -150,7 +150,7 @@ export default defineComponent({
         days.push({
           dayNumber: i,
           isCurrentMonth: false,
-          isToday: false,
+          isToday: date.isSameDate(nextDate, new Date()),
           events: getEventsForDay(formattedDate)
         })
       }
@@ -223,6 +223,14 @@ export default defineComponent({
 .other-month {
   color: #999;
   background-color: #f8f8f8;
+}
+
+.today {
+  background-color: #ECF1FF;
+}
+
+.today:hover {
+  background-color: #ECF1FF !important;
 }
 
 .event-badge {

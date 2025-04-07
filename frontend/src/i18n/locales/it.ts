@@ -114,6 +114,7 @@ export default {
     illness: 'Malattia',
     allergies: 'Allergie',
     chooseDate: 'Scegli una data',
+    paymentsStatus: 'Stato dei Pagamenti',
   },
   placeholders: {
     commonPrice: 'Prezzo comune',
@@ -171,7 +172,19 @@ export default {
       '8': 'Settembre',
       '9': 'Ottobre',
       '10': 'Novembre',
-      '11': 'Dicembre'
+      '11': 'Dicembre',
+      'january': 'Gennaio',
+      'february': 'Febbraio',
+      'march': 'Marzo',
+      'april': 'Aprile',
+      'may': 'Maggio',
+      'june': 'Giugno',
+      'july': 'Luglio',
+      'august': 'Agosto',
+      'september': 'Settembre',
+      'october': 'Ottobre',
+      'november': 'Novembre',
+      'december': 'Dicembre',
     }
   },
   menu: {
@@ -184,7 +197,7 @@ export default {
     setting: 'Impostazioni',
     pricing: 'Prezzi',
     privacyPolicy: 'Privacy Policy',
-    finance: 'Bilancio',
+    balance: 'Bilancio',
   },
   settings: {
     tabs: {
@@ -196,6 +209,11 @@ export default {
       notifications: 'Notifiche',
       targets: 'Targets',
     }
+  },
+  status: {
+    completed: 'Completato',
+    pending: 'In Attesa',
+    failed: 'Fallito',
   },
   userOptions: {
     personalInfo: 'Informazioni Personali',

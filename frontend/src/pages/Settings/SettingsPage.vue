@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly q-pa-md">
-    <div :class="{'w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
+    <div :class="{'q-py-sm w-95': $q.screen.gt.sm, 'q-py-sm w-100': $q.screen.lt.md}">
       <BodySection>
         <template v-slot:leftHeader>
           <q-tabs

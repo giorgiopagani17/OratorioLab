@@ -1,18 +1,21 @@
 <template>
-  <div class="event-card q-pa-md" style="width: 340px">
+  <q-card class="event-card" style="width: 340px">
     <q-img
       :src="props.eventActivity.image || ''"
-      class="event-card-image"
       height="160px"
     />
-    <div class="event-card-content q-pt-md">
+
+    <q-card-section>
       <div class="text-subtitle1 text-bold text-secondary ellipsis-2-lines">
         {{ props.eventActivity.name || 'No name' }}
       </div>
       <div class="text-grey-7 ellipsis-2-lines q-mt-xs" style="height: 42px">
         {{ props.eventActivity.description || 'No description' }}
       </div>
-      <div class="row justify-between items-center q-mt-sm">
+    </q-card-section>
+
+    <q-card-section class="q-pt-none">
+      <div class="row justify-between items-center">
         <div class="text-caption text-secondary">
           {{ formatDates(props.eventActivity.startDate, props.eventActivity.endDate) }}
         </div>
@@ -21,10 +24,13 @@
           <span v-else>{{ $t('texts.gratis') }}</span>
         </div>
       </div>
+    </q-card-section>
+
+    <q-card-actions vertical>
       <q-btn
         color="primary"
         flat
-        class="q-mt-sm full-width"
+        class="full-width"
         @click="$emit('click', props.eventActivity)"
       >
         <span v-if="props.isDraft">
@@ -34,8 +40,8 @@
           {{ $t('buttons.view') }}
         </span>
       </q-btn>
-    </div>
-  </div>
+    </q-card-actions>
+  </q-card>
 </template>
 
 <script setup lang="ts">
@@ -76,26 +82,13 @@ const formatDates = (startDate?: string, endDate?: string): string => {
 <style lang="scss" scoped>
 .event-card {
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  height: 355px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+  transition: transform 0.2s;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   }
-}
-
-.event-card-image {
-  border-radius: 4px;
-}
-
-.event-card-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
 }
 
 .ellipsis-2-lines {

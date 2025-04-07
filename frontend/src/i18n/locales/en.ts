@@ -14,7 +14,7 @@ export default {
     create: 'Create',
     spaceCreate: 'Space',
     groupsCreate: 'Groups',
-    financialBalance: 'Finance',
+    financialBalance: 'Balance',
     drafts: 'Drafts',
     dragAndDrop: 'Drag image here or click to upload file from your device',
     major: '18 +',
@@ -114,6 +114,7 @@ export default {
     illness: 'Illness',
     allergies: 'Allergies',
     chooseDate: 'Choose a date',
+    paymentsStatus: 'Payments Status',
   },
   placeholders: {
     commonPrice: 'Common Price',
@@ -171,7 +172,19 @@ export default {
       '8': 'September',
       '9': 'October',
       '10': 'November',
-      '11': 'December'
+      '11': 'December',
+      'january': 'January',
+      'february': 'February',
+      'march': 'March',
+      'april': 'April',
+      'may': 'May',
+      'june': 'June',
+      'july': 'July',
+      'august': 'August',
+      'september': 'September',
+      'october': 'October',
+      'november': 'November',
+      'december': 'December',
     }
   },
   menu: {
@@ -184,7 +197,7 @@ export default {
     setting: 'Settings',
     pricing: 'Pricing',
     privacyPolicy: 'Privacy Policy',
-    finance: 'Finance',
+    balance: 'Balance',
   },
   settings: {
     tabs: {
@@ -196,6 +209,11 @@ export default {
       notifications: 'Notifications',
       targets: 'Targets',
     }
+  },
+  status: {
+    completed: 'Completed',
+    pending: 'Pending',
+    failed: 'Failed',
   },
   userOptions: {
     personalInfo: 'Personal information',
