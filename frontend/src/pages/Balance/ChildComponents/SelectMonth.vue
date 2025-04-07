@@ -21,7 +21,7 @@
           :class="{
             'selected-month': month.index === selectedMonth,
             'text-grey': month.isFuture,
-            'custom-btn-blue': month.index === selectedMonth
+            'month-btn-active': month.index === selectedMonth
           }"
           :style="{ opacity: month.isFuture ? 0.5 : 1 }"
           @click="selectMonth(month.index)"
@@ -161,8 +161,8 @@ onMounted(() => {
   background: #e0e0e0;
 }
 
-.custom-btn-blue {
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+.month-btn-active {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
 .selected-month {
