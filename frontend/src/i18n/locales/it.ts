@@ -213,13 +213,47 @@ export default {
   },
   settings: {
     tabs: {
-      general: 'Generale',
+      general: 'Oratorio',
       events: 'Eventi',
       activities: 'Attività',
       currency: 'Valuta',
       users: 'Utenti',
       notifications: 'Notifiche',
       targets: 'Targets',
+    },
+    commons: {
+      name: 'Nome',
+      nameDescription: 'Inserisci il nome del tuo oratorio',
+      address: 'Indirizzo',
+      addressDescription: 'Inserisci l\'indirizzo fisico del tuo oratorio',
+      contactEmail: 'Email di contatto',
+      contactEmailDescription: 'Indirizzo email per informazioni generali',
+      contactTelephone: 'Telefono di contatto',
+      contactTelephoneDescription: 'Numero di telefono per informazioni generali',
+      oratoryPlaces: 'Spazi dell\'oratorio',
+      oratoryPlacesDescription: 'Aggiungi gli spazi interni ed esterni disponibili presso il tuo oratorio',
+      add: 'Aggiungi',
+      noPlacesAdded: 'Nessuno spazio aggiunto',
+      image: 'Immagine',
+      imageDescription: 'Carica un\'immagine rappresentativa del tuo oratorio',
+      noImage: 'Nessuna immagine caricata',
+      selectImage: 'Seleziona un\'immagine',
+      changeImage: 'Cambia immagine',
+      removeImage: 'Rimuovi immagine',
+      uploadImage: 'Carica Immagine',
+      oratoryImage: 'Immagine dell\'oratorio',
+      imageRecommendation: 'Dimensioni consigliate: 1280x720px (16:9)',
+      supportedFormats: 'Formati supportati: JPG, PNG, GIF (max 5MB)'
+    },
+    users: {
+      admins: 'Amministratori',
+      adminsDescription: 'Aggiungi amministratori che possono gestire tutti gli aspetti dell\'oratorio',
+      staff: 'Staff',
+      staffDescription: 'Aggiungi membri dello staff che possono gestire le attività ma con accesso amministrativo limitato',
+      email: 'Indirizzo email',
+      noAdminsAdded: 'Nessun amministratore aggiunto',
+      noStaffAdded: 'Nessun membro dello staff aggiunto',
+      emailAlreadyExists: 'Questo indirizzo email è già nell\'elenco'
     }
   },
   status: {

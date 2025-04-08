@@ -24,8 +24,8 @@
 
         <q-tab-panels v-model="activeTab" animated style="width: 100%;">
           <q-tab-panel v-for="tab in tabs" :key="tab.name" :name="tab.name">
-            <div class="text-h6 q-mb-md">{{ $t(`settings.tabs.${tab.name}`) }}</div>
-            <p>{{ $t('settings.comingSoon') }}</p>
+            <OratorioSettingTab v-if="tab.name === 'general'" />
+            <UserSettingTab v-if="tab.name === 'users'" />
           </q-tab-panel>
         </q-tab-panels>
       </BodySection>
@@ -36,6 +36,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import BodySection from '@/components/Sections/BodySection.vue';
+import OratorioSettingTab from '@/pages/Settings/Tabs/OratorioSettingTab.vue';
+import UserSettingTab from '@/pages/Settings/Tabs/UsersSettingTab.vue';
 
 defineOptions({
   name: 'SettingsPage'

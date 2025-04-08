@@ -213,13 +213,47 @@ export default {
   },
   settings: {
     tabs: {
-      general: 'General',
+      general: 'Oratory',
       events: 'Events',
       activities: 'Activities',
       currency: 'Currency',
       users: 'Users',
       notifications: 'Notifications',
       targets: 'Targets',
+    },
+    commons: {
+      name: 'Name',
+      nameDescription: 'Enter the name of your oratory',
+      address: 'Address',
+      addressDescription: 'Enter the physical address of your oratory',
+      contactEmail: 'Contact Email',
+      contactEmailDescription: 'Email address for general inquiries',
+      contactTelephone: 'Contact Telephone',
+      contactTelephoneDescription: 'Telephone number for general inquiries',
+      oratoryPlaces: 'Oratory Places',
+      oratoryPlacesDescription: 'Add indoor and outdoor spaces available at your oratory',
+      add: 'Add',
+      noPlacesAdded: 'No places added yet',
+      image: 'Image',
+      imageDescription: 'Upload a representative image of your oratory',
+      noImage: 'No image uploaded',
+      selectImage: 'Select an image',
+      changeImage: 'Change image',
+      removeImage: 'Remove image',
+      uploadImage: 'Upload Image',
+      oratoryImage: 'Oratory Image',
+      imageRecommendation: 'Recommended size: 1280x720px (16:9)',
+      supportedFormats: 'Supported formats: JPG, PNG, GIF (max 5MB)'
+    },
+    users: {
+      admins: 'Administrators',
+      adminsDescription: 'Add administrators who can manage all aspects of the oratory',
+      staff: 'Staff Members',
+      staffDescription: 'Add staff members who can manage activities but have limited administrative access',
+      email: 'Email address',
+      noAdminsAdded: 'No administrators added yet',
+      noStaffAdded: 'No staff members added yet',
+      emailAlreadyExists: 'This email address is already in the list'
     }
   },
   status: {
