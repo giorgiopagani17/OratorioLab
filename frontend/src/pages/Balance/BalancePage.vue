@@ -48,7 +48,6 @@
                 :key="transaction.id"
                 :transaction="transaction"
                 :is-last="index === filteredTransactions.length - 1"
-                @click="handleTransactionClick(transaction)"
               />
             </div>
 
@@ -164,10 +163,6 @@ const statusCounts = computed(() => {
 const getStatusPercentage = (status: string) => {
   if (!filteredTransactions.value.length) return 0;
   return Math.round((statusCounts.value[status] / filteredTransactions.value.length) * 100);
-};
-
-const handleTransactionClick = (transaction: Transaction) => {
-  console.log('Transaction clicked:', transaction);
 };
 </script>
 

@@ -14,8 +14,8 @@
       :style="{ width: width, maxWidth: maxWidth, minWidth: minWidth }"
     >
       <div class="modal-header q-px-sm" v-if="showHeader">
-        <div class="row items-center justify-between q-pb-sm">
-          <div class="text-bold" :class="`text-${titleColor}`" style="font-size: 25px">{{ title }}</div>
+        <div class="row items-center justify-between q-pb-sm no-wrap">
+          <div class="text-bold ellipsis" :class="`text-${titleColor}`" style="font-size: 25px">{{ title }}</div>
           <q-btn
             v-if="showCloseButton"
             flat
@@ -24,6 +24,7 @@
             icon="close"
             color="grey-7"
             @click="closeModal"
+            class="q-ml-sm"
           />
         </div>
         <q-separator v-if="showHeaderSeparator" />

@@ -190,6 +190,15 @@ export default {
       'december': 'December',
     }
   },
+  transaction: {
+    details: 'Transaction Details',
+    amount: 'Amount',
+    status: 'Payment Status',
+    user: 'User',
+    date: 'Date',
+    description: 'Description',
+    receipt: 'Payment Receipt',
+  },
   menu: {
     home: 'Home',
     registry: 'Registry',

@@ -1,7 +1,7 @@
 <template>
   <q-card
     :class="['transaction-card cursor-pointer', isLast ? 'q-mb-sm' : 'q-mb-md']"
-    @click="$emit('click', transaction)"
+    @click="openTransactionDetails"
   >
     <q-card-section :horizontal="$q.screen.gt.xs">
       <q-img
@@ -26,10 +26,19 @@
       </q-card-section>
     </q-card-section>
   </q-card>
+
+  <InfoTransactionModal
+    v-if="selectedTransaction"
+    :is-open="detailsSidebarOpen"
+    :transaction="selectedTransaction"
+    @update:is-open="detailsSidebarOpen = $event"
+  />
 </template>
 
 <script setup lang="ts">
 import { date } from 'quasar';
+import InfoTransactionModal from '@/components/Modals/components/InfoTransactionModal.vue';
+import { ref } from 'vue';
 
 defineOptions({
   name: 'TransactionCard'
@@ -49,7 +58,7 @@ interface Transaction {
   amount: number;
 }
 
-defineProps({
+const props = defineProps({
   transaction: {
     type: Object as () => Transaction,
     required: true
@@ -61,6 +70,15 @@ defineProps({
 });
 
 defineEmits(['click']);
+
+// Added these missing refs
+const selectedTransaction = ref<Transaction | null>(null);
+const detailsSidebarOpen = ref(false);
+
+const openTransactionDetails = () => {
+  selectedTransaction.value = props.transaction;
+  detailsSidebarOpen.value = true;
+};
 
 const formatDate = (dateString: string) => {
   return date.formatDate(new Date(dateString), 'DD/MM/YYYY HH:mm');

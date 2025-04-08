@@ -190,6 +190,15 @@ export default {
       'december': 'Dicembre',
     }
   },
+  transaction: {
+    details: 'Dettagli Transazione',
+    amount: 'Importo',
+    status: 'Status Pagamento',
+    user: 'Utente',
+    date: 'Data',
+    description: 'Descrizione',
+    receipt: 'Ricevuta Pagamento',
+  },
   menu: {
     home: 'Home',
     registry: 'Anagrafiche',
