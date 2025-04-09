@@ -243,7 +243,12 @@ export default {
       uploadImage: 'Upload Image',
       oratoryImage: 'Oratory Image',
       imageRecommendation: 'Recommended size: 1280x720px (16:9)',
-      supportedFormats: 'Supported formats: JPG, PNG, GIF (max 5MB)'
+      supportedFormats: 'Supported formats: JPG, PNG, GIF (max 5MB)',
+      settingsSaved: 'Settings saved successfully',
+      remove: 'Remove',
+      save: 'Save',
+      edit: 'Edit',
+      cancel: 'Cancel',
     },
     users: {
       admins: 'Administrators',
@@ -254,6 +259,28 @@ export default {
       noAdminsAdded: 'No administrators added yet',
       noStaffAdded: 'No staff members added yet',
       emailAlreadyExists: 'This email address is already in the list'
+    },
+    targets: {
+      title: 'Age Groups',
+      description: 'Define age groups for activities and events',
+      name: 'Group name',
+      minAge: 'Min age',
+      maxAge: 'Max age',
+      required: 'Required',
+      ageRange: '{min} - {max} years',
+      ageRangePlus: '{min}+ years',
+      noTargetsAdded: 'No age groups added yet',
+      nameExists: 'A group with this name already exists',
+      ageRangeOverlap: 'This age range overlaps with an existing group',
+      gender: 'Gender',
+      any: 'Any',
+      male: 'Male',
+      female: 'Female',
+      targetAdded: 'Target added successfully',
+      ageConstraint: 'Maximum minimum age 90, Maximum age 100',
+      maximumTargets: 'Maximum Targets',
+      maximumTargetsDescription: 'Set the maximum number of targets that can be selected for an activity or event',
+      targetUpdated: 'Target updated successfully'
     }
   },
   status: {

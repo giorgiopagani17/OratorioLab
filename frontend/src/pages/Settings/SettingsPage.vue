@@ -26,6 +26,7 @@
           <q-tab-panel v-for="tab in tabs" :key="tab.name" :name="tab.name">
             <OratorioSettingTab v-if="tab.name === 'general'" />
             <UserSettingTab v-if="tab.name === 'users'" />
+            <TargetSettingTab v-if="tab.name === 'targets'" />
           </q-tab-panel>
         </q-tab-panels>
       </BodySection>
@@ -38,6 +39,7 @@ import { ref } from 'vue';
 import BodySection from '@/components/Sections/BodySection.vue';
 import OratorioSettingTab from '@/pages/Settings/Tabs/OratorioSettingTab.vue';
 import UserSettingTab from '@/pages/Settings/Tabs/UsersSettingTab.vue';
+import TargetSettingTab from '@/pages/Settings/Tabs/TargetSettingTab.vue';
 
 defineOptions({
   name: 'SettingsPage'

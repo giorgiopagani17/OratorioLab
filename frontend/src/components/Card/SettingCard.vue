@@ -4,6 +4,7 @@
       <div class="col-12 col-md-4">
         <div class="text-subtitle1 text-weight-medium">{{ label }}</div>
         <div class="text-caption text-grey-7">{{ description }}</div>
+        <div class="text-caption text-grey-5">{{ subDescription }}</div>
       </div>
       <div class="col-12 col-md-8">
         <slot></slot>
@@ -20,6 +21,10 @@ defineProps({
     required: true
   },
   description: {
+    type: String,
+    default: ''
+  },
+  subDescription: {
     type: String,
     default: ''
   },

@@ -243,7 +243,12 @@ export default {
       uploadImage: 'Carica Immagine',
       oratoryImage: 'Immagine dell\'oratorio',
       imageRecommendation: 'Dimensioni consigliate: 1280x720px (16:9)',
-      supportedFormats: 'Formati supportati: JPG, PNG, GIF (max 5MB)'
+      supportedFormats: 'Formati supportati: JPG, PNG, GIF (max 5MB)',
+      settingsSaved: 'Impostazioni salvate con successo',
+      remove: 'Rimuovi',
+      save: 'Salva',
+      edit: 'Modifica',
+      cancel: 'Annulla',
     },
     users: {
       admins: 'Amministratori',
@@ -254,6 +259,28 @@ export default {
       noAdminsAdded: 'Nessun amministratore aggiunto',
       noStaffAdded: 'Nessun membro dello staff aggiunto',
       emailAlreadyExists: 'Questo indirizzo email è già nell\'elenco'
+    },
+    targets: {
+      title: 'Fasce d\'età',
+      description: 'Definisci le fasce d\'età per attività ed eventi',
+      name: 'Nome gruppo',
+      minAge: 'Età min',
+      maxAge: 'Età max',
+      required: 'Obbligatorio',
+      ageRange: '{min} - {max} anni',
+      ageRangePlus: '{min}+ anni',
+      noTargetsAdded: 'Nessuna fascia d\'età aggiunta',
+      nameExists: 'Esiste già un gruppo con questo nome',
+      ageRangeOverlap: 'Questa fascia d\'età si sovrappone con un gruppo esistente',
+      gender: 'Genere',
+      any: 'Tutti',
+      male: 'Maschi',
+      female: 'Femmine',
+      targetAdded: 'Fascia d\'età aggiunta con successo',
+      ageConstraint: 'Età minima massima 90, Età massima 100',
+      maximumTargets: 'Numero Massimo di Target',
+      maximumTargetsDescription: 'Imposta il numero massimo di target che possono essere selezionati per un\'attività o evento',
+      targetUpdated: 'Fascia d\'età aggiornata con successo',
     }
   },
   status: {
