@@ -10,11 +10,23 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center justify-center q-pa-md container-body">
+    <div class="flex items-center justify-center container-body" :class="paddingClass">
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import {computed} from 'vue';
+
+const props = defineProps({
+  padding: {
+    type: String,
+    default: 'q-pa-md'
+  }
+});
+
+const paddingClass = computed(() => {
+  return props.padding || '';
+});
 </script>

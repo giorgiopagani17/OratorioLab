@@ -39,6 +39,7 @@
       </HeaderSection>
 
       <DataTable
+        class="q-mt-lg"
         :rows="subscriptions"
         :columns="columns"
         row-key="id"

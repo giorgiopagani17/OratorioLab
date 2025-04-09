@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="row q-mb-sm">
-                  <div class="col-4 text-weight-bold text-secondary">{{ $t('labels.notes') }}:</div>
+                  <div class="col-4 text-weight-bold text-secondary two-line-truncate">{{ $t('labels.notes') }}:</div>
                   <div class="col-8">{{ eventActivity.notes || 'Nessuna nota' }}</div>
                 </div>
 
@@ -110,12 +110,12 @@
             <div class="col-auto q-mt-auto">
               <q-btn
                 v-if="isAdmin"
-                color="primary"
+                color="negative"
                 class="full-width"
-                @click="navigateTo('/subscriptions')"
-                icon="how_to_reg"
+                @click="deleteEventActivity(idEventActivity)"
+                icon="delete"
               >
-                {{ $t('buttons.viewSubscriptions') }}
+                <span class="q-ml-sm">{{ $t('buttons.delete') }}</span>
               </q-btn>
             </div>
           </q-card-section>
@@ -129,7 +129,7 @@
               <q-icon name="description" color="secondary" size="sm" class="q-mr-sm" />
               {{ $t('labels.description') }}
             </div>
-            <p class="text-body1 q-ma-none">{{ eventActivity.description }}</p>
+            <p class="text-body1 q-ma-none two-line-truncate">{{ eventActivity.description }}</p>
           </q-card-section>
         </q-card>
       </div>
@@ -197,9 +197,10 @@ const formatHours = (date?: string): string => {
   });
 };
 
-const navigateTo = (path: string) => {
-  if(idEventActivity != 0 && props.isAdmin) {
-    router.push('/' + props.section + '/view/' + idEventActivity + path);
-  }
+const deleteEventActivity = (id: number) => {
+  // Implement the delete functionality here
+  console.log(`Deleting ${type} with ID: ${id}`);
+  // After deletion, navigate back to the list
+  router.push(`/${props.section}/view`);
 };
 </script>

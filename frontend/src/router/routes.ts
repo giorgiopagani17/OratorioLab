@@ -59,8 +59,22 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
+        path: 'drafts',
+        component: () => import('@/pages/EventsActivities/View/AllEventsActivities.vue'),
+        props: (route) => ({
+          section: route.params.section,
+          isDraft: true
+        })
+      }
+    ]
+  },
+  {
+    path: '/:section(activities|events)',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
         path: 'view/:id/subscriptions',
-        component: () => import('@/pages/Subscriptions/View/AllSubscriptionsPage.vue'),
+        component: () => import('@/pages/EventsActivities/Subscriptions/AllSubscriptionsPage.vue'),
         props: (route) => ({
           id: Number(route.params.id),
           section: route.params.section
@@ -73,11 +87,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: 'drafts',
-        component: () => import('@/pages/EventsActivities/View/AllEventsActivities.vue'),
+        path: 'view/:id/balance',
+        component: () => import('@/pages/Balance/BalancePage.vue'),
         props: (route) => ({
-          section: route.params.section,
-          isDraft: true
+          id: Number(route.params.id),
+          section: route.params.section
         })
       }
     ]

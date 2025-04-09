@@ -46,7 +46,7 @@
           <div
             v-for="(eventActivity, index) in eventsActivities"
             :key="index"
-            class="col-12 col-sm-6 col-md-4"
+            class="col-12 col-sm-6 col-md-4 col-lg-3"
           >
             <EventActivityListCard
               :event-activity="eventActivity"
@@ -55,10 +55,14 @@
             />
           </div>
 
-          <EmptyStateDisplay
+          <div
             v-if="!eventsActivities.length"
-            :message="$t(`errors.no${props.section.charAt(0).toUpperCase() + props.section.slice(1)}Found`)"
-          />
+            class="col-12 flex justify-center items-center"
+          >
+            <EmptyStateDisplay
+              :message="$t(`errors.no${props.section.charAt(0).toUpperCase() + props.section.slice(1)}Found`)"
+            />
+          </div>
         </div>
       </BodySection>
     </div>
@@ -245,8 +249,44 @@ const handleClick = (eventActivity: EventActivity) => {
 <style lang="scss" scoped>
 .events-grid {
   overflow-y: auto;
-  height: 62.5vh;
+  height: calc(100vh - 200px);
   width: 100%;
   padding: 0px 8px 10px 8px;
+}
+
+// Center the grid items when there are fewer than the maximum per row
+.events-grid.row {
+  justify-content: center; // This centers the columns in the row
+}
+
+// Fix for cards overlapping
+.events-grid .col-12,
+.events-grid .col-sm-6,
+.events-grid .col-md-4,
+.events-grid .col-lg-3 {
+  margin-bottom: 16px; // Ensure spacing between rows
+  height: auto; // Allow height to adjust to content
+  display: flex; // Use flexbox
+  justify-content: center; // Center the card horizontally in the column
+}
+
+// Ensure cards fill their container properly
+.events-grid .col-12 > *,
+.events-grid .col-sm-6 > *,
+.events-grid .col-md-4 > *,
+.events-grid .col-lg-3 > * {
+  width: 100%; // Make cards fill the column width
+  height: 100%; // Make cards fill the column height
+  max-width: 340px; // Match the card's defined width
+}
+
+@media (max-width: 599px) {
+  .events-grid {
+    height: calc(100vh - 150px);
+  }
+}
+
+.full-height {
+  min-height: 200px;
 }
 </style>

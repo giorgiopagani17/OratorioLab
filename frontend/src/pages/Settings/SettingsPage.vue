@@ -54,11 +54,11 @@ const activeTab = ref('general');
 
 const tabs = ref<Tab[]>([
   { name: 'general', icon: 'settings' },
+  { name: 'users', icon: 'people' },
   { name: 'events', icon: 'event' },
   { name: 'activities', icon: 'local_activity' },
-  { name: 'currency', icon: 'attach_money' },
   { name: 'targets', icon: 'ads_click' },
-  { name: 'users', icon: 'people' },
+  { name: 'categories', icon: 'category' },
   { name: 'notifications', icon: 'notifications' }
 ]);
 </script>

@@ -208,3 +208,32 @@ body {
 .bg-tertiary {
   background-color: $tertiary !important;
 }
+
+.single-line-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.two-line-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.content-container-informations {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 290px;
+}
+
+.content-area-informations {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+

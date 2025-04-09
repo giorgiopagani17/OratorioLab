@@ -6,10 +6,10 @@
     />
 
     <q-card-section>
-      <div class="text-subtitle1 text-bold text-secondary ellipsis-2-lines">
+      <div class="text-subtitle1 text-bold text-secondary single-line-truncate">
         {{ props.eventActivity.name || 'No name' }}
       </div>
-      <div class="text-grey-7 ellipsis-2-lines q-mt-xs" style="height: 42px">
+      <div class="text-grey-7 two-line-truncate q-mt-xs" style="height: 42px">
         {{ props.eventActivity.description || 'No description' }}
       </div>
     </q-card-section>
@@ -89,13 +89,5 @@ const formatDates = (startDate?: string, endDate?: string): string => {
     transform: translateY(-2px);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   }
-}
-
-.ellipsis-2-lines {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 </style>

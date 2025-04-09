@@ -21,6 +21,7 @@ interface Props {
   message: string;
   messageClass?: string;
   height?: string;
+  minHeight?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -28,12 +29,13 @@ const props = withDefaults(defineProps<Props>(), {
   iconSize: '5rem',
   iconColor: 'grey-5',
   messageClass: 'text-h5',
-  height: '445px'
+  height: '100%',
+  minHeight: '100%',
 });
 
 const containerStyle = computed(() => ({
   height: props.height,
-  minHeight: '445px',
+  minHeight: props.minHeight,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center'

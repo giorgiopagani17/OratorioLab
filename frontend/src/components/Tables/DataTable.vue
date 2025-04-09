@@ -2,7 +2,6 @@
   <div class="table-container">
     <q-table
       style="border-radius: 24px; min-height: 436px"
-      class="q-mt-lg"
       :rows="props.rows"
       :columns="props.columns"
       :row-key="props.rowKey"

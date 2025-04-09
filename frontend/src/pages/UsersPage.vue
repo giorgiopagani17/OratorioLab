@@ -38,6 +38,7 @@
       </HeaderSection>
 
       <DataTable
+        class="q-mt-lg"
         :rows="rows"
         :columns="columns"
         row-key="name"

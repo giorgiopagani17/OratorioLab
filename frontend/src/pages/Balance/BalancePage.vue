@@ -32,6 +32,7 @@
                       :percentage="getStatusPercentage(status)"
                       :color="getStatusColor(status)"
                       :label="$t('status.' + status)"
+                      :transactions="filteredTransactions"
                     />
                   </div>
                 </q-card-section>
@@ -54,6 +55,7 @@
             <EmptyStateDisplay
               v-if="!filteredTransactions.length"
               :message="$t('errors.noTransactionsFound')"
+              :min-height="'445px'"
             />
           </div>
         </div>
@@ -100,6 +102,7 @@ interface Transaction {
 }
 
 const props = defineProps<{
+  id: number;
   section: string;
 }>();
 
@@ -123,9 +126,17 @@ const filteredTransactions = computed<Transaction[]>(() => {
   });
 
   if (props.section === 'activities') {
-    return transactions.filter(transaction => transaction.activityId !== null);
+    if(!props.id) {
+      return transactions.filter(transaction => transaction.activityId !== null);
+    } else {
+      return transactions.filter(transaction => transaction.activityId === props.id);
+    }
   } else if (props.section === 'events') {
-    return transactions.filter(transaction => transaction.eventId !== null);
+    if(!props.id) {
+      return transactions.filter(transaction => transaction.eventId !== null);
+    } else {
+      return transactions.filter(transaction => transaction.eventId === props.id);
+    }
   } else {
     return transactions;
   }

@@ -18,12 +18,21 @@
           </div>
         </template>
         <div v-if="eventActivity" class="q-pa-sm full-width">
-          <EventActivityReviewCard :id="props.id" :section="props.section" :eventActivity="eventActivity" :isAdmin="true"/>
+          <EventActivityReviewCard :id="props.id" :section="props.section" :eventActivity="eventActivity" :isAdmin="isAdmin"/>
         </div>
         <div v-else class="q-pa-sm full-width">
           <p>No event activity found.</p>
         </div>
       </BodySection>
+
+      <div class="q-mt-lg">
+        <EventActivityInformation
+          v-if="isAdmin"
+          :id="props.id"
+          :section="props.section"
+          :isLoading="isLoading"
+        />
+      </div>
     </div>
   </q-page>
 </template>
@@ -33,8 +42,9 @@ import BodySection from '@/components/Sections/BodySection.vue';
 import EventActivityReviewCard from '@/components/Card/EventActivityReviewCard.vue';
 import activities from '@/data/activities.json';
 import events from '@/data/events.json';
-import { computed } from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import { useRouter } from 'vue-router';
+import EventActivityInformation from '@/pages/EventsActivities/Informations/EventActivityInformation.vue';
 
 const props = defineProps<{
   id: number;
@@ -42,6 +52,9 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
+const isLoading = ref(true);
+const isAdmin = ref(true);
+
 const eventActivity = computed(() => {
   const data = props.section === 'events' ? events.events : activities.activities;
   const item = data.find(item => item.id === props.id);
@@ -58,5 +71,11 @@ const eventActivity = computed(() => {
     image: item.image || 'https://cdn.quasar.dev/img/paris.jpg',
     price: 'targets' in item ? item.targets[0].price : item.price
   };
+});
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 800);
 });
 </script>
