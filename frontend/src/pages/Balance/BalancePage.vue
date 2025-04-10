@@ -10,7 +10,20 @@
 
       <BodySection class="q-mt-lg">
         <template v-slot:leftHeader>
-          {{ $t('calendar.months.' + selectedMonthData?.name) }} {{ selectedMonthData?.year }}
+          <div class="flex items-center">
+            <q-btn
+              v-if="props.section!= 'all'"
+              flat
+              round
+              color="white"
+              icon="arrow_back"
+              size="sm"
+              @click="router.back()"
+            />
+            <span class="q-ml-xs">
+              {{ $t('calendar.months.' + selectedMonthData?.name) }} {{ selectedMonthData?.year }}
+            </span>
+          </div>
         </template>
 
         <template v-slot:rightHeader>
@@ -81,6 +94,7 @@ import TransactionCard from '@/components/Card/TransactionCard.vue';
 import EmptyStateDisplay from '@/components/Utils/EmptyStateDisplay.vue';
 import activitiesData from '@/data/activities.json';
 import eventsData from '@/data/events.json';
+import { useRouter } from 'vue-router';
 
 defineOptions({
   name: 'BalancePage'
@@ -113,6 +127,7 @@ const props = defineProps<{
   section: string;
 }>();
 
+const router = useRouter();
 const selectedMonthData = ref<MonthData | null>(null);
 
 const eventActivityName = computed(() => {
