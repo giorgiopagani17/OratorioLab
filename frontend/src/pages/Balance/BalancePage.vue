@@ -10,11 +10,16 @@
 
       <BodySection class="q-mt-lg">
         <template v-slot:leftHeader>
-          <span v-if="props.section != 'all'">
-            <span class="text-primary">{{ $t('types.' + props.section) }}</span>
-            -
-          </span>
           {{ $t('calendar.months.' + selectedMonthData?.name) }} {{ selectedMonthData?.year }}
+        </template>
+
+        <template v-slot:rightHeader>
+          <span class="text-primary" v-if="props.section != 'all' && !props.id" >
+            {{ $t('types.' + props.section) }}
+          </span>
+          <span class="text-primary" v-if="props.id && eventActivityName">
+            {{ eventActivityName }}
+          </span>
         </template>
 
         <div class="transactions-container q-mt-xs">
@@ -74,6 +79,8 @@ import transactionsData from '@/data/transactions.json';
 import StatusKnobChart from '@/components/Charts/StatusKnobChart.vue';
 import TransactionCard from '@/components/Card/TransactionCard.vue';
 import EmptyStateDisplay from '@/components/Utils/EmptyStateDisplay.vue';
+import activitiesData from '@/data/activities.json';
+import eventsData from '@/data/events.json';
 
 defineOptions({
   name: 'BalancePage'
@@ -107,6 +114,19 @@ const props = defineProps<{
 }>();
 
 const selectedMonthData = ref<MonthData | null>(null);
+
+const eventActivityName = computed(() => {
+  if (!props.id) return null;
+
+  if (props.section === 'activities') {
+    const activity = activitiesData.activities.find(activity => activity.id === props.id);
+    return activity?.name || null;
+  } else if (props.section === 'events') {
+    const event = eventsData.events.find(event => event.id === props.id);
+    return event?.name || null;
+  }
+  return null;
+});
 
 const onMonthSelected = (monthData: MonthData) => {
   selectedMonthData.value = monthData;
